@@ -5,9 +5,41 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import { teams } from '~/data/teams';
+import type { Team } from '~/data/teams';
 import { Icon } from 'astro-icon/components';
+import type { SanityMannschaft } from '~/lib/sanity';
 
-export const getStaticPaths = (() => {
+function sanityToTeam(m: SanityMannschaft): Team {
+  return {
+    name: m.name,
+    slug: m.slug.current,
+    league: m.liga,
+    description: m.beschreibung || '',
+    handballNetId: m.handballNetId || '',
+    category: m.kategorie || 'herren',
+    trainer: m.trainer,
+    trainingszeiten: m.trainingszeiten,
+    halle: m.halle,
+    kontakt: m.kontakt,
+    instagram: m.instagram,
+  };
+}
+
+export const getStaticPaths = (async () => {
+  // Try Sanity first — fall back to static teams.ts if empty or unavailable
+  try {
+    const { fetchMannschaften } = await import('~/lib/sanity');
+    const mannschaften = await fetchMannschaften();
+    if (mannschaften && mannschaften.length > 0) {
+      return mannschaften.map((m) => ({
+        params: { slug: m.slug.current },
+        props: { team: sanityToTeam(m) },
+      }));
+    }
+  } catch {
+    // Sanity unavailable — fall back below
+  }
+
   return teams.map((team) => ({
     params: { slug: team.slug },
     props: { team },

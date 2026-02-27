@@ -249,6 +249,13 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
     text-decoration: none;
   }
 
+  /* style.css hides .navbar__cta on mobile — restore it so the hamburger shows */
+  @media (max-width: 767px) {
+    .navbar__cta {
+      display: flex;
+    }
+  }
+
   /* Mobile expanded nav */
   @media (max-width: 767px) {
     #header.expanded .navbar__nav-wrapper {

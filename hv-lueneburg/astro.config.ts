@@ -12,6 +12,7 @@ import compress from 'astro-compress';
 import type { AstroIntegration } from 'astro';
 import AstroPWA from '@vite-pwa/astro';
 import sanity from '@sanity/astro';
+import react from '@astrojs/react';
 
 import astrowind from './vendor/integration';
 
@@ -103,10 +104,11 @@ export default defineConfig({
         maximumFileSizeToCacheInBytes: 10000000,
       }
     }),
+    react(),
     sanity({
-      projectId: 'vwvj9wfe', // Sample/placeholder, will instruct user to update
+      projectId: 'z61c87ba',
       dataset: 'production',
-      useCdn: true,
+      useCdn: false,
       apiVersion: '2024-03-01',
       studioBasePath: '/admin',
     }),

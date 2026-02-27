@@ -1,17 +1,22 @@
-import { defineConfig } from 'sanity'
-import { deskTool } from 'sanity/desk'
-import { visionTool } from '@sanity/vision'
+import {defineConfig} from 'sanity'
+import {structureTool} from 'sanity/structure'
+import {visionTool} from '@sanity/vision'
+import {schemaTypes} from './src/sanity/schemas'
+import {structure} from './src/sanity/structure'
 
 export default defineConfig({
-  name: 'default',
-  title: 'HVL Lüneburg',
+  name: 'hv-lueneburg',
+  title: 'HV Lüneburg',
 
-  projectId: process.env.PUBLIC_SANITY_PROJECT_ID || 'your-project-id',
-  dataset: process.env.PUBLIC_SANITY_DATASET || 'production',
+  projectId: 'z61c87ba',
+  dataset: 'production',
 
-  plugins: [deskTool(), visionTool()],
+  plugins: [
+    structureTool({structure}),
+    visionTool(),
+  ],
 
   schema: {
-    types: [], // Schemas will map here
+    types: schemaTypes,
   },
 })

@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content';
 import type { Post } from '~/types';
 import { APP_BLOG } from 'astrowind:config';
 import { cleanSlug, trimSlash, BLOG_BASE, POST_PERMALINK_PATTERN, CATEGORY_BASE, TAG_BASE } from './permalinks';
+import type { SanityBeitrag } from '~/lib/sanity';
 
 const generatePermalink = async ({
   id,
@@ -100,7 +101,48 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   };
 };
 
+const normalizeFromSanity = async (beitrag: SanityBeitrag): Promise<Post> => {
+  const { portableTextToHtml, urlFor } = await import('~/lib/sanity');
+  const slug = beitrag.slug.current;
+  const publishDate = new Date(beitrag.veroeffentlichtAm);
+  const category = beitrag.kategorie
+    ? { slug: cleanSlug(beitrag.kategorie), title: beitrag.kategorie }
+    : undefined;
+  const tags = (beitrag.tags || []).map((tag) => ({ slug: cleanSlug(tag), title: tag }));
+  const permalink = await generatePermalink({ id: beitrag._id, slug, publishDate, category: category?.slug });
+  const image = beitrag.titelbild ? urlFor(beitrag.titelbild).width(1200).url() : undefined;
+  const content = beitrag.inhalt ? portableTextToHtml(beitrag.inhalt) : undefined;
+
+  return {
+    id: beitrag._id,
+    slug,
+    permalink,
+    publishDate,
+    title: beitrag.titel,
+    excerpt: beitrag.zusammenfassung,
+    image,
+    category,
+    tags,
+    author: beitrag.autor,
+    draft: false,
+    metadata: {},
+    content,
+  };
+};
+
 const load = async function (): Promise<Array<Post>> {
+  // Try Sanity first — fall back to Content Collections if empty or unavailable
+  try {
+    const { fetchBeitraege } = await import('~/lib/sanity');
+    const beitraege = await fetchBeitraege();
+    if (beitraege && beitraege.length > 0) {
+      const normalizedPosts = beitraege.map(async (b) => await normalizeFromSanity(b));
+      return await Promise.all(normalizedPosts);
+    }
+  } catch {
+    // Sanity unavailable or schema empty — use static content collections below
+  }
+
   const posts = await getCollection('post');
   const normalizedPosts = posts.map(async (post) => await getNormalizedPost(post));
 

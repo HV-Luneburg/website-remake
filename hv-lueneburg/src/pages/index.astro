@@ -271,4 +271,82 @@ const mockPosts = [
     })();
   </script>
 
+  <!-- Auto-populate hero fixture card from handball.net Spielplan widget.
+       Reads the first upcoming game once the widget renders and updates the
+       static nextMatch card. Falls back silently if the widget hasn't loaded
+       or class names change. -->
+  <script is:inline>
+    (function () {
+      var CONTAINER = document.getElementById('hb-vereins-spielplan');
+      if (!CONTAINER) return;
+
+      // Selectors to try for the first game row (BEM variants handball.net uses)
+      var ROW_SELECTORS = [
+        '.hb-embed__schedule-entry',
+        '.hb-embed__schedule > li',
+        '.hb-embed__schedule > tr',
+        '.hb-embed__schedule tbody tr',
+      ];
+      // Selectors to try for the opponent (guest) team name inside a row
+      var GUEST_SELECTORS = ['.hb-embed__schedule-guest', '.hb-embed__schedule-team:last-of-type', '.team-name'];
+      var DATE_SELECTORS = ['.hb-embed__schedule-date', '.date', 'time', '.hb-embed__schedule-time'];
+
+      function tryUpdate() {
+        var firstRow = null;
+        for (var i = 0; i < ROW_SELECTORS.length; i++) {
+          firstRow = CONTAINER.querySelector(ROW_SELECTORS[i]);
+          if (firstRow) break;
+        }
+        if (!firstRow) return false;
+
+        // Extract guest team (opponent)
+        var guestEl = null;
+        for (var j = 0; j < GUEST_SELECTORS.length; j++) {
+          var all = firstRow.querySelectorAll(GUEST_SELECTORS[j]);
+          guestEl = all.length > 1 ? all[all.length - 1] : all[0];
+          if (guestEl) break;
+        }
+
+        // Extract date text
+        var dateEl = null;
+        for (var k = 0; k < DATE_SELECTORS.length; k++) {
+          dateEl = firstRow.querySelector(DATE_SELECTORS[k]);
+          if (dateEl) break;
+        }
+
+        // Update hero card only when we got at least an opponent name
+        if (guestEl && guestEl.textContent.trim()) {
+          var opponentEl = document.querySelector('.fixture-card__teams .fixture-card__team:last-child');
+          if (opponentEl) opponentEl.textContent = guestEl.textContent.trim();
+        }
+
+        if (dateEl && dateEl.textContent.trim()) {
+          var dateDisplay = document.querySelector('.fixture-card__date');
+          if (dateDisplay) dateDisplay.textContent = dateEl.textContent.trim();
+
+          // Try to parse and update countdown target
+          var parsed = Date.parse(dateEl.getAttribute('datetime') || dateEl.textContent.trim());
+          if (!isNaN(parsed)) {
+            var countdown = document.getElementById('hero-countdown');
+            if (countdown) countdown.dataset.target = new Date(parsed).toISOString();
+          }
+        }
+
+        return true;
+      }
+
+      // Watch for the widget to inject its HTML
+      var observer = new MutationObserver(function (_, obs) {
+        if (tryUpdate()) obs.disconnect();
+      });
+      observer.observe(CONTAINER, { childList: true, subtree: true });
+
+      // Also try immediately in case it already rendered
+      tryUpdate();
+
+      // Disconnect after 15 s regardless to avoid memory leaks
+      setTimeout(function () { observer.disconnect(); }, 15000);
+    })();
+  </script>
+
 </Layout>

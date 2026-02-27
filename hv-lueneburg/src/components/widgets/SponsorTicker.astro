@@ -1,35 +1,76 @@
 ---
 /**
  * SponsorTicker — thin scrolling partner strip above the main navbar.
- * Placeholder sponsor names; replace with Sanity data once CMS is wired up.
+ * Fetches active sponsors from Sanity; falls back to hardcoded names if CMS is empty.
  */
+import type { SanitySponsor } from '~/lib/sanity';
 
-const sponsors = [
-  'Sparkasse Lüneburg',
-  'VR Bank Nord',
-  'Stadtwerke Lüneburg',
-  'Autohaus Rosier',
-  'REWE Center',
-  'Hotel Bergström',
-  'Salü Lüneburg',
-  'Lüneburg Sport',
-];
+interface SponsorItem {
+  name: string;
+  website?: string;
+  logoUrl?: string;
+}
+
+let sponsors: SponsorItem[] = [];
+
+try {
+  const { fetchSponsoren, urlFor } = await import('~/lib/sanity');
+  const sanitySponsor: SanitySponsor[] = await fetchSponsoren();
+  if (sanitySponsor && sanitySponsor.length > 0) {
+    sponsors = sanitySponsor.map((s) => ({
+      name: s.name,
+      website: s.website,
+      logoUrl: s.logo ? urlFor(s.logo).height(24).url() : undefined,
+    }));
+  }
+} catch {
+  // Sanity unavailable — use fallback below
+}
+
+if (sponsors.length === 0) {
+  sponsors = [
+    { name: 'Sparkasse Lüneburg' },
+    { name: 'VR Bank Nord' },
+    { name: 'Stadtwerke Lüneburg' },
+    { name: 'Autohaus Rosier' },
+    { name: 'REWE Center' },
+    { name: 'Hotel Bergström' },
+    { name: 'Salü Lüneburg' },
+    { name: 'Lüneburg Sport' },
+  ];
+}
 ---
 
 <div class="sponsor-ticker" role="marquee" aria-label="Unsere Partner">
   <span class="sponsor-ticker__label">PARTNER</span>
   <div class="sponsor-ticker__wrapper">
     <div class="sponsor-ticker__track">
-      {sponsors.map((name) => (
+      {sponsors.map((sponsor) => (
         <>
-          <span class="sponsor-ticker__item">{name}</span>
+          <span class="sponsor-ticker__item">
+            {sponsor.website ? (
+              <a href={sponsor.website} target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                {sponsor.logoUrl
+                  ? <img src={sponsor.logoUrl} alt={sponsor.name} class="inline-block h-4 w-auto" loading="lazy" />
+                  : sponsor.name}
+              </a>
+            ) : (
+              sponsor.logoUrl
+                ? <img src={sponsor.logoUrl} alt={sponsor.name} class="inline-block h-4 w-auto" loading="lazy" />
+                : sponsor.name
+            )}
+          </span>
           <span class="sponsor-ticker__sep" aria-hidden="true">·</span>
         </>
       ))}
       {/* Duplicate set for seamless loop */}
-      {sponsors.map((name) => (
+      {sponsors.map((sponsor) => (
         <>
-          <span class="sponsor-ticker__item" aria-hidden="true">{name}</span>
+          <span class="sponsor-ticker__item" aria-hidden="true">
+            {sponsor.logoUrl
+              ? <img src={sponsor.logoUrl} alt={sponsor.name} class="inline-block h-4 w-auto" loading="lazy" />
+              : sponsor.name}
+          </span>
           <span class="sponsor-ticker__sep" aria-hidden="true">·</span>
         </>
       ))}

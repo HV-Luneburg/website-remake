@@ -4103,6 +4103,94 @@ pre code {
   background: #1C1C1C !important;
 }
 
+/* ── hb-embed__schedule: HVL brand overrides ─────────────────────────────── */
+
+/* Schedule table rows */
+.handball-wrapper .hb-embed__schedule {
+  font-family: var(--font-body);
+  width: 100%;
+}
+
+/* Each game entry row */
+.handball-wrapper .hb-embed__schedule-entry,
+.handball-wrapper .hb-embed__schedule tr,
+.handball-wrapper .hb-embed__schedule li {
+  border-bottom: 1px solid var(--color-gray-200);
+  transition: background-color 150ms ease;
+}
+
+.handball-wrapper .hb-embed__schedule-entry:hover,
+.handball-wrapper .hb-embed__schedule tr:hover {
+  background-color: rgba(227, 6, 19, 0.04);
+}
+
+.dark .handball-wrapper .hb-embed__schedule-entry,
+.dark .handball-wrapper .hb-embed__schedule tr,
+.dark .handball-wrapper .hb-embed__schedule li {
+  border-color: #2A2A2A;
+}
+
+.dark .handball-wrapper .hb-embed__schedule-entry:hover,
+.dark .handball-wrapper .hb-embed__schedule tr:hover {
+  background-color: rgba(227, 6, 19, 0.08);
+}
+
+/* Date / time cells */
+.handball-wrapper .hb-embed__schedule-date,
+.handball-wrapper .hb-embed__schedule .date,
+.handball-wrapper .hb-embed__schedule td:first-child {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-gray-500);
+  white-space: nowrap;
+}
+
+/* Team name cells */
+.handball-wrapper .hb-embed__schedule-team,
+.handball-wrapper .hb-embed__schedule-host,
+.handball-wrapper .hb-embed__schedule-guest,
+.handball-wrapper .hb-embed__schedule .team {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-normal);
+}
+
+/* Highlight HV Lüneburg's own team name in primary red */
+.handball-wrapper .hb-embed__schedule-team.is-home,
+.handball-wrapper .hb-embed__schedule .team-home {
+  color: var(--color-primary);
+}
+
+/* Score / result cells */
+.handball-wrapper .hb-embed__schedule-result,
+.handball-wrapper .hb-embed__schedule .result,
+.handball-wrapper .hb-embed__schedule .score {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-black);
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+}
+
+/* Header row (column labels) */
+.handball-wrapper .hb-embed__schedule th,
+.handball-wrapper .hb-embed__schedule .header {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-widest);
+  color: var(--color-gray-500);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: var(--space-2);
+}
+
+.dark .handball-wrapper .hb-embed__schedule th,
+.dark .handball-wrapper .hb-embed__schedule .header {
+  color: var(--color-gray-400);
+}
+
 /* Hero fixture card: ensure correct absolute positioning on desktop */
 @media (min-width: 1024px) {
   .hero__fixture {

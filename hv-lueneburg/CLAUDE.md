@@ -282,7 +282,7 @@ npm run build    # Production build → dist/
 npm run preview  # Preview built site
 ```
 
-Build is fully static (SSG). All 27 pages must build cleanly with no errors.
+Build is fully static (SSG). All 32 pages must build cleanly with no errors.
 
 ---
 
@@ -307,6 +307,7 @@ Build is fully static (SSG). All 27 pages must build cleanly with no errors.
 - **2026-02-15:** Reference site for structure was [Tornados basketball theme](https://tornados.ancorathemes.com). Section order on homepage follows that layout using AstroWind widgets.
 - **2026-02-27:** Full visual redesign applied using `style.css` as primary design system. Fonts changed from Inter → Barlow Condensed + Barlow. Colours changed from blue (AstroWind default) → HVL red/navy/gold. All major components rewritten to use HVL CSS classes. Typography is uppercase and condensed throughout (intentional jersey aesthetic).
 - **2026-02-27 (session 2):** Homepage level-up: added `SponsorTicker.astro` (above navbar partner strip), upgraded `Hero2.astro` with load-time CSS animations and floating fixture card slot, wrapped handball.net widgets in `.handball-wrapper` dark container, restructured section order, reduced BlogLatestPosts to 3, removed bottom `Brands` section. Added CSS sections 22–25 to `style.css` (sponsor-ticker, fixture-card, handball-wrapper, hero load animations). Mobile typography: hero title clamped to `clamp(3rem, 10vw, 10rem)`, section-title and card__title made fluid with `clamp()`.
+- **2026-02-27 (Netlify fix):** Site deployed to Netlify but all pages returned 404. Root cause: `@astrojs/node` adapter with `mode: 'standalone'` was in `astro.config.ts` — this splits output into `dist/client/` + `dist/server/`, but Netlify expects HTML files at `dist/` root. Fix: removed the node adapter entirely (Astro outputs static HTML directly to `dist/` without it), removed the `import node` line, and removed `studioBasePath: '/admin'` from the Sanity integration (that option creates an SSR route requiring an adapter). Build time dropped from ~38 s to ~5.7 s.
 
 ---
 
@@ -333,3 +334,5 @@ Build is fully static (SSG). All 27 pages must build cleanly with no errors.
 19. **StickyScorebar multi-game** — accepts `games?: Game[]` array. Desktop: flex row with `divide-x`. Mobile: one game shown, rotates every 20 s via JS toggling `display:none`. Found in `src/components/widgets/StickyScorebar.astro`.
 20. **Team Instagram section** — on `/teams/[slug]`, Instagram appears as a standalone section between the description block and Tabelle (not inside the info card). Only rendered when `team.instagram` is set. Compute handle in frontmatter: `instagramHandle = team.instagram?.replace(...)`.
 21. **stat-number font size** — `.card--stat .stat-number` uses `clamp(1.5rem, 4vw, 2.5rem)` (not `var(--text-hero)`) to prevent overflow on mobile with longer strings like "12.000+".
+22. **No SSR adapter** — do NOT add `@astrojs/node` or any other adapter to `astro.config.ts`. This is a static site (SSG). Adding a Node adapter splits the build into `dist/client/` + `dist/server/`, breaking Netlify deployment. Netlify expects HTML files at `dist/` root.
+23. **No `studioBasePath` in Sanity integration** — the `studioBasePath: '/admin'` option in `@sanity/astro` creates an SSR-rendered route, which requires an adapter. Since this is a static build and we have a separate Studio project (`studio-hv-lueneburg/`), do not set this option.

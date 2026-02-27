@@ -62,9 +62,10 @@ const sanityTeams = await sanityClient.fetch(`*[_type == "mannschaft"] | order(r
 const widgetTeams = sanityTeams.length > 0 ? sanityTeams.slice(0, 6) : [];
 
 const settings = await sanityClient.fetch(`*[_type == "siteSettings"][0]{handballNetSettings}`);
-const hbConfig = settings?.handballNetSettings || {};
+const hbConfigFromSanity = settings?.handballNetSettings || {};
 
-import { sponsorStrip, nextMatch } from '~/data/site';
+import { sponsorStrip, nextMatch, handballNetSettings } from '~/data/site';
+const hbConfig = handballNetSettings; // Use static config to fix widget init
 
 // Format match date for display: "Sa., 15.03.2026 · 19:30 Uhr"
 const matchDate = new Date(nextMatch.date);

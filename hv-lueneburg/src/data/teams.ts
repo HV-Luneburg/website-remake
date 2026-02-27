@@ -17,6 +17,8 @@ export interface Team {
   kontakt?: string;
   /** Instagram handle or URL for this specific team */
   instagram?: string;
+  /** Sort order (smaller numbers first) */
+  reihenfolge: number;
 }
 
 export const teams: Team[] = [
@@ -32,6 +34,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Di. 19:30–21:30 Uhr', 'Do. 19:30–21:30 Uhr'],
     halle: 'Sporthalle Am Sportpark, Lüneburg',
     kontakt: 'herren1@hv-lueneburg.de',
+    reihenfolge: 20,
   },
   {
     name: 'Herren 2',
@@ -44,6 +47,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Mo. 20:00–22:00 Uhr', 'Mi. 20:00–22:00 Uhr'],
     halle: 'Sporthalle Am Sportpark, Lüneburg',
     kontakt: 'herren2@hv-lueneburg.de',
+    reihenfolge: 40,
   },
   {
     name: 'Herren 3',
@@ -56,6 +60,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Di. 20:00–22:00 Uhr'],
     halle: 'Sporthalle Kreideberg, Lüneburg',
     kontakt: 'herren3@hv-lueneburg.de',
+    reihenfolge: 60,
   },
   {
     name: 'Herren 4',
@@ -68,6 +73,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Do. 20:00–22:00 Uhr'],
     halle: 'Sporthalle Kreideberg, Lüneburg',
     kontakt: 'herren4@hv-lueneburg.de',
+    reihenfolge: 80,
   },
   // Damen
   {
@@ -81,6 +87,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Di. 19:00–21:00 Uhr', 'Do. 19:00–21:00 Uhr'],
     halle: 'Sporthalle Am Sportpark, Lüneburg',
     kontakt: 'damen1@hv-lueneburg.de',
+    reihenfolge: 10,
   },
   {
     name: 'Damen 2',
@@ -93,6 +100,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Mo. 19:00–21:00 Uhr', 'Mi. 19:00–21:00 Uhr'],
     halle: 'Sporthalle Kreideberg, Lüneburg',
     kontakt: 'damen2@hv-lueneburg.de',
+    reihenfolge: 30,
   },
   // Männliche Jugend
   {
@@ -106,6 +114,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Mi. 17:30–19:30 Uhr', 'Fr. 17:30–19:30 Uhr'],
     halle: 'Sporthalle Am Sportpark, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 110,
   },
   {
     name: 'Männliche Jugend B',
@@ -118,6 +127,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Di. 17:00–19:00 Uhr', 'Do. 17:00–19:00 Uhr'],
     halle: 'Sporthalle Am Sportpark, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 130,
   },
   {
     name: 'Männliche Jugend B II',
@@ -130,6 +140,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Di. 17:00–19:00 Uhr'],
     halle: 'Sporthalle Kreideberg, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 140,
   },
   {
     name: 'Männliche Jugend C',
@@ -142,6 +153,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Mi. 16:00–18:00 Uhr', 'Sa. 10:00–12:00 Uhr'],
     halle: 'Sporthalle Am Sportpark, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 150,
   },
   {
     name: 'Männliche Jugend C II',
@@ -154,6 +166,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Do. 16:00–18:00 Uhr'],
     halle: 'Sporthalle Kreideberg, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 160,
   },
   {
     name: 'Männliche Jugend D',
@@ -166,6 +179,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Mi. 15:30–17:30 Uhr', 'Sa. 09:00–11:00 Uhr'],
     halle: 'Sporthalle Am Sportpark, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 170,
   },
   {
     name: 'Männliche Jugend D II',
@@ -178,6 +192,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Do. 15:30–17:30 Uhr'],
     halle: 'Sporthalle Kreideberg, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 180,
   },
   {
     name: 'Männliche Jugend E',
@@ -190,6 +205,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Mi. 15:00–17:00 Uhr'],
     halle: 'Sporthalle Am Sportpark, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 190,
   },
   {
     name: 'Männliche Jugend E II',
@@ -202,6 +218,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Do. 15:00–17:00 Uhr'],
     halle: 'Sporthalle Kreideberg, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 200,
   },
   // Weibliche Jugend
   {
@@ -215,6 +232,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Di. 16:00–18:00 Uhr', 'Sa. 10:00–12:00 Uhr'],
     halle: 'Sporthalle Am Sportpark, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 175,
   },
   {
     name: 'Weibliche Jugend E',
@@ -227,6 +245,7 @@ export const teams: Team[] = [
     trainingszeiten: ['Do. 16:00–18:00 Uhr'],
     halle: 'Sporthalle Kreideberg, Lüneburg',
     kontakt: 'jugend@hv-lueneburg.de',
+    reihenfolge: 195,
   },
 ];
 

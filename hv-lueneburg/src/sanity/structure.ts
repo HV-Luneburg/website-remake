@@ -26,8 +26,25 @@ export const structure = (S: StructureBuilder) =>
       S.listItem()
         .title('Seiten')
         .child(
-          S.documentTypeList('page')
-            .title('Flex-Seiten')
+          S.list()
+            .title('Seiten')
+            .items([
+              S.listItem()
+                .title('Über uns')
+                .id('aboutPage')
+                .child(
+                  S.document()
+                    .schemaType('aboutPage')
+                    .documentId('aboutPage')
+                    .title('Über uns bearbeiten')
+                ),
+              S.listItem()
+                .title('Weitere Seiten')
+                .child(
+                  S.documentTypeList('page')
+                    .title('Flex-Seiten')
+                ),
+            ])
         ),
       S.divider(),
       S.listItem()

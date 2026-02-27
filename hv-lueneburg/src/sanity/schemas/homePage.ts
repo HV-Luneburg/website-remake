@@ -46,6 +46,27 @@ export const homePage = defineType({
           ]
         }
       ]
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Galerie (Startseite)',
+      description: 'Genau 4 Bilder für die Galerie-Sektion auf der Startseite.',
+      type: 'array',
+      validation: rule => rule.length(4),
+      of: [
+        {
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alternativer Text',
+              type: 'string',
+              description: 'Wichtig für Barrierefreiheit und SEO.',
+            }
+          ]
+        }
+      ]
     })
   ]
 })

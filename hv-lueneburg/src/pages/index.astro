@@ -9,7 +9,7 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 
 import { teams } from '~/data/teams';
-import { sponsorStrip, nextMatch, clubStats, heroSlides } from '~/data/site';
+import { sponsorStrip, nextMatch, clubStats, heroSlides, homeGallery, handballNetSettings } from '~/data/site';
 
 // Format match date for display: "Sa., 15.03.2026 · 19:30 Uhr"
 const matchDate = new Date(nextMatch.date);
@@ -83,15 +83,15 @@ const mockPosts = [
           <span class="fixture-card__league">{nextMatch.league}</span>
         </div>
         <div class="fixture-card__teams">
-          <span class="fixture-card__team">HV Lüneburg</span>
+          <span class="fixture-card__team">...</span>
           <span class="fixture-card__vs">VS</span>
-          <span class="fixture-card__team">{nextMatch.opponent}</span>
+          <span class="fixture-card__team">...</span>
         </div>
         <div class="fixture-card__meta">
-          <span class="fixture-card__date">{formattedMatchDate}</span>
-          <span class="fixture-card__venue">{nextMatch.venue}</span>
+          <span class="fixture-card__date">Lade Spieldaten...</span>
+          <span class="fixture-card__venue"></span>
         </div>
-        <div class="fixture-card__countdown" id="hero-countdown" data-target={nextMatch.date} aria-live="polite"></div>
+        <div class="fixture-card__countdown" id="hero-countdown" data-target="" aria-live="polite"></div>
         <a href={nextMatch.scheduleUrl} class="fixture-card__link">Spielplan ansehen →</a>
       </div>
     </Fragment>
@@ -142,6 +142,17 @@ const mockPosts = [
   <!-- 4. Aktuelles -->
   <DynamicContentFeed posts={mockPosts} />
 
+  <!-- 4.5. Galerie -->
+  <section class="home-gallery">
+    <div class="home-gallery__grid">
+      {homeGallery.map((img, i) => (
+        <div class="home-gallery__item">
+          <img src={img} alt={`Galerie Bild ${i+1}`} loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </section>
+
   <!-- 5. Stats -->
   <Stats
     isDark
@@ -167,11 +178,24 @@ const mockPosts = [
     }))}
   />
 
-  <!-- 7. Tabelle Herren 1 -->
-  <WidgetWrapper id="tabelle" containerClass="max-w-6xl mx-auto">
-    <Headline title="Tabelle Herren 1" tagline="Tabelle" subtitle="Aktuelle Tabelle unserer ersten Herrenmannschaft — live von handball.net." />
-    <div class="handball-wrapper">
-      <div id="hb-tabelle-herren1"></div>
+  <!-- 7. Tabellen -->
+  <WidgetWrapper id="tabellen" containerClass="max-w-7xl mx-auto px-0 sm:px-4">
+    <Headline title="Aktuelle Tabellen" tagline="Tabelle" subtitle="Die Tabellen von 1. Herren und 1. Damen im Überblick." />
+    <div class="tables-view">
+      <div class="tables-view__track">
+        <div class="tables-view__item">
+          <div class="handball-wrapper">
+            <div class="handball-wrapper__label">1. Herren</div>
+            <div id="hb-tabelle-herren1"></div>
+          </div>
+        </div>
+        <div class="tables-view__item">
+          <div class="handball-wrapper">
+            <div class="handball-wrapper__label">1. Damen</div>
+            <div id="hb-tabelle-damen1"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </WidgetWrapper>
 
@@ -241,14 +265,33 @@ const mockPosts = [
   </CallToAction>
 
   <!-- handball.net Widget Script -->
-  <script is:inline>
+  <script is:inline define:vars={{ hbConfig: handballNetSettings }}>
     (function(e,t,n,r,i,s,o){e[i]=e[i]||function(){(e[i].q=e[i].q||[]).push(arguments)},
     e[i].l=1*new Date;s=t.createElement(n),o=t.getElementsByTagName(n)[0];s.async=1;
     s.src=r;o.parentNode.insertBefore(s,o)})(window,document,"script",
     'https://www.handball.net/widgets/embed/v1.js',"_hb");
 
-    _hb({ widget: 'spielplan', clubId: 'nuliga.hvn.681', container: 'hb-vereins-spielplan' });
-    _hb({ widget: 'tabelle', token: 'nuliga.hvn.1662205', container: 'hb-tabelle-herren1' });
+    // Startseite Spielplan (alles)
+    var spielplanOptions = { widget: 'spielplan', container: 'hb-vereins-spielplan' };
+    if (hbConfig.clubId) spielplanOptions.clubId = hbConfig.clubId;
+    if (hbConfig.organizationId) spielplanOptions.organizationId = hbConfig.organizationId;
+    _hb(spielplanOptions);
+
+    // Tabelle 1. Herren
+    var tabelleHerrenOptions = { widget: 'tabelle', container: 'hb-tabelle-herren1' };
+    if (hbConfig.clubId) tabelleHerrenOptions.clubId = hbConfig.clubId;
+    if (hbConfig.tournamentIdHerren) tabelleHerrenOptions.tournamentId = hbConfig.tournamentIdHerren;
+    if (hbConfig.teamIdHerren) tabelleHerrenOptions.teamId = hbConfig.teamIdHerren;
+    _hb(tabelleHerrenOptions);
+
+    // Tabelle 1. Damen
+    if (hbConfig.tournamentIdDamen || hbConfig.teamIdDamen) {
+      var tabelleDamenOptions = { widget: 'tabelle', container: 'hb-tabelle-damen1' };
+      if (hbConfig.clubId) tabelleDamenOptions.clubId = hbConfig.clubId;
+      if (hbConfig.tournamentIdDamen) tabelleDamenOptions.tournamentId = hbConfig.tournamentIdDamen;
+      if (hbConfig.teamIdDamen) tabelleDamenOptions.teamId = hbConfig.teamIdDamen;
+      _hb(tabelleDamenOptions);
+    }
   </script>
 
   <!-- Countdown für das Nächste-Spiel-Kärtchen -->
@@ -280,55 +323,66 @@ const mockPosts = [
       var CONTAINER = document.getElementById('hb-vereins-spielplan');
       if (!CONTAINER) return;
 
-      // Selectors to try for the first game row (BEM variants handball.net uses)
-      var ROW_SELECTORS = [
-        '.hb-embed__schedule-entry',
-        '.hb-embed__schedule > li',
-        '.hb-embed__schedule > tr',
-        '.hb-embed__schedule tbody tr',
-      ];
-      // Selectors to try for the opponent (guest) team name inside a row
-      var GUEST_SELECTORS = ['.hb-embed__schedule-guest', '.hb-embed__schedule-team:last-of-type', '.team-name'];
-      var DATE_SELECTORS = ['.hb-embed__schedule-date', '.date', 'time', '.hb-embed__schedule-time'];
-
       function tryUpdate() {
-        var firstRow = null;
-        for (var i = 0; i < ROW_SELECTORS.length; i++) {
-          firstRow = CONTAINER.querySelector(ROW_SELECTORS[i]);
-          if (firstRow) break;
-        }
-        if (!firstRow) return false;
+        // Find the first game group/row
+        var firstGroup = CONTAINER.querySelector('.hb-embed__schedule-list-grouped-item') || CONTAINER.querySelector('.hb-embed__schedule-entry');
+        if (!firstGroup) return false;
 
-        // Extract guest team (opponent)
-        var guestEl = null;
-        for (var j = 0; j < GUEST_SELECTORS.length; j++) {
-          var all = firstRow.querySelectorAll(GUEST_SELECTORS[j]);
-          guestEl = all.length > 1 ? all[all.length - 1] : all[0];
-          if (guestEl) break;
-        }
-
-        // Extract date text
-        var dateEl = null;
-        for (var k = 0; k < DATE_SELECTORS.length; k++) {
-          dateEl = firstRow.querySelector(DATE_SELECTORS[k]);
-          if (dateEl) break;
-        }
-
-        // Update hero card only when we got at least an opponent name
-        if (guestEl && guestEl.textContent.trim()) {
+        // --- 1. Extract Teams (Home & Guest) ---
+        var teamEls = firstGroup.querySelectorAll('.hb-embed__schedule-list-item-team-name, .hb-embed__schedule-team');
+        if (teamEls.length >= 2) {
+          var homeName = teamEls[0].textContent.trim().replace('Handballverein', 'HV');
+          var guestName = teamEls[teEls => teamEls.length - 1].textContent.trim().replace('Handballverein', 'HV');
+          
+          var uiTeams = document.querySelectorAll('.fixture-card__teams .fixture-card__team');
+          if (uiTeams.length >= 2) {
+            uiTeams[0].textContent = homeName;
+            uiTeams[1].textContent = guestName;
+          }
+        } else if (teamEls.length === 1) {
+          var guestEl = teamEls[0];
           var opponentEl = document.querySelector('.fixture-card__teams .fixture-card__team:last-child');
-          if (opponentEl) opponentEl.textContent = guestEl.textContent.trim();
+          if (opponentEl) opponentEl.textContent = guestEl.textContent.trim().replace('Handballverein', 'HV');
         }
 
-        if (dateEl && dateEl.textContent.trim()) {
-          var dateDisplay = document.querySelector('.fixture-card__date');
-          if (dateDisplay) dateDisplay.textContent = dateEl.textContent.trim();
+        // --- 2. Extract Date & Time ---
+        var dateEl = firstGroup.querySelector('.hb-embed__schedule-list-item-date, .hb-embed__schedule-date, .date');
+        var timeEl = firstGroup.querySelector('.hb-embed__schedule-list-item-starts-at-time, .hb-embed__schedule-time, time');
+        
+        var dateText = dateEl ? dateEl.textContent.trim() : null;
+        var timeText = timeEl ? timeEl.textContent.trim() : null;
 
-          // Try to parse and update countdown target
-          var parsed = Date.parse(dateEl.getAttribute('datetime') || dateEl.textContent.trim());
-          if (!isNaN(parsed)) {
-            var countdown = document.getElementById('hero-countdown');
-            if (countdown) countdown.dataset.target = new Date(parsed).toISOString();
+        if (dateText) {
+          var dateDisplay = document.querySelector('.fixture-card__date');
+          
+          // Clean texts for UI
+          var cleanDateUI = dateText;
+          if (timeText) {
+             cleanDateUI += ' · ' + timeText;
+          }
+          if (dateDisplay) dateDisplay.textContent = cleanDateUI;
+
+          // Compute ISO string for countdown
+          // Extract matching parts from "Samstag, 28.2.2026" or "28.02.26"
+          var dateMatch = dateText.match(/(\d{1,2})\.(\d{1,2})\.(\d{2,4})/);
+          if (dateMatch) {
+            var d = dateMatch[1].padStart(2, '0');
+            var m = dateMatch[2].padStart(2, '0');
+            var y = dateMatch[3].length === 2 ? '20' + dateMatch[3] : dateMatch[3];
+            
+            var t = '00:00';
+            if (timeText) {
+               var timeMatch = timeText.match(/(\d{1,2}:\d{2})/);
+               if (timeMatch) t = timeMatch[1].padStart(5, '0');
+            }
+            
+            var isoString = y + '-' + m + '-' + d + 'T' + t + ':00';
+            var parsed = Date.parse(isoString);
+            
+            if (!isNaN(parsed)) {
+              var countdown = document.getElementById('hero-countdown');
+              if (countdown) countdown.dataset.target = new Date(parsed).toISOString();
+            }
           }
         }
 

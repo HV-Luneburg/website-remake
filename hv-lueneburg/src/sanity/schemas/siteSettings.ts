@@ -50,11 +50,35 @@ export const siteSettings = defineType({
       type: 'url',
     }),
     defineField({
-      name: 'handballNetClubId',
-      title: 'handball.net Vereins-ID',
-      description: 'Z.B. nuliga.hvn.681',
-      type: 'string',
-      initialValue: 'nuliga.hvn.681'
+      name: 'handballNetSettings',
+      title: 'handball.net Widget Konfiguration',
+      type: 'object',
+      fields: [
+        {
+          name: 'clubId',
+          title: 'Vereins-ID (ClubId)',
+          description: 'Z.B. nuliga.hvn.681. Standard für Gesamtarbeiten.',
+          type: 'string',
+          initialValue: 'nuliga.hvn.681'
+        },
+        {
+          name: 'organizationId',
+          title: 'Organisations-ID (OrganizationId)',
+          type: 'string',
+        },
+        {
+          name: 'tournamentId',
+          title: 'Turnier/Ligen-ID (TournamentId)',
+          description: 'Die ID für die anzuzeigende Tabelle der 1. Herren.',
+          type: 'string',
+          initialValue: 'nuliga.hvn.1662205'
+        },
+        {
+          name: 'teamId',
+          title: 'Team-ID (TeamId)',
+          type: 'string',
+        },
+      ]
     }),
     defineField({
       name: 'liveTicker',

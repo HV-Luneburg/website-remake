@@ -20,7 +20,15 @@ export const club = {
   address: 'Platzhalter-Straße 1, 21335 Lüneburg',
   instagram: '#',        // TODO: replace with real URL
   facebook: '#',         // TODO: replace with real URL
-  handballNetClubId: 'nuliga.hvn.681',
+};
+
+export const handballNetSettings = {
+  clubId: 'nuliga.hvn.681',
+  organizationId: '',
+  tournamentIdHerren: 'nuliga.hvn.1662205',
+  tournamentIdDamen: 'nuliga.hvn.1660608', // Placeholder, will be replaced with real ID
+  teamIdHerren: '',
+  teamIdDamen: '',
 };
 
 // ---------------------------------------------------------------------------
@@ -138,6 +146,17 @@ export const clubStats = [
   { title: 'Mannschaften',    amount: '17',     icon: 'tabler:ball-tennis' },
   { title: 'Jahre',           amount: '79+',    icon: 'tabler:calendar' },
   { title: 'Spiele / Saison', amount: '100+',  icon: 'tabler:trophy' },
+];
+
+// ---------------------------------------------------------------------------
+// GALLERY (homepage gallery section)
+// ---------------------------------------------------------------------------
+
+export const homeGallery = [
+  'https://images.unsplash.com/photo-1548689816-c399f954f3dd?q=80&w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1574629810360-7efbb6b69281?q=80&w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=800&auto=format&fit=crop'
 ];
 
 // ---------------------------------------------------------------------------

@@ -3563,9 +3563,9 @@ pre code {
   text-transform: uppercase;
   color: var(--color-primary);
   margin-bottom: var(--space-2);
-}hb-embed
+}
 
-
+hb-embed
 /* ==========================================================================
    25. HERO LOAD ANIMATIONS (immediate, not scroll-triggered)
    ========================================================================== */
@@ -3941,8 +3941,13 @@ pre code {
 }
 
 @keyframes sponsor-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4077,8 +4082,13 @@ pre code {
     background-color: var(--color-black) !important;
   }
 
-  #header.expanded .navbar__nav-link {
+  #header.expanded .navbar__nav-link,
+  #header.expanded .navbar__nav-link:hover {
     color: var(--color-white) !important;
+  }
+
+  #header.expanded [data-aw-toggle-menu] span {
+    background-color: var(--color-white) !important;
   }
 }
 
@@ -4091,6 +4101,14 @@ pre code {
 
 .dark .handball-wrapper .hb-embed {
   background: #1C1C1C !important;
+  color: var(--color-text) !important;
+}
+
+.dark .handball-wrapper .hb-embed__title,
+.dark .handball-wrapper .hb-embed__schedule-list-item-date,
+.dark .handball-wrapper .hb-embed__schedule-list-item-team-name,
+.dark .handball-wrapper .hb-embed__schedule-list-item-starts-at-time {
+  color: var(--color-text) !important;
 }
 
 /* ── hb-embed__schedule: HVL brand overrides ─────────────────────────────── */
@@ -4179,6 +4197,91 @@ pre code {
 .dark .handball-wrapper .hb-embed__schedule th,
 .dark .handball-wrapper .hb-embed__schedule .header {
   color: var(--color-gray-400);
+}
+
+/* ── Dual Tables View (Homepage) ─────────────────────────────── */
+
+.tables-view {
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Hide scrollbar Firefox */
+  padding-bottom: var(--space-4);
+}
+
+.tables-view::-webkit-scrollbar {
+  display: none;
+  /* Hide scrollbar Chrome/Safari */
+}
+
+.tables-view__track {
+  display: flex;
+  gap: var(--space-6);
+  padding: 0 var(--container-pad);
+  /* Match container padding on mobile */
+}
+
+.tables-view__item {
+  flex: 0 0 85vw;
+  /* Show peeking next card on mobile */
+  scroll-snap-align: center;
+}
+
+@media (min-width: 768px) {
+  .tables-view {
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+
+  .tables-view__track {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+    padding: 0;
+  }
+
+  .tables-view__item {
+    flex: auto;
+  }
+}
+
+/* ── Home Gallery ─────────────────────────────── */
+
+.home-gallery {
+  width: 100%;
+  margin: var(--space-12) 0;
+}
+
+.home-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-1);
+}
+
+@media (min-width: 768px) {
+  .home-gallery__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.home-gallery__item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--color-black);
+}
+
+.home-gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.home-gallery__item:hover img {
+  transform: scale(1.05);
 }
 
 /* Hero fixture card: ensure correct absolute positioning on desktop */

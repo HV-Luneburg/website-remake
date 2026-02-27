@@ -258,8 +258,8 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
 
   /* Mobile expanded nav */
   @media (max-width: 767px) {
-    #header.expanded .navbar__nav-wrapper {
-      display: flex;
+    :global(#header.expanded) .navbar__nav-wrapper {
+      display: flex !important;
       position: fixed;
       top: 0;
       left: 0;
@@ -276,14 +276,14 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
       z-index: 295;
     }
 
-    #header.expanded .navbar__nav {
+    :global(#header.expanded) .navbar__nav {
       flex-direction: column;
       width: 100%;
       align-items: center;
       gap: var(--space-2, 0.5rem);
     }
 
-    #header.expanded .navbar__nav-link {
+    :global(#header.expanded) .navbar__nav-link {
       font-size: clamp(1.75rem, 6vw, 2.5rem);
       font-weight: 900;
       color: var(--color-white, #fff);
@@ -295,28 +295,28 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
       transition: background-color 200ms ease, color 200ms ease;
     }
 
-    #header.expanded .navbar__nav-link:hover {
+    :global(#header.expanded) .navbar__nav-link:hover {
       background-color: rgba(227, 6, 19, 0.12);
       color: var(--color-primary, #E30613);
     }
 
-    #header.expanded .navbar__nav-link--active {
+    :global(#header.expanded) .navbar__nav-link--active {
       color: var(--color-primary, #E30613);
     }
 
-    #header.expanded .navbar__nav-link::after {
+    :global(#header.expanded) .navbar__nav-link::after {
       display: none;
     }
 
     /* Probetraining CTA visible in mobile menu */
-    #header.expanded .navbar__cta-mobile-extra {
+    :global(#header.expanded) .navbar__cta-mobile-extra {
       display: flex;
       margin-top: var(--space-8, 2rem);
       width: 100%;
       justify-content: center;
     }
 
-    #header.expanded .navbar__dropdown {
+    :global(#header.expanded) .navbar__dropdown {
       position: static;
       border: none;
       margin-top: var(--space-2, 0.5rem);
@@ -325,13 +325,13 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
       text-align: center;
     }
 
-    #header.expanded .navbar__dropdown-link {
+    :global(#header.expanded) .navbar__dropdown-link {
       color: rgba(255, 255, 255, 0.7);
       font-size: 1.1rem;
       padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
     }
 
-    #header.expanded .navbar__dropdown-link:hover {
+    :global(#header.expanded) .navbar__dropdown-link:hover {
       color: var(--color-primary, #E30613);
       background-color: rgba(227, 6, 19, 0.08);
     }

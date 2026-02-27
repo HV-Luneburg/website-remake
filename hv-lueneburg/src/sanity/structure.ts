@@ -5,6 +5,32 @@ export const structure = (S: StructureBuilder) =>
     .title('HV Lüneburg')
     .items([
       S.listItem()
+        .title('Einstellungen')
+        .id('siteSettings')
+        .child(
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('siteSettings')
+            .title('Allgemeine Einstellungen')
+        ),
+      S.listItem()
+        .title('Startseite')
+        .id('homePage')
+        .child(
+          S.document()
+            .schemaType('homePage')
+            .documentId('homePage')
+            .title('Startseite bearbeiten')
+        ),
+      S.divider(),
+      S.listItem()
+        .title('Seiten')
+        .child(
+          S.documentTypeList('page')
+            .title('Flex-Seiten')
+        ),
+      S.divider(),
+      S.listItem()
         .title('Aktuelles & Berichte')
         .child(
           S.documentTypeList('beitrag')

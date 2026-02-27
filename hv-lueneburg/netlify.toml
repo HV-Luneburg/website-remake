@@ -1,6 +1,18 @@
 [build]
   publish = "dist"
   command = "npm run build"
+
+[[redirects]]
+  from = "/admin"
+  to = "https://z61c87ba.sanity.studio"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/admin/*"
+  to = "https://z61c87ba.sanity.studio/:splat"
+  status = 301
+  force = true
 [build.processing.html]
   pretty_urls = false
 [[headers]]

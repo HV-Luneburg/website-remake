@@ -25,9 +25,29 @@ export const sponsor = defineType({
       options: {hotspot: false},
     }),
     defineField({
+      name: 'mark',
+      title: 'Kurzzeichen (falls kein Logo vorhanden)',
+      type: 'string',
+      description: 'Z.B. "S" für Sparkasse, wird im Ticker gezeigt wenn kein Logo existiert.',
+      validation: rule => rule.max(3)
+    }),
+    defineField({
+      name: 'text',
+      title: 'Beschreibung / Text',
+      type: 'text',
+      description: 'Besonders wichtig für Hauptsponsoren',
+      rows: 4
+    }),
+    defineField({
       name: 'website',
       title: 'Website-URL',
       type: 'url',
+    }),
+    defineField({
+      name: 'jobLink',
+      title: 'Karriere / Job-URL',
+      type: 'url',
+      description: 'Z.B. für die Jobbörse der Hauptsponsoren'
     }),
     defineField({
       name: 'kategorie',
@@ -62,7 +82,7 @@ export const sponsor = defineType({
       subtitle: 'kategorie',
       media: 'logo',
     },
-    prepare({title, subtitle, media}: {title: string; subtitle: string; media: unknown}) {
+    prepare({title, subtitle, media}: {title: string; subtitle: string; media: any}) {
       return {
         title,
         subtitle: subtitle ? kategorieLabels[subtitle] || subtitle : undefined,

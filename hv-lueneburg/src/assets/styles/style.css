@@ -4071,25 +4071,15 @@ pre code {
   color: var(--color-text-muted);
 }
 
-/* Dark mode: make the nav mobile menu dark instead of white */
+/* Mobile menu — always dark, always white text */
 @media (max-width: 767px) {
-  .dark #header.expanded .navbar__nav-wrapper {
-    background-color: #141414;
+  #header.expanded .navbar__nav-wrapper {
+    background-color: var(--color-black) !important;
   }
 
-  .dark #header.expanded .navbar__nav-link {
-    color: var(--color-white);
+  #header.expanded .navbar__nav-link {
+    color: var(--color-white) !important;
   }
-}
-
-/* Light mode: nav mobile menu stays white with dark text */
-#header.expanded .navbar__nav-wrapper {
-  background-color: var(--color-white);
-}
-
-/* Prevent mobile menu from inheriting dark bg on light mode */
-#header.expanded .navbar__nav-link {
-  color: var(--color-primary);
 }
 
 /* Handball widget: ensure white card background is applied */

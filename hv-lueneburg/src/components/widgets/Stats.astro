@@ -1,0 +1,80 @@
+---
+import type { Stats as Props } from '~/types';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import { Icon } from 'astro-icon/components';
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  stats = [],
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-6xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+  <div class="text-center mb-12">
+    <Headline
+      title={title}
+      subtitle={subtitle}
+      tagline={tagline}
+      classes={{
+        title: 'text-3xl md:text-5xl font-black font-heading tracking-tight uppercase mb-4 text-white',
+        subtitle: 'text-lg md:text-xl text-gray-300 max-w-2xl mx-auto'
+      }}
+    />
+  </div>
+
+  <div class="stats-grid">
+    {stats.map(({ amount, title: statTitle, icon }) => (
+      <div class="card card--stat stats-grid__item">
+        {icon && (
+          <Icon
+            name={icon}
+            class="w-10 h-10 mb-4 mx-auto"
+            style="color: rgba(255,255,255,0.6);"
+          />
+        )}
+        {amount && (
+          <div class="stat-number">{amount}</div>
+        )}
+        {statTitle && (
+          <div class="stat-label">{statTitle}</div>
+        )}
+      </div>
+    ))}
+  </div>
+</WidgetWrapper>
+
+<style>
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background-color: rgba(255,255,255,0.15);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .stats-grid__item {
+    border-radius: 0 !important;
+  }
+
+  /* On mobile: stack in 2 columns with proper rounded corners */
+  @media (max-width: 639px) {
+    .stats-grid {
+      grid-template-columns: 1fr 1fr;
+      border-radius: 16px;
+    }
+  }
+</style>

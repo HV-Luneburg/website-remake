@@ -1,0 +1,206 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface PostTile {
+  id: string;
+  type: 'spielbericht' | 'ankündigung' | 'gallery';
+  title: string;
+  date: string;
+  author?: string;
+  imageUrl?: string;
+  excerpt?: string;
+  team?: string;
+  score?: string;
+  galleryImages?: string[];
+  link: string;
+}
+
+export interface Props {
+  posts: PostTile[];
+  title?: string;
+  tagline?: string;
+}
+
+const { posts = [], title = 'Aktuelles', tagline = 'Neuigkeiten' } = Astro.props;
+---
+
+<section class="py-16 md:py-24 bg-white dark:bg-[#141414]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <!-- Section header -->
+    <div class="section-header mb-10 md:mb-14">
+      <span class="heading-eyebrow">{tagline}</span>
+      <h2 class="section-title">{title}</h2>
+    </div>
+
+    <!-- Posts grid: mobile stacks, desktop varies -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+      {posts.map((post, index) => {
+
+        // ── SPIELBERICHT (Match report) — featured full width on desktop ──
+        if (post.type === 'spielbericht') return (
+          <article class:list={[
+            'group relative flex flex-col bg-white dark:bg-[#1C1C1C] rounded-2xl overflow-hidden border border-gray-100 dark:border-[#2A2A2A]',
+            'shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1',
+            index === 0 ? 'md:col-span-2 lg:col-span-2' : ''
+          ]}>
+            <!-- Image -->
+            {post.imageUrl && (
+              <div class:list={['relative overflow-hidden', index === 0 ? 'h-56 md:h-72' : 'h-48']}>
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
+                <!-- Gradient overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+                <!-- Score badge (if available) -->
+                {post.score && (
+                  <div class="absolute bottom-4 right-4 bg-primary text-white font-mono font-black text-lg px-3 py-1 rounded-lg shadow-lg">
+                    {post.score}
+                  </div>
+                )}
+
+                <!-- Type badge -->
+                <span class="absolute top-4 left-4 bg-primary text-white text-xs font-black uppercase tracking-wider px-3 py-1.5 rounded-md">
+                  Spielbericht
+                </span>
+              </div>
+            )}
+
+            <!-- Content -->
+            <div class="p-6 flex flex-col flex-1">
+              {post.team && (
+                <span class="text-xs font-black uppercase tracking-widest text-primary mb-2">{post.team}</span>
+              )}
+              <h3 class:list={[
+                'font-heading font-black uppercase tracking-tight text-gray-900 dark:text-white leading-tight mb-3',
+                'group-hover:text-primary transition-colors duration-200',
+                index === 0 ? 'text-2xl md:text-3xl' : 'text-xl'
+              ]}>
+                <a href={post.link} class="hover:underline underline-offset-2">{post.title}</a>
+              </h3>
+              {post.excerpt && (
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">{post.excerpt}</p>
+              )}
+              <div class="flex items-center gap-4 text-xs text-gray-400 dark:text-gray-500 border-t border-gray-100 dark:border-[#2A2A2A] pt-4">
+                <span class="flex items-center gap-1.5">
+                  <Icon name="tabler:calendar" class="w-3.5 h-3.5" />
+                  {post.date}
+                </span>
+                {post.author && (
+                  <span class="flex items-center gap-1.5">
+                    <Icon name="tabler:user" class="w-3.5 h-3.5" />
+                    {post.author}
+                  </span>
+                )}
+                <a href={post.link} class="ml-auto text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all text-xs uppercase tracking-wider">
+                  Lesen <Icon name="tabler:arrow-right" class="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+
+            <a href={post.link} class="absolute inset-0 z-10" aria-hidden="true"><span class="sr-only">Artikel lesen</span></a>
+          </article>
+        );
+
+        // ── ANKÜNDIGUNG (Announcement) ──
+        if (post.type === 'ankündigung') return (
+          <article class="group relative flex flex-col bg-white dark:bg-[#1C1C1C] rounded-2xl overflow-hidden border border-gray-100 dark:border-[#2A2A2A] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <!-- Red accent top bar -->
+            <div class="h-1 bg-primary flex-shrink-0"></div>
+
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center gap-2 mb-4">
+                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Icon name="tabler:bell" class="w-4 h-4 text-primary" />
+                </div>
+                <span class="text-xs font-black uppercase tracking-widest text-primary">Ankündigung</span>
+              </div>
+
+              <h3 class="text-xl font-heading font-black uppercase tracking-tight text-gray-900 dark:text-white leading-tight mb-3 group-hover:text-primary transition-colors flex-1">
+                <a href={post.link} class="hover:underline underline-offset-2">{post.title}</a>
+              </h3>
+
+              {post.excerpt && (
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">{post.excerpt}</p>
+              )}
+
+              <div class="flex items-center justify-between border-t border-gray-100 dark:border-[#2A2A2A] pt-4 mt-auto">
+                <span class="text-xs text-gray-400 dark:text-gray-500">{post.date}</span>
+                <a href={post.link} class="text-xs font-black uppercase tracking-wider text-primary flex items-center gap-1 hover:gap-2 transition-all">
+                  Lesen <Icon name="tabler:arrow-right" class="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+
+            <a href={post.link} class="absolute inset-0 z-10" aria-hidden="true"><span class="sr-only">Ankündigung lesen</span></a>
+          </article>
+        );
+
+        // ── GALERIE (Gallery) ──
+        if (post.type === 'gallery') {
+          const images = post.galleryImages || [post.imageUrl].filter(Boolean) as string[];
+          return (
+            <article class="group relative flex flex-col bg-white dark:bg-[#1C1C1C] rounded-2xl overflow-hidden border border-gray-100 dark:border-[#2A2A2A] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <!-- Gallery grid preview -->
+              <div class="grid grid-cols-2 gap-0.5 h-48 overflow-hidden">
+                {images.slice(0, 2).map((src, i) => (
+                  <div class={`relative overflow-hidden ${i === 0 && images.length === 1 ? 'col-span-2' : ''}`}>
+                    <img src={src} alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                  </div>
+                ))}
+                {images.length === 0 && (
+                  <div class="col-span-2 bg-gray-100 dark:bg-[#2A2A2A] flex items-center justify-center">
+                    <Icon name="tabler:photo" class="w-12 h-12 text-gray-300 dark:text-gray-600" />
+                  </div>
+                )}
+              </div>
+
+              {/* Overlay showing count */}
+              {images.length > 2 && (
+                <div class="absolute top-[7.5rem] right-0 h-24 w-1/2 bg-black/60 flex items-center justify-center">
+                  <span class="text-white font-black text-xl font-heading">+{images.length - 1}</span>
+                </div>
+              )}
+
+              <!-- Content -->
+              <div class="p-6 flex flex-col flex-1">
+                <div class="flex items-center gap-2 mb-3">
+                  <Icon name="tabler:camera" class="w-4 h-4 text-gray-400" />
+                  <span class="text-xs font-black uppercase tracking-widest text-gray-400">Galerie</span>
+                </div>
+                <h3 class="text-xl font-heading font-black uppercase tracking-tight text-gray-900 dark:text-white leading-tight group-hover:text-primary transition-colors">
+                  <a href={post.link} class="hover:underline underline-offset-2">{post.title}</a>
+                </h3>
+                <div class="flex items-center justify-between border-t border-gray-100 dark:border-[#2A2A2A] pt-4 mt-4">
+                  <span class="text-xs text-gray-400 dark:text-gray-500">{post.date}</span>
+                  <a href={post.link} class="text-xs font-black uppercase tracking-wider text-primary flex items-center gap-1 hover:gap-2 transition-all">
+                    Ansehen <Icon name="tabler:arrow-right" class="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+
+              <a href={post.link} class="absolute inset-0 z-10" aria-hidden="true"><span class="sr-only">Galerie ansehen</span></a>
+            </article>
+          );
+        }
+
+        return null;
+      })}
+
+    </div>
+
+    <!-- View all link -->
+    <div class="mt-10 md:mt-14 flex justify-center">
+      <a href="/news" class="btn btn--outline btn--pill btn--lg">
+        Alle Neuigkeiten
+        <Icon name="tabler:arrow-right" class="w-5 h-5" />
+      </a>
+    </div>
+
+  </div>
+</section>

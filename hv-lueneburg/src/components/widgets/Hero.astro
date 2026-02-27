@@ -1,0 +1,135 @@
+---
+import Image from '~/components/common/Image.astro';
+import Button from '~/components/ui/Button.astro';
+
+import type { Hero as Props } from '~/types';
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+
+  content = await Astro.slots.render('content'),
+  actions = await Astro.slots.render('actions'),
+  image = await Astro.slots.render('image'),
+
+  id,
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<section
+  class="not-prose"
+  style="
+    position: relative;
+    background: linear-gradient(135deg, var(--color-black, #0c0c0c) 60%, var(--color-primary-dark, #B5000F) 100%);
+    color: #fff;
+    padding: clamp(4rem, 12vw, 8rem) var(--container-pad, clamp(1.5rem, 5vw, 4rem));
+    overflow: hidden;
+  "
+  {...id ? { id } : {}}
+>
+  <!-- Optional bg slot -->
+  {bg && (
+    <div style="position:absolute;inset:0;z-index:0;pointer-events:none;" aria-hidden="true">
+      <Fragment set:html={bg} />
+    </div>
+  )}
+
+  <!-- Jersey-number decoration -->
+  <span
+    aria-hidden="true"
+    style="
+      position: absolute;
+      right: -0.05em;
+      bottom: -0.1em;
+      font-family: var(--font-display, 'Barlow Condensed');
+      font-size: clamp(8rem, 25vw, 22rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.04);
+      pointer-events: none;
+      z-index: 1;
+      user-select: none;
+      text-transform: uppercase;
+    "
+  >HVL</span>
+
+  <div
+    class="intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+    style="position:relative;z-index:2;max-width:var(--container-xl,1280px);margin:0 auto;text-align:center;"
+  >
+    {tagline && (
+      <span class="heading-eyebrow">{tagline}</span>
+    )}
+
+    {title && (
+      <h1
+        style="
+          font-family: var(--font-display, 'Barlow Condensed');
+          font-size: clamp(2.5rem, 7vw, 5rem);
+          font-weight: 900;
+          line-height: 1.05;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #ffffff;
+          margin-bottom: 1.5rem;
+          text-shadow: 0 2px 20px rgba(0,0,0,.5);
+        "
+        set:html={title}
+      />
+    )}
+
+    {subtitle && (
+      <p
+        style="
+          font-size: 1.25rem;
+          font-weight: 500;
+          line-height: 1.4;
+          color: rgba(255,255,255,.85);
+          margin-bottom: 2rem;
+          max-width: 55ch;
+          margin-left: auto;
+          margin-right: auto;
+        "
+        set:html={subtitle}
+      />
+    )}
+
+    {actions && (
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:0.5rem;">
+        {Array.isArray(actions) ? (
+          actions.map((action) => (
+            <Button
+              {...(action || {})}
+              class={action.variant === 'primary' ? 'btn btn--primary btn--lg' : 'btn btn--outline-white btn--lg'}
+            />
+          ))
+        ) : (
+          <Fragment set:html={actions} />
+        )}
+      </div>
+    )}
+
+    {content && <Fragment set:html={content} />}
+  </div>
+
+  {image && (
+    <div style="margin-top:3rem;position:relative;z-index:2;max-width:64rem;margin-left:auto;margin-right:auto;">
+      {typeof image === 'string' ? (
+        <Fragment set:html={image} />
+      ) : (
+        <Image
+          class="mx-auto rounded-md w-full"
+          widths={[400, 768, 1024, 2040]}
+          sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
+          loading="eager"
+          width={1024}
+          height={576}
+          {...image}
+        />
+      )}
+    </div>
+  )}
+</section>

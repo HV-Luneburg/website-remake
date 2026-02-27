@@ -1,0 +1,114 @@
+---
+import type { CallToAction } from '~/types';
+import Button from '~/components/ui/Button.astro';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  content?: string;
+  callToAction?: string | CallToAction;
+  callToAction2?: string | CallToAction;
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  content = await Astro.slots.render('content'),
+  callToAction = await Astro.slots.render('callToAction'),
+  callToAction2 = await Astro.slots.render('callToAction2'),
+} = Astro.props;
+---
+
+<section
+  class="not-prose"
+  style="
+    background: linear-gradient(135deg, var(--color-black, #0c0c0c) 60%, var(--color-primary-dark, #B5000F) 100%);
+    padding: clamp(4rem, 10vw, 7rem) var(--container-pad, clamp(1.5rem, 5vw, 4rem));
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  "
+>
+  <!-- Jersey number decoration -->
+  <span
+    aria-hidden="true"
+    style="
+      position: absolute;
+      right: -0.05em;
+      bottom: -0.1em;
+      font-family: var(--font-display, 'Barlow Condensed');
+      font-size: clamp(8rem, 22vw, 20rem);
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(255,255,255,0.04);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.02em;
+    "
+  >HVL</span>
+
+  <div
+    class="intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+    style="position:relative;z-index:2;max-width:var(--container-xl,1280px);margin:0 auto;"
+  >
+    {tagline && (
+      <span class="heading-eyebrow">{tagline}</span>
+    )}
+
+    {title && (
+      <h1
+        style="
+          font-family: var(--font-display, 'Barlow Condensed');
+          font-size: clamp(2.5rem, 7vw, 5rem);
+          font-weight: 900;
+          line-height: 1.05;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #ffffff;
+          margin-bottom: 1.25rem;
+          text-shadow: 0 2px 20px rgba(0,0,0,.5);
+        "
+        set:html={title}
+      />
+    )}
+
+    {subtitle && (
+      <p
+        style="
+          font-size: 1.2rem;
+          line-height: 1.5;
+          color: rgba(255,255,255,0.85);
+          margin-bottom: 2rem;
+          max-width: 55ch;
+          margin-left: auto;
+          margin-right: auto;
+        "
+        set:html={subtitle}
+      />
+    )}
+
+    {(callToAction || callToAction2) && (
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+        {callToAction && (
+          typeof callToAction === 'string' ? (
+            <Fragment set:html={callToAction} />
+          ) : (
+            <Button variant="primary" {...callToAction} class="btn btn--primary btn--lg" />
+          )
+        )}
+        {callToAction2 && (
+          typeof callToAction2 === 'string' ? (
+            <Fragment set:html={callToAction2} />
+          ) : (
+            <Button {...callToAction2} class="btn btn--outline-white btn--lg" />
+          )
+        )}
+      </div>
+    )}
+
+    {content && <Fragment set:html={content} />}
+  </div>
+</section>

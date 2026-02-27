@@ -1,0 +1,84 @@
+---
+import { APP_BLOG } from 'astrowind:config';
+import type { Post } from '~/types';
+
+import Image from '~/components/common/Image.astro';
+
+import { findImage } from '~/utils/images';
+import { getPermalink } from '~/utils/permalinks';
+
+export interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const image = await findImage(post.image);
+const link = APP_BLOG?.post?.isEnabled ? getPermalink(post.permalink, 'post') : '';
+---
+
+<article class="card intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+
+  {image && (
+    <div class="card__media">
+      {link ? (
+        <a href={link} tabindex="-1" aria-hidden="true">
+          <Image
+            src={image}
+            widths={[400, 900]}
+            width={400}
+            sizes="(max-width: 900px) 400px, 900px"
+            alt={post.title}
+            aspectRatio="16:9"
+            layout="cover"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      ) : (
+        <Image
+          src={image}
+          widths={[400, 900]}
+          width={400}
+          sizes="(max-width: 900px) 400px, 900px"
+          alt={post.title}
+          aspectRatio="16:9"
+          layout="cover"
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+    </div>
+  )}
+
+  <div class="card__body">
+    {post.category && (
+      <span class="badge badge--primary" style="margin-bottom: var(--space-3); display: inline-block;">{post.category}</span>
+    )}
+
+    <h3 class="card__title">
+      {link ? (
+        <a href={link}>{post.title}</a>
+      ) : (
+        post.title
+      )}
+    </h3>
+
+    {post.excerpt && (
+      <p class="card__excerpt">{post.excerpt}</p>
+    )}
+
+    <div class="card__meta">
+      {post.publishDate && (
+        <time datetime={post.publishDate.toISOString()}>
+          {post.publishDate.toLocaleDateString('de-DE', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          })}
+        </time>
+      )}
+      {post.author && <span>· {post.author}</span>}
+    </div>
+  </div>
+
+</article>

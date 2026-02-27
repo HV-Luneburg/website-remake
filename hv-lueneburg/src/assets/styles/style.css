@@ -1,0 +1,4115 @@
+/* ==========================================================================
+   HVL – Handballverein Lüneburg e.V.
+   Global Stylesheet  ·  Season 2026/27
+   ==========================================================================
+
+   TABLE OF CONTENTS
+   -----------------
+   01. CSS Custom Properties (Design Tokens)
+   02. Reset & Base
+   03. Typography
+   04. Layout & Grid
+   05. Navigation
+   06. Hero & Jumbotron
+   07. Sections & Backgrounds
+   08. Cards
+   09. Buttons & CTAs
+   10. Badges & Labels
+   11. Forms & Inputs
+   12. Tables
+   13. Match / Score Components
+   14. Team / Player Cards
+   15. Sponsor Bar
+   16. Media Gallery
+   17. Ticker / News Strip
+   18. Footer
+   19. Utility Classes
+   20. Animations & Transitions
+   21. Responsive Breakpoints
+
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   ========================================================================== */
+
+:root {
+
+  /* --- Brand Colours ------------------------------------------------------- */
+
+  /* Primary: the iconic HVL jersey red */
+  --color-primary: #E30613;
+  --color-primary-dark: #B5000F;
+  /* hover / pressed state              */
+  --color-primary-light: #FF2D38;
+  /* highlights / glows                 */
+  --color-primary-muted: rgba(227, 6, 19, 0.12);
+  /* tinted backgrounds    */
+
+  /* Secondary: near-black charcoal — dark accent without blue */
+  --color-secondary: #1E1E1E;
+  --color-secondary-dark: #0C0C0C;
+  --color-secondary-light: #333333;
+  --color-secondary-muted: rgba(0, 0, 0, 0.08);
+
+  /* Accent: Lüneburg gold (skyline silhouette, Wittinger) */
+  --color-gold: #C9A020;
+  --color-gold-dark: #9C7910;
+  --color-gold-light: #E4C048;
+
+  /* Neutrals */
+  --color-black: #0C0C0C;
+  /* jersey black / TW-trikot           */
+  --color-white: #FFFFFF;
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #E8E8E8;
+  --color-gray-300: #CCCCCC;
+  --color-gray-400: #999999;
+  --color-gray-500: #666666;
+  --color-gray-600: #444444;
+  --color-gray-700: #2A2A2A;
+  --color-gray-800: #1A1A1A;
+
+  /* Semantic aliases */
+  --color-text: var(--color-gray-800);
+  --color-text-muted: var(--color-gray-500);
+  --color-text-inverted: var(--color-white);
+  --color-bg: var(--color-white);
+  --color-bg-alt: var(--color-gray-100);
+  --color-bg-dark: var(--color-black);
+  --color-border: var(--color-gray-200);
+  --color-border-strong: var(--color-gray-300);
+
+  /* --- Typography ---------------------------------------------------------- */
+
+  /* Display / jersey-style: condensed, athletic, all-caps feel             */
+  --font-display: 'Barlow Condensed', 'Industry', 'Oswald', 'Arial Narrow',
+    sans-serif;
+
+  /* Body / UI: clean, legible sans-serif                                    */
+  --font-body: 'Barlow', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Monospace: scores, stats, timestamps                                    */
+  --font-mono: 'DM Mono', 'Roboto Mono', 'Courier New', monospace;
+
+  /* Font sizes — fluid scale */
+  --text-xs: 0.75rem;
+  /*  12px */
+  --text-sm: 0.875rem;
+  /*  14px */
+  --text-base: 1rem;
+  /*  16px */
+  --text-md: 1.125rem;
+  /*  18px */
+  --text-lg: 1.25rem;
+  /*  20px */
+  --text-xl: 1.5rem;
+  /*  24px */
+  --text-2xl: 2rem;
+  /*  32px */
+  --text-3xl: 2.5rem;
+  /*  40px */
+  --text-4xl: 3.5rem;
+  /*  56px */
+  --text-5xl: 5rem;
+  /*  80px */
+  --text-hero: clamp(4rem, 12vw, 10rem);
+  /* jersey-number scale          */
+
+  /* Font weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-black: 900;
+
+  /* Line heights */
+  --lh-tight: 0.95;
+  --lh-heading: 1.1;
+  --lh-snug: 1.25;
+  --lh-body: 1.6;
+  --lh-loose: 1.8;
+
+  /* Letter spacing */
+  --ls-tight: -0.02em;
+  --ls-normal: 0em;
+  --ls-wide: 0.05em;
+  --ls-wider: 0.1em;
+  --ls-widest: 0.2em;
+
+  /* --- Spacing (8-pt grid) ------------------------------------------------ */
+
+  --space-1: 0.25rem;
+  /*  4px */
+  --space-2: 0.5rem;
+  /*  8px */
+  --space-3: 0.75rem;
+  /* 12px */
+  --space-4: 1rem;
+  /* 16px */
+  --space-5: 1.25rem;
+  /* 20px */
+  --space-6: 1.5rem;
+  /* 24px */
+  --space-8: 2rem;
+  /* 32px */
+  --space-10: 2.5rem;
+  /* 40px */
+  --space-12: 3rem;
+  /* 48px */
+  --space-16: 4rem;
+  /* 64px */
+  --space-20: 5rem;
+  /* 80px */
+  --space-24: 6rem;
+  /* 96px */
+  --space-32: 8rem;
+  /* 128px */
+
+  /* --- Borders & Radii ---------------------------------------------------- */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+  --radius-none: 0;
+
+  --border-width: 1px;
+  --border-width-2: 2px;
+  --border-width-4: 4px;
+
+  /* --- Shadows ------------------------------------------------------------ */
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .10), 0 1px 2px rgba(0, 0, 0, .06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .08);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, .15), 0 4px 10px rgba(0, 0, 0, .10);
+  --shadow-xl: 0 20px 50px rgba(0, 0, 0, .20), 0 8px 20px rgba(0, 0, 0, .12);
+  --shadow-red: 0 8px 24px rgba(227, 6, 19, 0.40);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, .08);
+
+  /* --- Layout ------------------------------------------------------------- */
+
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1440px;
+  --container-pad: clamp(var(--space-6), 5vw, var(--space-16));
+
+  /* --- Z-Index Stack ------------------------------------------------------ */
+
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 300;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* --- Transitions -------------------------------------------------------- */
+
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-bounce: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+/* ==========================================================================
+   02. RESET & BASE
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Remove list styles for nav/UI lists */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Inherit fonts for inputs */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Focus-visible ring — uses brand red */
+:focus-visible {
+  outline: var(--border-width-2) solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Remove default focus for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Selection colour */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  border-top: var(--border-width) solid var(--color-border);
+  margin: var(--space-8) 0;
+}
+
+/* Anchor base */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+
+/* ==========================================================================
+   03. TYPOGRAPHY
+   ========================================================================== */
+
+/* --- Display headings (jersey-style, condensed, uppercase) --------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+h1,
+.h1 {
+  font-size: var(--text-3xl);
+}
+
+h2,
+.h2 {
+  font-size: var(--text-2xl);
+}
+
+h3,
+.h3 {
+  font-size: var(--text-1xl);
+}
+
+h4,
+.h4 {
+  font-size: var(--text-xl);
+}
+
+h5,
+.h5 {
+  font-size: var(--text-lg);
+}
+
+h6,
+.h6 {
+  font-size: var(--text-md);
+}
+
+/* Fluid hero heading — scales with viewport like jersey number */
+.heading-hero {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+}
+
+/* Eyebrow label above a headline */
+.heading-eyebrow {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+/* Subheading / subtitle */
+.subheading {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-normal);
+  text-transform: none;
+  color: var(--color-text-muted);
+}
+
+/* --- Paragraph & body text ----------------------------------------------- */
+
+p {
+  margin-bottom: var(--space-4);
+  max-width: 70ch;
+  /* optimal reading line length */
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.lead {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  color: var(--color-text);
+}
+
+.text-small {
+  font-size: var(--text-sm);
+  line-height: var(--lh-body);
+}
+
+.text-tiny {
+  font-size: var(--text-xs);
+  line-height: var(--lh-body);
+}
+
+/* --- Lists --------------------------------------------------------------- */
+
+ul,
+ol {
+  padding-left: var(--space-6);
+  margin-bottom: var(--space-4);
+}
+
+ul li,
+ol li {
+  margin-bottom: var(--space-2);
+}
+
+/* Red marker for unordered lists */
+ul li::marker {
+  color: var(--color-primary);
+}
+
+/* --- Blockquote ---------------------------------------------------------- */
+
+blockquote {
+  border-left: var(--border-width-4) solid var(--color-primary);
+  padding: var(--space-4) var(--space-6);
+  margin: var(--space-8) 0;
+  background: var(--color-primary-muted);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--color-text);
+}
+
+blockquote cite {
+  display: block;
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  font-style: normal;
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--color-primary);
+}
+
+/* --- Code & preformatted ------------------------------------------------- */
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--color-gray-100);
+  color: var(--color-primary-dark);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  background: var(--color-gray-800);
+  color: var(--color-gray-100);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin-bottom: var(--space-6);
+}
+
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+/* --- Text colour helpers ------------------------------------------------- */
+
+.text-primary {
+  color: var(--color-primary) !important;
+}
+
+.text-secondary {
+  color: var(--color-secondary) !important;
+}
+
+.text-gold {
+  color: var(--color-gold) !important;
+}
+
+.text-white {
+  color: var(--color-white) !important;
+}
+
+.text-muted {
+  color: var(--color-text-muted) !important;
+}
+
+.text-black {
+  color: var(--color-black) !important;
+}
+
+
+/* ==========================================================================
+   04. LAYOUT & GRID
+   ========================================================================== */
+
+/* --- Container ----------------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container-xl);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+.container--sm {
+  max-width: var(--container-sm);
+}
+
+.container--md {
+  max-width: var(--container-md);
+}
+
+.container--lg {
+  max-width: var(--container-lg);
+}
+
+.container--xl {
+  max-width: var(--container-xl);
+}
+
+.container--2xl {
+  max-width: var(--container-2xl);
+}
+
+.container--full {
+  max-width: 100%;
+}
+
+/* --- Flex helpers -------------------------------------------------------- */
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-start {
+  align-items: flex-start;
+}
+
+.flex-end {
+  align-items: flex-end;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+.flex-none {
+  flex: none;
+}
+
+.gap-2 {
+  gap: var(--space-2);
+}
+
+.gap-4 {
+  gap: var(--space-4);
+}
+
+.gap-6 {
+  gap: var(--space-6);
+}
+
+.gap-8 {
+  gap: var(--space-8);
+}
+
+.gap-12 {
+  gap: var(--space-12);
+}
+
+/* --- CSS Grid ------------------------------------------------------------ */
+
+.grid {
+  display: grid;
+}
+
+.grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Auto-fill responsive grids */
+.grid-auto-sm {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.grid-auto-md {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.grid-auto-lg {
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+}
+
+/* Content + sidebar layout */
+.layout-sidebar {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+/* Jersey pattern background — repeated text like "DEIN NAME | DEIN NAME" */
+.bg-pattern-text {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-pattern-text::before {
+  content: attr(data-pattern);
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: currentColor;
+  opacity: 0.12;
+  word-break: break-all;
+  overflow: hidden;
+  pointer-events: none;
+  line-height: 1.8;
+  z-index: var(--z-below);
+}
+
+/* Lüneburg skyline as bottom decoration */
+.skyline-decoration {
+  position: relative;
+}
+
+.skyline-decoration::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-image: url('../img/skyline-lueneburg.svg');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   05. NAVIGATION
+   ========================================================================== */
+
+/* --- Main nav bar -------------------------------------------------------- */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  padding: 0 var(--container-pad);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  max-width: var(--container-2xl);
+  margin: auto;
+}
+
+/* Club logo */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.navbar__logo img {
+  height: 48px;
+  width: auto;
+}
+
+.navbar__logo-text {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-white);
+  line-height: 1;
+}
+
+.navbar__logo-text span {
+  color: var(--color-primary);
+}
+
+/* Navigation links */
+.navbar__nav {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: var(--space-1);
+}
+
+.navbar__nav-item {
+  position: relative;
+  list-style: none;
+}
+
+.navbar__nav-link {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-gray-300);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  position: relative;
+}
+
+.navbar__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: var(--space-4);
+  right: var(--space-4);
+  height: 2px;
+  background-color: var(--color-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+  transform-origin: left;
+}
+
+.navbar__nav-link:hover {
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, .05);
+  text-decoration: none;
+}
+
+.navbar__nav-link:hover::after,
+.navbar__nav-link--active::after {
+  transform: scaleX(1);
+}
+
+.navbar__nav-link--active {
+  color: var(--color-white);
+}
+
+/* CTA in nav */
+.navbar__cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* Mobile hamburger */
+.navbar__toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  color: var(--color-white);
+  flex-direction: column;
+  gap: 5px;
+}
+
+.navbar__toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+/* Top bar above navbar (fixture / ticker strip) */
+.topbar {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  text-align: center;
+  padding: var(--space-2) var(--container-pad);
+}
+
+.topbar a {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+
+/* ==========================================================================
+   06. HERO & JUMBOTRON
+   ========================================================================== */
+
+/* --- Full-bleed hero section --------------------------------------------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Dark overlay for hero images */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+      rgba(12, 12, 12, 0.70) 0%,
+      rgba(227, 6, 19, 0.40) 100%);
+  z-index: 1;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__media img,
+.hero__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* ── Hero slideshow ── */
+.hero__slideshow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.hero__slide[data-active="true"] {
+  opacity: 1;
+}
+
+.hero__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: var(--space-20) var(--container-pad);
+  max-width: var(--container-2xl);
+  margin: auto;
+}
+
+.hero__tag {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: var(--fw-black);
+  hyphens: none;
+  word-break: keep-all;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: var(--color-white);
+  margin-bottom: var(--space-6);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, .5);
+}
+
+.hero__title span {
+  color: var(--color-primary);
+}
+
+/* Use on dark hero: title in white with red accent */
+.hero--dark .hero__title span {
+  color: var(--color-gold);
+}
+
+.hero__subtitle {
+  font-size: var(--text-xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  color: rgba(255, 255, 255, .85);
+  margin-bottom: var(--space-8);
+  max-width: 55ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* Large player-number decoration (jersey aesthetic) */
+.hero__number {
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.15em;
+  font-family: var(--font-display);
+  font-size: clamp(10rem, 30vw, 28rem);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+  color: rgba(255, 255, 255, .06);
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+}
+
+/* Match hero: displays two teams and score prominently */
+.hero--match {
+  min-height: 60vh;
+  background-color: var(--color-black);
+}
+
+
+/* ==========================================================================
+   07. SECTIONS & BACKGROUNDS
+   ========================================================================== */
+
+/* Base section spacing — generous vertical rhythm */
+.section {
+  padding: var(--space-24) var(--container-pad);
+}
+
+.section--sm {
+  padding: var(--space-16) var(--container-pad);
+}
+
+.section--lg {
+  padding: var(--space-32) var(--container-pad);
+}
+
+/* --- Background variants ------------------------------------------------- */
+
+/* White (default) */
+.bg-white {
+  background-color: var(--color-white);
+}
+
+/* Light grey — alternating sections */
+.bg-light {
+  background-color: var(--color-gray-100);
+}
+
+/* Primary red — bold statement sections */
+.bg-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.bg-primary h1,
+.bg-primary h2,
+.bg-primary h3,
+.bg-primary h4,
+.bg-primary h5,
+.bg-primary h6 {
+  color: var(--color-white);
+}
+
+.bg-primary .subheading,
+.bg-primary p {
+  color: rgba(255, 255, 255, .85);
+}
+
+/* Secondary navy */
+.bg-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.bg-secondary h1,
+.bg-secondary h2,
+.bg-secondary h3 {
+  color: var(--color-white);
+}
+
+.bg-secondary p {
+  color: rgba(255, 255, 255, .85);
+}
+
+/* Dark / black — TW trikot inspired */
+.bg-dark {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.bg-dark h1,
+.bg-dark h2,
+.bg-dark h3 {
+  color: var(--color-white);
+}
+
+.bg-dark p {
+  color: var(--color-gray-300);
+}
+
+/* Gradient: red diagonal — inspired by the split jersey */
+.bg-gradient-red {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-white);
+}
+
+/* Gradient: red/dark split — jersey half-half pattern */
+.bg-gradient-split {
+  background: linear-gradient(180deg,
+      var(--color-primary) 50%,
+      var(--color-black) 50%);
+}
+
+/* Gradient: dark with red streak */
+.bg-gradient-dark {
+  background: linear-gradient(135deg,
+      var(--color-black) 60%,
+      var(--color-primary-dark) 100%);
+  color: var(--color-white);
+}
+
+/* Section divider — diagonal cut (like jersey panels) */
+.section--angled-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  padding-bottom: calc(var(--space-20) + 5vw);
+}
+
+.section--angled-top {
+  clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
+  padding-top: calc(var(--space-20) + 5vw);
+  margin-top: -5vw;
+}
+
+/* Red top border accent */
+.section--accented {
+  border-top: var(--border-width-4) solid var(--color-primary);
+}
+
+/* Section header block */
+.section-header {
+  margin-bottom: var(--space-16);
+}
+
+.section-header--center {
+  text-align: center;
+}
+
+.section-header--center p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-text);
+  line-height: var(--lh-heading);
+  margin-bottom: var(--space-4);
+}
+
+.section-title--inverted {
+  color: var(--color-white);
+}
+
+.section-title strong {
+  color: var(--color-primary);
+}
+
+
+/* ==========================================================================
+   08. CARDS
+   ========================================================================== */
+
+/* --- Base card ----------------------------------------------------------- */
+
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: var(--border-width) solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-gray-200);
+}
+
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.card:hover .card__media img {
+  transform: scale(1.04);
+}
+
+.card__body {
+  padding: var(--space-6);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__tag {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-heading);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.card__title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.card__title a:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.card__excerpt {
+  font-size: var(--text-sm);
+  line-height: var(--lh-body);
+  color: var(--color-text-muted);
+  flex: 1;
+  margin-bottom: var(--space-4);
+}
+
+.card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-gray-400);
+  margin-top: auto;
+}
+
+.card__footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: var(--border-width) solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --- Card variants ------------------------------------------------------- */
+
+/* Red highlight card */
+.card--primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary-dark);
+  color: var(--color-white);
+}
+
+.card--primary .card__title,
+.card--primary .card__tag {
+  color: var(--color-white);
+}
+
+.card--primary .card__excerpt {
+  color: rgba(255, 255, 255, .85);
+}
+
+/* Dark card */
+.card--dark {
+  background-color: var(--color-gray-800);
+  border-color: var(--color-gray-700);
+  color: var(--color-white);
+}
+
+.card--dark .card__title {
+  color: var(--color-white);
+}
+
+.card--dark .card__excerpt {
+  color: var(--color-gray-400);
+}
+
+/* Feature card — larger, horizontal */
+.card--feature {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.card--feature .card__media {
+  width: 40%;
+  flex-shrink: 0;
+  aspect-ratio: auto;
+}
+
+.card--feature .card__body {
+  padding: var(--space-8);
+}
+
+/* Borderless flat card */
+.card--flat {
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Stat / number card — for jersey-number style stats */
+.card--stat {
+  text-align: center;
+  padding: var(--space-8);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+}
+
+.card--stat .stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-white);
+}
+
+.card--stat .stat-label {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .75);
+  margin-top: var(--space-2);
+}
+
+
+/* ==========================================================================
+   09. BUTTONS & CTAs
+   ========================================================================== */
+
+/* --- Base button --------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-8);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  text-decoration: none;
+  border: var(--border-width-2) solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-bounce),
+    box-shadow var(--transition-fast);
+  white-space: nowrap;
+  user-select: none;
+  line-height: 1;
+}
+
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- Button sizes -------------------------------------------------------- */
+
+.btn--sm {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-xs);
+}
+
+.btn--lg {
+  padding: var(--space-4) var(--space-12);
+  font-size: var(--text-md);
+}
+
+.btn--xl {
+  padding: var(--space-5) var(--space-16);
+  font-size: var(--text-lg);
+}
+
+.btn--full {
+  width: 100%;
+}
+
+/* --- Button colours ------------------------------------------------------ */
+
+/* Primary: HVL red */
+.btn--primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+  box-shadow: var(--shadow-red);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: var(--color-white);
+  box-shadow: 0 10px 30px rgba(227, 6, 19, 0.50);
+}
+
+/* Secondary: navy blue */
+.btn--secondary {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-secondary-dark);
+  border-color: var(--color-secondary-dark);
+  color: var(--color-white);
+}
+
+/* Outline red */
+.btn--outline {
+  background-color: transparent;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Outline white — for use on coloured backgrounds */
+.btn--outline-white {
+  background-color: transparent;
+  border-color: var(--color-white);
+  color: var(--color-white);
+}
+
+.btn--outline-white:hover {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+}
+
+/* Ghost: dark/black */
+.btn--dark {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.btn--dark:hover {
+  background-color: var(--color-gray-800);
+  border-color: var(--color-gray-800);
+  color: var(--color-white);
+}
+
+/* Gold accent */
+.btn--gold {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-black);
+}
+
+.btn--gold:hover {
+  background-color: var(--color-gold-dark);
+  border-color: var(--color-gold-dark);
+  color: var(--color-black);
+}
+
+/* Pill shape */
+.btn--pill {
+  border-radius: var(--radius-pill);
+}
+
+
+/* ==========================================================================
+   10. BADGES & LABELS
+   ========================================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+}
+
+.badge--primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.badge--secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.badge--dark {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.badge--gold {
+  background-color: var(--color-gold);
+  color: var(--color-black);
+}
+
+.badge--light {
+  background-color: var(--color-gray-200);
+  color: var(--color-text);
+}
+
+.badge--success {
+  background-color: #15803d;
+  color: var(--color-white);
+}
+
+.badge--warning {
+  background-color: #d97706;
+  color: var(--color-white);
+}
+
+.badge--danger {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Live badge — pulsing red dot */
+.badge--live {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  position: relative;
+}
+
+.badge--live::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-white);
+  border-radius: 50%;
+  animation: pulse-dot 1.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.7);
+  }
+}
+
+
+/* ==========================================================================
+   11. FORMS & INPUTS
+   ========================================================================== */
+
+/* --- Form structure ----------------------------------------------------- */
+
+.form-group {
+  margin-bottom: var(--space-5);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+/* --- Labels ------------------------------------------------------------- */
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.form-label--required::after {
+  content: ' *';
+  color: var(--color-primary);
+}
+
+/* --- Inputs ------------------------------------------------------------- */
+
+.form-input,
+.form-select,
+.form-textarea {
+  display: block;
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  color: var(--color-text);
+  background-color: var(--color-white);
+  border: var(--border-width-2) solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-gray-400);
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+  border-color: var(--color-primary);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-muted);
+  outline: none;
+}
+
+.form-input--error,
+.form-select--error,
+.form-textarea--error {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-muted);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  padding-right: var(--space-10);
+  cursor: pointer;
+}
+
+/* --- Checkbox & Radio --------------------------------------------------- */
+
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+
+.form-check-input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.form-check-label {
+  font-size: var(--text-sm);
+  line-height: var(--lh-snug);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+/* --- Helper text & error messages --------------------------------------- */
+
+.form-hint {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.form-error {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+}
+
+/* --- Search bar --------------------------------------------------------- */
+
+.search-bar {
+  position: relative;
+  display: flex;
+}
+
+.search-bar .form-input {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  border-right: none;
+}
+
+.search-bar .btn {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   12. TABLES
+   ========================================================================== */
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  background-color: var(--color-white);
+}
+
+.table th {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border: none;
+  white-space: nowrap;
+}
+
+.table th:first-child {
+  border-radius: 0;
+}
+
+.table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border-width) solid var(--color-border);
+  color: var(--color-text);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: var(--color-primary-muted);
+}
+
+/* Striped rows */
+.table--striped tbody tr:nth-child(even) {
+  background-color: var(--color-gray-100);
+}
+
+/* Dark header variant */
+.table--dark th {
+  background-color: var(--color-black);
+}
+
+/* Standings / league table */
+.table--standings .table__rank {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--text-lg);
+  color: var(--color-primary);
+  text-align: center;
+  width: 48px;
+}
+
+.table--standings .table__team-name {
+  font-weight: var(--fw-bold);
+}
+
+.table--standings tr.table__row--highlight td {
+  background-color: var(--color-primary-muted);
+  border-left: var(--border-width-4) solid var(--color-primary);
+}
+
+
+/* ==========================================================================
+   13. MATCH / SCORE COMPONENTS
+   ========================================================================== */
+
+/* --- Fixture card -------------------------------------------------------- */
+
+.fixture {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.fixture:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.fixture__team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.fixture__team-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.fixture__team-name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-tight);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.fixture__vs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.fixture__score {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-primary);
+}
+
+.fixture__score--separator {
+  color: var(--color-gray-400);
+  margin: 0 var(--space-1);
+}
+
+.fixture__date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.fixture__venue {
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--color-gray-400);
+}
+
+/* Active / live fixture */
+.fixture--live {
+  border-color: var(--color-primary);
+  border-width: var(--border-width-2);
+}
+
+.fixture--live .fixture__score {
+  animation: score-pulse 2s ease-in-out infinite;
+}
+
+@keyframes score-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* --- Scoreboard (large display) ----------------------------------------- */
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  padding: var(--space-12) var(--space-8);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-white);
+  border-radius: var(--radius-xl);
+}
+
+.scoreboard__team-name {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-tight);
+}
+
+.scoreboard__score-main {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+}
+
+.scoreboard__halftime {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, .70);
+  text-align: center;
+  margin-top: var(--space-2);
+}
+
+
+/* ==========================================================================
+   14. TEAM / PLAYER CARDS
+   ========================================================================== */
+
+/* --- Player card --------------------------------------------------------- */
+
+.player-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-black);
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+}
+
+.player-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform var(--transition-slow);
+}
+
+.player-card:hover .player-card__image {
+  transform: scale(1.06);
+}
+
+/* Red sweep overlay on hover */
+.player-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+      rgba(227, 6, 19, 0.90) 0%,
+      rgba(227, 6, 19, 0.30) 40%,
+      transparent 70%);
+  transition: opacity var(--transition-base);
+}
+
+.player-card__info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-6);
+  z-index: 2;
+  color: var(--color-white);
+}
+
+.player-card__number {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  color: rgba(255, 255, 255, .20);
+  letter-spacing: var(--ls-tight);
+  z-index: 2;
+  transition: color var(--transition-base);
+}
+
+.player-card:hover .player-card__number {
+  color: rgba(255, 255, 255, .50);
+}
+
+.player-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-heading);
+  margin-bottom: var(--space-1);
+}
+
+.player-card__position {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .75);
+}
+
+
+/* ==========================================================================
+   15. SPONSOR BAR
+   ========================================================================== */
+
+/* Horizontal sponsor strip — like the jersey sponsor row */
+.sponsor-bar {
+  padding: var(--space-8) var(--container-pad);
+  background-color: var(--color-white);
+  border-top: var(--border-width) solid var(--color-border);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.sponsor-bar__label {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.sponsor-bar__logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+}
+
+.sponsor-bar__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.55;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+  filter: grayscale(100%);
+}
+
+.sponsor-bar__logo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: scale(1.08);
+}
+
+.sponsor-bar__logo img {
+  height: 40px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+}
+
+/* Main sponsor (Sparkasse / Hauptsponsor) — prominent */
+.sponsor-bar__logo--main {
+  opacity: 0.80;
+  filter: grayscale(0%);
+}
+
+.sponsor-bar__logo--main img {
+  height: 56px;
+}
+
+
+/* ==========================================================================
+   16. MEDIA GALLERY
+   ========================================================================== */
+
+/* Masonry-style grid gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+.gallery__item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background-color: var(--color-gray-200);
+}
+
+.gallery__item--tall {
+  grid-row: span 2;
+}
+
+.gallery__item--wide {
+  grid-column: span 2;
+}
+
+.gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+  display: block;
+}
+
+.gallery__item:hover img {
+  transform: scale(1.06);
+}
+
+/* Red overlay on hover */
+.gallery__item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(227, 6, 19, 0.50);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.gallery__item:hover::after {
+  opacity: 1;
+}
+
+/* Caption */
+.gallery__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-4);
+  background: linear-gradient(to top, rgba(0, 0, 0, .80) 0%, transparent 100%);
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  transform: translateY(100%);
+  transition: transform var(--transition-base);
+  z-index: 2;
+}
+
+.gallery__item:hover .gallery__caption {
+  transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   17. TICKER / NEWS STRIP
+   ========================================================================== */
+
+/* Scrolling news ticker — inspired by scoreboard displays */
+.ticker {
+  overflow: hidden;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--space-2) 0;
+  display: flex;
+  align-items: center;
+}
+
+.ticker__label {
+  flex-shrink: 0;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  padding: var(--space-2) var(--space-5);
+  white-space: nowrap;
+}
+
+.ticker__track {
+  display: flex;
+  animation: ticker-scroll 30s linear infinite;
+  gap: var(--space-12);
+  padding: 0 var(--space-8);
+}
+
+.ticker__item {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-white);
+}
+
+.ticker__item::after {
+  content: '  ·  ';
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker:hover .ticker__track {
+  animation-play-state: paused;
+}
+
+
+/* ==========================================================================
+   18. FOOTER
+   ========================================================================== */
+
+.footer {
+  background-color: var(--color-black);
+  color: var(--color-gray-300);
+  padding-top: var(--space-20);
+}
+
+.footer__main {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-10);
+  padding: 0 var(--container-pad) var(--space-16);
+  max-width: var(--container-2xl);
+  margin: auto;
+}
+
+@media (max-width: 767px) {
+  .footer__main {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .footer__legal {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  text-decoration: none;
+}
+
+.footer__logo img {
+  height: 52px;
+  width: auto;
+}
+
+.footer__brand-name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-white);
+  line-height: 1.1;
+}
+
+.footer__tagline {
+  font-size: var(--text-sm);
+  color: var(--color-gray-400);
+  margin-bottom: var(--space-6);
+  max-width: 32ch;
+}
+
+.footer__social {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-gray-800);
+  color: var(--color-gray-400);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.footer__social-link:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+/* Footer nav columns */
+.footer__col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__col-title {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-white);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--border-width-2) solid var(--color-primary);
+  display: inline-block;
+}
+
+.footer__nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__nav li {
+  margin-bottom: var(--space-2);
+}
+
+.footer__nav a {
+  font-size: var(--text-sm);
+  color: var(--color-gray-400);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer__nav a:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* Bottom bar */
+.footer__bottom {
+  border-top: var(--border-width) solid var(--color-gray-800);
+  padding: var(--space-6) var(--container-pad);
+  max-width: var(--container-2xl);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.footer__copyright {
+  font-size: var(--text-xs);
+  color: var(--color-gray-500);
+}
+
+.footer__legal {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__legal a {
+  font-size: var(--text-xs);
+  color: var(--color-gray-500);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer__legal a:hover {
+  color: var(--color-primary);
+}
+
+
+/* ==========================================================================
+   19. UTILITY CLASSES
+   ========================================================================== */
+
+/* --- Display ------------------------------------------------------------- */
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* --- Spacing shorthands -------------------------------------------------- */
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.mt-4 {
+  margin-top: var(--space-4);
+}
+
+.mt-8 {
+  margin-top: var(--space-8);
+}
+
+.mt-12 {
+  margin-top: var(--space-12);
+}
+
+.mt-16 {
+  margin-top: var(--space-16);
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-4 {
+  margin-bottom: var(--space-4);
+}
+
+.mb-8 {
+  margin-bottom: var(--space-8);
+}
+
+.mb-12 {
+  margin-bottom: var(--space-12);
+}
+
+.mb-16 {
+  margin-bottom: var(--space-16);
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.p-4 {
+  padding: var(--space-4);
+}
+
+.p-6 {
+  padding: var(--space-6);
+}
+
+.p-8 {
+  padding: var(--space-8);
+}
+
+/* --- Text alignment ------------------------------------------------------ */
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* --- Font weights -------------------------------------------------------- */
+
+.font-regular {
+  font-weight: var(--fw-regular);
+}
+
+.font-medium {
+  font-weight: var(--fw-medium);
+}
+
+.font-bold {
+  font-weight: var(--fw-bold);
+}
+
+.font-black {
+  font-weight: var(--fw-black);
+}
+
+/* --- Uppercase / display style ------------------------------------------ */
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.normal-case {
+  text-transform: none;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* --- Background colours -------------------------------------------------- */
+
+.bg-primary-muted {
+  background-color: var(--color-primary-muted);
+}
+
+.bg-secondary-muted {
+  background-color: var(--color-secondary-muted);
+}
+
+.bg-gray-100 {
+  background-color: var(--color-gray-100);
+}
+
+/* --- Borders ------------------------------------------------------------- */
+
+.border {
+  border: var(--border-width) solid var(--color-border);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.border-top-red {
+  border-top: var(--border-width-4) solid var(--color-primary);
+}
+
+.border-left-red {
+  border-left: var(--border-width-4) solid var(--color-primary);
+}
+
+.rounded-sm {
+  border-radius: var(--radius-sm);
+}
+
+.rounded-md {
+  border-radius: var(--radius-md);
+}
+
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+
+.rounded-pill {
+  border-radius: var(--radius-pill);
+}
+
+.rounded-none {
+  border-radius: 0;
+}
+
+/* --- Width / Height ------------------------------------------------------ */
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.max-w-sm {
+  max-width: var(--container-sm);
+}
+
+.max-w-md {
+  max-width: var(--container-md);
+}
+
+.max-w-prose {
+  max-width: 70ch;
+}
+
+/* --- Position ------------------------------------------------------------ */
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.inset-0 {
+  inset: 0;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* --- Aspect ratios ------------------------------------------------------- */
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+/* --- Object fit ---------------------------------------------------------- */
+
+.object-cover {
+  object-fit: cover;
+}
+
+.object-contain {
+  object-fit: contain;
+}
+
+.object-top {
+  object-position: top;
+}
+
+/* --- Opacity ------------------------------------------------------------- */
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+/* --- Shadow -------------------------------------------------------------- */
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.shadow-red {
+  box-shadow: var(--shadow-red);
+}
+
+.shadow-none {
+  box-shadow: none;
+}
+
+/* --- Dividers ------------------------------------------------------------ */
+
+.divider {
+  border: none;
+  border-top: var(--border-width) solid var(--color-border);
+  margin: var(--space-8) 0;
+}
+
+.divider--bold {
+  border-top-width: var(--border-width-4);
+  border-color: var(--color-primary);
+}
+
+/* --- Skip link (accessibility) ------------------------------------------ */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  z-index: var(--z-toast);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--space-3) var(--space-6);
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+
+/* ==========================================================================
+   20. ANIMATIONS & TRANSITIONS
+   ========================================================================== */
+
+/* Fade in up — on-scroll reveal */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease both;
+}
+
+/* Stagger delays for sequential lists */
+.animate-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-4 {
+  animation-delay: 0.4s;
+}
+
+.animate-delay-5 {
+  animation-delay: 0.5s;
+}
+
+/* Slide in from left */
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.5s ease both;
+}
+
+/* Scale in pop */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Red flash — for live score updates */
+@keyframes flash-red {
+
+  0%,
+  100% {
+    background-color: transparent;
+  }
+
+  50% {
+    background-color: var(--color-primary-muted);
+  }
+}
+
+.animate-flash {
+  animation: flash-red 0.8s ease;
+}
+
+/* Hover lift — reusable transform utility */
+.hover-lift {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ==========================================================================
+   21. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   Mobile first — base styles above target all screens.
+   Breakpoints:
+     sm:  >= 640px
+     md:  >= 768px
+     lg:  >= 1024px
+     xl:  >= 1280px
+     2xl: >= 1440px
+   ------------------------------------------------------------------------- */
+
+/* --- Small (640px) ------------------------------------------------------- */
+@media (min-width: 640px) {
+  .sm\:grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sm\:flex {
+    display: flex;
+  }
+
+  .sm\:hidden {
+    display: none;
+  }
+
+  .sm\:block {
+    display: block;
+  }
+}
+
+/* --- Medium (768px) ------------------------------------------------------ */
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .layout-sidebar {
+    grid-template-columns: 1fr 300px;
+  }
+
+  .card--feature {
+    flex-direction: row;
+  }
+
+  .md\:grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .md\:grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:flex {
+    display: flex;
+  }
+}
+
+/* --- Large (1024px) ------------------------------------------------------ */
+@media (min-width: 1024px) {
+
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .footer__main {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+
+  .lg\:grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .lg\:grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .lg\:hidden {
+    display: none;
+  }
+
+  .lg\:block {
+    display: block;
+  }
+
+  .lg\:flex {
+    display: flex;
+  }
+}
+
+/* --- Extra large (1280px) ------------------------------------------------ */
+@media (min-width: 1280px) {
+  .xl\:grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .xl\:hidden {
+    display: none;
+  }
+}
+
+/* --- Mobile overrides (max-width: 767px) --------------------------------- */
+@media (max-width: 767px) {
+
+  /* Stack all multi-column grids */
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .layout-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  /* Mobile nav */
+  .navbar__nav {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background-color: var(--color-black);
+    flex-direction: column;
+    padding: var(--space-4) var(--container-pad);
+    border-top: var(--border-width-2) solid var(--color-primary);
+    gap: 0;
+    z-index: var(--z-dropdown);
+  }
+
+  .navbar__nav.is-open {
+    display: flex;
+  }
+
+  .navbar__nav-link {
+    padding: var(--space-4) var(--space-2);
+    width: 100%;
+    border-bottom: var(--border-width) solid var(--color-gray-800);
+  }
+
+  .navbar__toggle {
+    display: flex;
+  }
+
+  .navbar__cta {
+    display: none;
+  }
+
+  /* Stack feature cards */
+  .card--feature {
+    flex-direction: column;
+  }
+
+  .card--feature .card__media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Footer mobile */
+  .footer__main {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Scoreboard compact */
+  .scoreboard {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Fixture compact */
+  .fixture {
+    flex-wrap: wrap;
+  }
+
+  /* Hero subtitle tighter on mobile */
+  .hero__subtitle {
+    font-size: 1rem;
+    max-width: none;
+    margin-bottom: var(--space-6);
+  }
+
+  /* Buttons full width on mobile */
+  .hero__actions {
+    flex-direction: column;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Headings scale down */
+  h1,
+  .h1 {
+    font-size: var(--text-3xl);
+  }
+
+  h2,
+  .h2 {
+    font-size: var(--text-2xl);
+  }
+
+  h3,
+  .h3 {
+    font-size: var(--text-xl);
+  }
+
+  /* Section angled clips disabled on small screens */
+  .section--angled-bottom,
+  .section--angled-top {
+    clip-path: none;
+    padding-bottom: var(--space-20);
+    padding-top: var(--space-20);
+    margin-top: 0;
+  }
+
+  /* Large number decoration hidden */
+  .hero__number {
+    display: none;
+  }
+}
+
+/* --- Print --------------------------------------------------------------- */
+@media print {
+
+  .navbar,
+  .topbar,
+  .ticker,
+  .footer,
+  .btn,
+  .hero__number {
+    display: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    color: #000;
+    background: #fff;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .section {
+    padding: 24pt 0;
+  }
+}
+
+
+/* ==========================================================================
+   22. HERO MARQUEE BACKGROUND
+   ========================================================================== */
+
+/* Giant background text that animates behind hero content — Tornados pattern */
+.hero__marquee {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* between media (0) and ::before overlay (1) and content (2) */
+  overflow: hidden;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.hero__marquee-track {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+  animation: hero-marquee 90s linear infinite;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 16vw, 14rem);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.035);
+  line-height: 1;
+  user-select: none;
+}
+
+@keyframes hero-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__marquee-track {
+    animation: none;
+  }
+}
+
+
+/* ==========================================================================
+   23. TEAM INFO BOX & CATEGORY GROUPS
+   ========================================================================== */
+
+/* Category group on /teams overview */
+.teams-group {
+  margin-bottom: var(--space-8);
+}
+
+.teams-group__header {
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-4);
+  border-bottom: var(--border-width-2) solid var(--color-gray-200);
+}
+
+/* Info strip on team detail pages */
+.team-infobox {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-8);
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: var(--border-width) solid var(--color-border);
+  border-top: var(--border-width-4) solid var(--color-primary);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-card);
+}
+
+.team-infobox__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.team-infobox__label {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.team-infobox__value {
+  font-size: var(--text-base);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  line-height: var(--lh-snug);
+}
+
+.team-infobox__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.team-infobox__list li {
+  font-size: var(--text-base);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+  padding-left: var(--space-4);
+  position: relative;
+}
+
+.team-infobox__list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+  font-weight: var(--fw-black);
+}
+
+
+/* ==========================================================================
+   24. SPONSOR TICKER (legacy — kept for reference)
+   ========================================================================== */
+
+/* Thin black strip that scrolls sponsor names above the main nav */
+.sponsor-ticker {
+  overflow: hidden;
+  background-color: var(--color-black);
+  color: var(--color-gray-300);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: calc(var(--z-sticky) + 1);
+}
+
+.sponsor-ticker__label {
+  flex-shrink: 0;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  padding: 0 var(--space-4);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.sponsor-ticker__wrapper {
+  overflow: hidden;
+  flex: 1;
+}
+
+.sponsor-ticker__track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: 0 var(--space-6);
+  animation: ticker-scroll 40s linear infinite;
+  width: max-content;
+}
+
+.sponsor-ticker:hover .sponsor-ticker__track {
+  animation-play-state: paused;
+}
+
+.sponsor-ticker__item {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-gray-400);
+  transition: color var(--transition-fast);
+  filter: grayscale(1) brightness(1.2);
+}
+
+.sponsor-ticker__item:hover {
+  color: var(--color-white);
+  filter: none;
+}
+
+.sponsor-ticker__sep {
+  color: var(--color-primary);
+  font-size: var(--text-xs);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+
+/* ==========================================================================
+   23. FIXTURE CARD (hero floating next-match card)
+   ========================================================================== */
+
+.fixture-card {
+  background-color: var(--color-black);
+  border: var(--border-width) solid var(--color-gray-700);
+  border-top: 3px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  min-width: 260px;
+  max-width: 320px;
+  box-shadow: var(--shadow-xl);
+  color: var(--color-white);
+}
+
+.fixture-card__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.fixture-card__league {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-gray-500);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  text-align: right;
+  line-height: 1.3;
+}
+
+.fixture-card__teams {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.fixture-card__team {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--fw-black);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-tight);
+  line-height: 1;
+  flex: 1;
+}
+
+.fixture-card__team:last-child {
+  text-align: right;
+}
+
+.fixture-card__vs {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  flex-shrink: 0;
+}
+
+.fixture-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: var(--border-width) solid var(--color-gray-800);
+}
+
+.fixture-card__date {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-gray-300);
+}
+
+.fixture-card__venue {
+  font-size: var(--text-xs);
+  color: var(--color-gray-500);
+  letter-spacing: var(--ls-wide);
+}
+
+.fixture-card__countdown {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  margin-bottom: var(--space-4);
+}
+
+.fixture-card__link {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.fixture-card__link:hover {
+  color: var(--color-primary-light);
+}
+
+/* Positioning inside hero */
+.hero__fixture {
+  position: absolute;
+  bottom: var(--space-10);
+  right: var(--space-10);
+  z-index: 10;
+  animation: fade-in-up 0.7s ease 0.5s both;
+}
+
+@media (max-width: 1023px) {
+  .hero__fixture {
+    display: none;
+    /* Hidden on mobile/tablet — shown below hero instead */
+  }
+}
+
+
+/* ==========================================================================
+   24. HANDBALL.NET WRAPPER
+   ========================================================================== */
+
+.handball-wrapper {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  border-top: 3px solid var(--color-primary);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+}
+
+.handball-wrapper__label {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}hb-embed
+
+
+/* ==========================================================================
+   25. HERO LOAD ANIMATIONS (immediate, not scroll-triggered)
+   ========================================================================== */
+
+/* These classes replace intersect-based Tailwind animation on hero elements.
+   They fire immediately on page load since the hero is always in viewport. */
+
+.hero__title--reveal {
+  animation: fade-in-up 0.7s ease both;
+}
+
+.hero__subtitle--reveal {
+  animation: fade-in-up 0.7s ease 0.15s both;
+}
+
+.hero__actions--reveal {
+  animation: fade-in-up 0.7s ease 0.3s both;
+}
+
+.hero__number--reveal {
+  animation: scale-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+
+/* ==========================================================================
+   26. SPONSOR LOGO STRIP (below hero)
+   ========================================================================== */
+
+/* Clean static partner strip — white bg, logo placeholder boxes */
+.sponsor-logo-strip {
+  background: var(--color-white);
+  border-top: var(--border-width) solid var(--color-border);
+  border-bottom: var(--border-width) solid var(--color-border);
+  padding: var(--space-5) var(--container-pad);
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.sponsor-logo-strip__label {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--color-gray-400);
+  padding-right: var(--space-8);
+  border-right: var(--border-width) solid var(--color-border);
+  white-space: nowrap;
+}
+
+.sponsor-logo-strip__logos {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.sponsor-logo-strip__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  filter: grayscale(1) opacity(0.45);
+  transition: filter 250ms ease, border-color 250ms ease;
+  cursor: pointer;
+}
+
+.sponsor-logo-strip__item:hover {
+  filter: grayscale(0) opacity(1);
+  border-color: var(--color-border-strong);
+}
+
+.sponsor-logo-strip__mark {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: var(--fw-black);
+  color: var(--color-primary);
+  flex-shrink: 0;
+  letter-spacing: 0;
+}
+
+.sponsor-logo-strip__name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-gray-700);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+@media (max-width: 767px) {
+  .sponsor-logo-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-5) var(--container-pad);
+    gap: var(--space-4);
+  }
+
+  .sponsor-logo-strip__label {
+    border-right: none;
+    border-bottom: var(--border-width) solid var(--color-border);
+    padding-right: 0;
+    padding-bottom: var(--space-3);
+    width: 100%;
+  }
+
+  .sponsor-logo-strip__logos {
+    overflow-x: auto;
+    width: 100%;
+    flex-wrap: nowrap;
+    padding-bottom: var(--space-1);
+    /* hide scrollbar visually */
+    scrollbar-width: none;
+  }
+
+  .sponsor-logo-strip__logos::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ================================================================
+   Section 30 — Blog: News-page hero, featured post, single post
+   ================================================================ */
+
+/* News list page hero ---------------------------------------------- */
+.news-page-hero {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-black);
+  padding: var(--space-20) var(--container-pad);
+  text-align: center;
+  border-bottom: var(--border-width-2) solid var(--color-primary);
+}
+
+.news-page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--color-black) 0%, var(--color-secondary) 100%);
+  opacity: .6;
+}
+
+.news-page-hero__number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 22vw, 18rem);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .04);
+  user-select: none;
+  pointer-events: none;
+}
+
+.news-page-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--container-md);
+  margin: 0 auto;
+}
+
+.news-page-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: var(--color-white);
+  margin: var(--space-3) 0 var(--space-4);
+}
+
+.news-page-hero__subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-gray-400);
+  max-width: 45ch;
+  margin: 0 auto;
+}
+
+/* Feature card body enhancements ----------------------------------- */
+.card--feature__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-10);
+}
+
+.card--feature__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.card--feature__title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.card--feature__title a:hover {
+  color: var(--color-primary);
+}
+
+/* Single post hero ------------------------------------------------- */
+.post-hero {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-black);
+  padding: var(--space-20) var(--container-pad);
+  text-align: center;
+  border-bottom: var(--border-width-2) solid var(--color-primary);
+}
+
+.post-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--color-black) 0%, var(--color-secondary) 100%);
+  opacity: .55;
+}
+
+.post-hero__number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 16rem);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .04);
+  user-select: none;
+  pointer-events: none;
+}
+
+.post-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--container-md);
+  margin: 0 auto;
+}
+
+.post-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+  color: var(--color-white);
+  margin: var(--space-3) 0 var(--space-4);
+}
+
+.post-hero__excerpt {
+  font-size: var(--text-lg);
+  line-height: var(--lh-body);
+  color: var(--color-gray-400);
+  max-width: 60ch;
+  margin: 0 auto var(--space-4);
+}
+
+.post-hero__meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-gray-500);
+  margin-top: var(--space-4);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Overrides for Hero Fixture Card
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) {
+  .hero {
+    flex-direction: column;
+    justify-content: center;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-8);
+  }
+
+  .hero__content {
+    padding-bottom: var(--space-8);
+  }
+
+  .hero__fixture {
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+/* ==========================================================================
+   27. STATS CARDS — MOBILE FIX
+   ========================================================================== */
+
+/* On mobile the cards stack, so all corners should be rounded equally */
+@media (max-width: 639px) {
+  .card--stat {
+    border-radius: var(--radius-lg) !important;
+  }
+}
+
+/* On tablet 2-col layout, fix corner rounding per row */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .card--stat {
+    border-radius: var(--radius-lg) !important;
+  }
+}
+
+
+/* ==========================================================================
+   28. SPONSOR LOGO STRIP — AUTO-SCROLL
+   ========================================================================== */
+
+/* Convert static logos list to an infinite marquee */
+.sponsor-logo-strip__logos {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  overflow: hidden;
+  flex-wrap: nowrap;
+  flex: 1;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.sponsor-logo-strip__track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  animation: sponsor-scroll 32s linear infinite;
+  flex-shrink: 0;
+  min-width: max-content;
+}
+
+.sponsor-logo-strip__track:hover,
+.sponsor-logo-strip__logos:hover .sponsor-logo-strip__track {
+  animation-play-state: paused;
+}
+
+@keyframes sponsor-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sponsor-logo-strip__track {
+    animation: none;
+  }
+}
+
+/* Make items slightly larger in the scrolling strip */
+.sponsor-logo-strip__item {
+  padding: var(--space-2) var(--space-5);
+}
+
+.sponsor-logo-strip__mark {
+  width: 32px;
+  height: 32px;
+  font-size: 11px;
+}
+
+.sponsor-logo-strip__name {
+  font-size: var(--text-sm);
+}
+
+
+/* ==========================================================================
+   29. DARK MODE — SEMANTIC OVERRIDES
+   ========================================================================== */
+
+/* Dark mode: update semantic bg/text tokens so style.css components look right */
+.dark {
+  --color-bg: #141414;
+  --color-bg-alt: #1c1c1c;
+  --color-text: #F0F0F0;
+  --color-text-muted: #9A9A9A;
+  --color-border: #2A2A2A;
+  --color-border-strong: #3A3A3A;
+}
+
+.dark body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Dark mode: cards */
+.dark .card {
+  background-color: #1C1C1C;
+  border-color: #2A2A2A;
+}
+
+.dark .card__title {
+  color: #F0F0F0;
+}
+
+.dark .card__excerpt {
+  color: #9A9A9A;
+}
+
+/* Dark mode: section backgrounds */
+.dark .sponsor-logo-strip {
+  background-color: #1C1C1C;
+  border-color: #2A2A2A;
+}
+
+.dark .sponsor-logo-strip__name {
+  color: #AAAAAA;
+}
+
+/* Dark mode: handball widget wrapper */
+.dark .handball-wrapper {
+  background-color: #1A1A1A;
+  border-color: #2A2A2A;
+}
+
+/* Dark mode: section with bg-light / gray-100 */
+.dark .bg-light,
+.dark [style*="background:var(--color-gray-100)"],
+.dark [style*="background: var(--color-gray-100)"] {
+  background-color: #1C1C1C !important;
+}
+
+/* Dark mode: theme toggle button */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--color-gray-400);
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+.theme-toggle .icon-moon {
+  display: block;
+}
+
+.dark .theme-toggle .icon-sun {
+  display: block;
+}
+
+.dark .theme-toggle .icon-moon {
+  display: none;
+}
+
+/* Fix nav hamburger lines — always white since navbar is always dark */
+[data-aw-toggle-menu] span {
+  background-color: var(--color-white) !important;
+}
+
+/* Ensure sufficient contrast for section subtitles on dark backgrounds */
+.dark .subheading,
+.dark p:not(.footer__tagline):not(.footer__copyright) {
+  color: var(--color-text-muted);
+}
+
+/* Dark mode: make the nav mobile menu dark instead of white */
+@media (max-width: 767px) {
+  .dark #header.expanded .navbar__nav-wrapper {
+    background-color: #141414;
+  }
+
+  .dark #header.expanded .navbar__nav-link {
+    color: var(--color-white);
+  }
+}
+
+/* Light mode: nav mobile menu stays white with dark text */
+#header.expanded .navbar__nav-wrapper {
+  background-color: var(--color-white);
+}
+
+/* Prevent mobile menu from inheriting dark bg on light mode */
+#header.expanded .navbar__nav-link {
+  color: var(--color-primary);
+}
+
+/* Handball widget: ensure white card background is applied */
+.handball-wrapper .hb-embed {
+  background: var(--color-white) !important;
+  border-radius: 0px;
+  overflow: hidden;
+}
+
+.dark .handball-wrapper .hb-embed {
+  background: #1C1C1C !important;
+}
+
+/* Hero fixture card: ensure correct absolute positioning on desktop */
+@media (min-width: 1024px) {
+  .hero__fixture {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    width: auto;
+    max-width: 340px;
+  }
+}

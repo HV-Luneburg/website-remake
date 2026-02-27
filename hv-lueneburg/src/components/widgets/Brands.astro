@@ -1,0 +1,57 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Brands as Props } from '~/types';
+
+import Image from '~/components/common/Image.astro';
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+
+const {
+  title = '',
+  subtitle = '',
+  tagline = '',
+  icons = [],
+  images = [],
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-6xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+  <Headline title={title} subtitle={subtitle} tagline={tagline} />
+
+  <div class="sponsor-bar__logos">
+    {icons.map((icon) => (
+      <a class="sponsor-bar__logo" href="#" title="Sponsor">
+        <Icon name={icon} class="w-12 h-12" />
+      </a>
+    ))}
+    {images.map((image) =>
+      (image as { src?: string; alt?: string; href?: string }).src ? (
+        <a
+          class="sponsor-bar__logo"
+          href={(image as { href?: string }).href || '#'}
+          title={(image as { alt?: string }).alt || 'Sponsor'}
+          target={(image as { href?: string }).href ? '_blank' : undefined}
+          rel={(image as { href?: string }).href ? 'noopener noreferrer' : undefined}
+        >
+          <Image
+            src={(image as { src: string }).src}
+            alt={(image as { alt?: string }).alt || ''}
+            class="sponsor-bar__logo-img"
+            width={140}
+            height={48}
+            layout="fixed"
+          />
+        </a>
+      ) : null
+    )}
+  </div>
+</WidgetWrapper>

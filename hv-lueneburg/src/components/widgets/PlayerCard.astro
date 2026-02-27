@@ -1,0 +1,81 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  name: string;
+  number: number;
+  position: string;
+  imageUrl?: string;
+  stats?: {
+    games?: number;
+    goals?: number;
+    assists?: number;
+  };
+}
+
+const {
+  name,
+  number,
+  position,
+  imageUrl = "https://images.unsplash.com/photo-1548689816-c399f954f3dd?q=80&w=800&auto=format&fit=crop",
+  stats = { games: 14, goals: 42, assists: 19 }
+} = Astro.props;
+---
+
+<div class="group relative w-full aspect-[3/4] rounded-2xl overflow-hidden bg-slate-900 shadow-lg cursor-pointer transform transition-transform hover:-translate-y-2 duration-300 [transform:translateZ(0)]">
+  
+  <!-- Massive Background Number -->
+  <div class="absolute -right-4 top-4 text-[12rem] font-black text-white/10 font-heading leading-none z-0 user-select-none transition-transform duration-500 group-hover:scale-110 group-hover:text-primary/20">
+    {number}
+  </div>
+
+  <!-- Player Image (Full-bleed) -->
+  <img 
+    src={imageUrl} 
+    alt={name} 
+    class="absolute inset-0 w-full h-full object-cover object-top opacity-70 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal transition-all duration-500 z-10"
+  />
+
+  <!-- Gradient Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20 opacity-80 group-hover:opacity-90 transition-opacity"></div>
+
+  <!-- Content Container -->
+  <div class="relative z-30 h-full flex flex-col justify-end p-6">
+    
+    <!-- Header: Name & Number -->
+    <div class="flex items-end justify-between mb-2">
+      <h3 class="text-2xl sm:text-3xl font-heading font-black text-white leading-none tracking-wide group-hover:text-primary transition-colors">
+        {name.split(' ').map((part, i) => (
+          <span class={i === name.split(' ').length - 1 ? 'block text-3xl sm:text-4xl uppercase' : 'block text-lg sm:text-xl text-gray-300'}>{part}</span>
+        ))}
+      </h3>
+      <div class="text-4xl sm:text-5xl font-heading font-black text-white text-shadow-sm">
+        {number}
+      </div>
+    </div>
+
+    <!-- Position -->
+    <div class="text-accent font-bold uppercase tracking-widest text-xs mb-4">
+      {position}
+    </div>
+
+    <!-- Hidden Stats revealed on hover -->
+    <div class="overflow-hidden max-h-0 group-hover:max-h-32 transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100">
+      <div class="flex items-center justify-between pt-4 border-t border-white/20">
+        <div class="text-center">
+          <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Spiele</div>
+          <div class="text-xl font-bold text-white">{stats.games}</div>
+        </div>
+        <div class="text-center">
+          <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Tore</div>
+          <div class="text-xl font-bold text-white">{stats.goals}</div>
+        </div>
+        <div class="text-center">
+          <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Assists</div>
+          <div class="text-xl font-bold text-white">{stats.assists}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

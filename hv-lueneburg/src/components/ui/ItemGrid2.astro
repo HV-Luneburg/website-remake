@@ -1,0 +1,73 @@
+---
+import type { ItemGrid as Props } from '~/types';
+import { Icon } from 'astro-icon/components';
+import { twMerge } from 'tailwind-merge';
+import Button from './Button.astro';
+
+const { items = [], columns, defaultIcon = '', classes = {} } = Astro.props;
+
+const {
+  container: containerClass = '',
+  panel: panelClass = '',
+  title: titleClass = '',
+  description: descriptionClass = '',
+  icon: defaultIconClass = '',
+} = classes as Record<string, string>;
+---
+
+{
+  items && items.length > 0 && (
+    <div
+      class={twMerge(
+        `grid gap-6 ${
+          columns === 4
+            ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'
+            : columns === 3
+              ? 'lg:grid-cols-3 sm:grid-cols-2'
+              : columns === 2
+                ? 'sm:grid-cols-2'
+                : ''
+        }`,
+        containerClass
+      )}
+    >
+      {items.map(({ title, description, icon, callToAction, classes: itemClasses = {} }) => (
+        <div
+          class={twMerge(
+            'card intersect-once intersect-quarter intersect-no-queue motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+            panelClass,
+            (itemClasses as Record<string, string>)?.panel
+          )}
+        >
+          <div class="card__body">
+            {(icon || defaultIcon) && (
+              <Icon
+                name={icon || defaultIcon}
+                class={twMerge('w-10 h-10 mb-4', defaultIconClass, (itemClasses as Record<string, string>)?.icon)}
+                style="color: var(--color-primary, #E30613);"
+              />
+            )}
+            {title && (
+              <div
+                class={twMerge('card__title', titleClass, (itemClasses as Record<string, string>)?.title)}
+              >
+                {title}
+              </div>
+            )}
+            {description && (
+              <p
+                class={twMerge('card__excerpt', descriptionClass, (itemClasses as Record<string, string>)?.description)}
+                set:html={description}
+              />
+            )}
+            {callToAction && (
+              <div class="mt-4">
+                <Button {...callToAction} variant="tertiary" />
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}

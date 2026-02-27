@@ -1,0 +1,108 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  homeTeam: string;
+  awayTeam: string;
+  homeScore: number;
+  awayScore: number;
+  date: string;
+  league: string;
+  topScorers?: { name: string; goals: number; sevenMeters?: number }[];
+  galleryImages?: string[];
+  summary?: string;
+}
+
+const {
+  homeTeam,
+  awayTeam,
+  homeScore,
+  awayScore,
+  date,
+  league,
+  topScorers = [],
+  galleryImages = [],
+  summary = '',
+} = Astro.props;
+
+const isWin = homeTeam.includes('Lüneburg') ? homeScore > awayScore : awayScore > homeScore;
+const isDraw = homeScore === awayScore;
+---
+
+<div class="match-report-template max-w-4xl mx-auto my-12 bg-white dark:bg-slate-900 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-slate-800">
+  
+  <!-- Score Header -->
+  <div class={`p-8 sm:p-12 pb-16 relative overflow-hidden ${isWin ? 'bg-primary text-white' : isDraw ? 'bg-gray-800 text-white' : 'bg-red-900 text-white'}`}>
+    <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\\'60\\' height=\\'60\\' viewBox=\\'0 0 60 60\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'none\\' fill-rule=\\'evenodd\\'%3E%3Cg fill=\\'%23ffffff\\' fill-opacity=\\'1\\'%3E%3Cpath d=\\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    <div class="relative z-10 flex flex-col items-center">
+      <span class="text-white/80 font-bold tracking-widest uppercase text-xs sm:text-sm mb-6 bg-black/20 px-4 py-1 rounded-full">{league} • {date}</span>
+      <div class="flex items-center justify-center gap-4 sm:gap-12 w-full">
+        <div class="flex-1 text-right">
+          <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-black leading-tight sm:leading-none">{homeTeam}</h2>
+        </div>
+        <div class="flex-shrink-0 bg-white/10 backdrop-blur-md rounded-2xl px-6 py-4 border border-white/20 shadow-inner">
+          <div class="text-5xl sm:text-7xl font-mono font-bold tracking-tighter shadow-sm">{homeScore}:{awayScore}</div>
+        </div>
+        <div class="flex-1 text-left">
+          <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-black leading-tight sm:leading-none">{awayTeam}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Body -->
+  <div class="p-6 sm:p-10 lg:p-12 -mt-8 relative z-20 bg-white dark:bg-slate-900 rounded-t-3xl">
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <!-- Main Summary -->
+      <div class="md:col-span-2 prose prose-lg dark:prose-invert prose-headings:font-heading prose-a:text-primary">
+        <h3 class="text-2xl font-bold mb-4">Spielzusammenfassung</h3>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed font-serif text-lg">
+          {summary || <slot />}
+        </p>
+      </div>
+
+      <!-- Stats Sidebar -->
+      <div class="md:col-span-1 border-l-0 md:border-l border-gray-100 dark:border-slate-800 md:pl-8">
+        <h3 class="text-lg font-heading font-black uppercase tracking-wider mb-6 flex items-center gap-2">
+          <Icon name="tabler:target" class="w-5 h-5 text-primary" />
+          Top Scorer
+        </h3>
+        {topScorers && topScorers.length > 0 ? (
+          <ul class="space-y-4">
+            {topScorers.map((scorer) => (
+              <li class="flex items-center justify-between bg-gray-50 dark:bg-slate-800/50 p-3 rounded-lg border border-gray-100 dark:border-slate-800">
+                <span class="font-bold text-gray-900 dark:text-gray-100">{scorer.name}</span>
+                <div class="flex items-center gap-2">
+                  <span class="text-xl font-black text-primary">{scorer.goals}</span>
+                  {scorer.sevenMeters ? <span class="text-xs text-gray-400 bg-gray-200 dark:bg-slate-700 px-1 rounded" title="7-Meter">({scorer.sevenMeters})</span> : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="text-sm text-gray-500">Keine Daten verfügbar.</p>
+        )}
+      </div>
+    </div>
+
+    <!-- Image Gallery Section -->
+    {galleryImages && galleryImages.length > 0 && (
+      <div class="mt-16 pt-12 border-t border-gray-100 dark:border-slate-800">
+        <h3 class="text-2xl font-heading font-black uppercase tracking-wider mb-8 flex items-center gap-3">
+          <Icon name="tabler:camera" class="w-6 h-6 text-primary" />
+          Spielgalerie
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {galleryImages.map((img) => (
+            <a href={img} target="_blank" class="group aspect-video overflow-hidden rounded-xl bg-gray-100 block border border-gray-200 dark:border-slate-700 shadow-sm relative">
+              <img src={img} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300"></div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+  </div>
+</div>

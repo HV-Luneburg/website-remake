@@ -1,0 +1,60 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  limit?: number;
+}
+
+const { limit = 4 } = Astro.props;
+
+// Mock IG Data until Sanity integration is active
+const posts = [
+  { id: '1', type: 'image', url: 'https://images.unsplash.com/photo-1548689816-c399f954f3dd', likes: 142, comments: 12 },
+  { id: '2', type: 'video', url: 'https://images.unsplash.com/photo-1526676037777-05a232554f77', likes: 256, comments: 45 },
+  { id: '3', type: 'image', url: 'https://images.unsplash.com/photo-1574629810360-7efbb6b69281', likes: 98, comments: 3 },
+  { id: '4', type: 'image', url: 'https://images.unsplash.com/photo-1518655048521-f130df041f66', likes: 210, comments: 18 },
+];
+---
+
+<div class="instagram-feed bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 sm:p-8">
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <div class="bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[2px] rounded-full">
+        <div class="bg-white dark:bg-slate-900 p-1 rounded-full">
+          <Icon name="tabler:brand-instagram" class="w-6 h-6 text-gray-900 dark:text-white" />
+        </div>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg leading-tight">@hv_lueneburg</h3>
+        <p class="text-xs text-gray-500">Folge uns auf Instagram</p>
+      </div>
+    </div>
+    <a href="https://instagram.com/hv_lueneburg" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+      Zum Profil
+    </a>
+  </div>
+
+  <div class="grid grid-cols-2 gap-2 sm:gap-4">
+    {posts.slice(0, limit).map(post => (
+      <a href={`https://instagram.com/hv_lueneburg`} target="_blank" rel="noopener" class="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 dark:bg-slate-800 block">
+        <img src={`${post.url}?q=80&w=400&auto=format&fit=crop`} alt="Instagram post" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+        
+        {post.type === 'video' && (
+          <div class="absolute top-2 right-2 text-white drop-shadow-md">
+            <Icon name="tabler:player-play-filled" class="w-5 h-5" />
+          </div>
+        )}
+
+        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 text-white font-bold backdrop-blur-[2px]">
+          <span class="flex items-center gap-1"><Icon name="tabler:heart-filled" class="w-5 h-5" /> {post.likes}</span>
+          <span class="flex items-center gap-1"><Icon name="tabler:message-circle-2-filled" class="w-5 h-5" /> {post.comments}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <div class="mt-6 p-4 rounded-xl bg-gray-50 dark:bg-slate-800/50 text-sm text-gray-600 dark:text-gray-400 border border-gray-100 dark:border-slate-700/50 flex gap-3">
+    <Icon name="tabler:info-circle" class="w-5 h-5 flex-shrink-0 text-primary" />
+    <p>Das Instagram-Token wird nach dem Launch im Sanity CMS hinterlegt. Bis dahin simulieren wir den Feed.</p>
+  </div>
+</div>

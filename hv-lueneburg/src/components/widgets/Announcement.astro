@@ -1,0 +1,20 @@
+---
+// HVL News-Ticker — scrolling announcement bar
+// Items will later be loaded from Sanity CMS
+const items = [
+  'Willkommen beim HV Lüneburg',
+  'Saison 2026/27 startet – Trainingszeiten auf handball.net',
+  'Probetraining jederzeit möglich – jetzt anmelden!',
+  'Spielberichte auf unserer News-Seite',
+];
+---
+
+<div class="ticker" aria-label="Aktuelles">
+  <span class="ticker__label">News</span>
+  <div class="ticker__track" aria-hidden="true">
+    {/* Duplicate items for seamless loop */}
+    {[...items, ...items].map((item) => (
+      <span class="ticker__item">{item}</span>
+    ))}
+  </div>
+</div>

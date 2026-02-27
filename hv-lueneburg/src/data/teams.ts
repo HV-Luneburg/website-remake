@@ -1,0 +1,234 @@
+export interface Team {
+  name: string;
+  slug: string;
+  league: string;
+  description: string;
+  /** handball.net team ID for widget embedding */
+  handballNetId: string;
+  /** Category for grouping on the teams overview page */
+  category: 'herren' | 'damen' | 'jugend';
+  /** Head coach name — TODO: replace with real data */
+  trainer?: string;
+  /** Training schedule — TODO: replace with real data */
+  trainingszeiten?: string[];
+  /** Training hall / venue — TODO: replace with real data */
+  halle?: string;
+  /** Contact name or email — TODO: replace with real data */
+  kontakt?: string;
+  /** Instagram handle or URL for this specific team */
+  instagram?: string;
+}
+
+export const teams: Team[] = [
+  // Herren
+  {
+    name: 'Herren 1',
+    slug: 'herren-1',
+    league: 'Verbandsliga Männer',
+    description: 'Unsere erste Herrenmannschaft.',
+    handballNetId: 'nuliga.hvn.1662205',
+    category: 'herren',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Di. 19:30–21:30 Uhr', 'Do. 19:30–21:30 Uhr'],
+    halle: 'Sporthalle Am Sportpark, Lüneburg',
+    kontakt: 'herren1@hv-lueneburg.de',
+  },
+  {
+    name: 'Herren 2',
+    slug: 'herren-2',
+    league: 'Regionsoberliga Männer',
+    description: 'Unsere zweite Herrenmannschaft.',
+    handballNetId: 'nuliga.hvn.1664641',
+    category: 'herren',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Mo. 20:00–22:00 Uhr', 'Mi. 20:00–22:00 Uhr'],
+    halle: 'Sporthalle Am Sportpark, Lüneburg',
+    kontakt: 'herren2@hv-lueneburg.de',
+  },
+  {
+    name: 'Herren 3',
+    slug: 'herren-3',
+    league: 'Regionsliga Männer',
+    description: 'Unsere dritte Herrenmannschaft.',
+    handballNetId: 'nuliga.hvn.1663439',
+    category: 'herren',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Di. 20:00–22:00 Uhr'],
+    halle: 'Sporthalle Kreideberg, Lüneburg',
+    kontakt: 'herren3@hv-lueneburg.de',
+  },
+  {
+    name: 'Herren 4',
+    slug: 'herren-4',
+    league: 'Regionsliga Männer',
+    description: 'Unsere vierte Herrenmannschaft.',
+    handballNetId: 'nuliga.hvn.1665153',
+    category: 'herren',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Do. 20:00–22:00 Uhr'],
+    halle: 'Sporthalle Kreideberg, Lüneburg',
+    kontakt: 'herren4@hv-lueneburg.de',
+  },
+  // Damen
+  {
+    name: 'Damen 1',
+    slug: 'damen-1',
+    league: 'Oberliga Frauen',
+    description: 'Unsere erste Damenmannschaft.',
+    handballNetId: 'nuliga.hvn.1662898',
+    category: 'damen',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Di. 19:00–21:00 Uhr', 'Do. 19:00–21:00 Uhr'],
+    halle: 'Sporthalle Am Sportpark, Lüneburg',
+    kontakt: 'damen1@hv-lueneburg.de',
+  },
+  {
+    name: 'Damen 2',
+    slug: 'damen-2',
+    league: 'Regionsoberliga Frauen',
+    description: 'Unsere zweite Damenmannschaft.',
+    handballNetId: 'nuliga.hvn.1664664',
+    category: 'damen',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Mo. 19:00–21:00 Uhr', 'Mi. 19:00–21:00 Uhr'],
+    halle: 'Sporthalle Kreideberg, Lüneburg',
+    kontakt: 'damen2@hv-lueneburg.de',
+  },
+  // Männliche Jugend
+  {
+    name: 'Männliche Jugend A',
+    slug: 'maennliche-jugend-a',
+    league: 'Landesliga A-Jugend',
+    description: 'Unsere männliche A-Jugend.',
+    handballNetId: 'nuliga.hvn.1666958',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Mi. 17:30–19:30 Uhr', 'Fr. 17:30–19:30 Uhr'],
+    halle: 'Sporthalle Am Sportpark, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  {
+    name: 'Männliche Jugend B',
+    slug: 'maennliche-jugend-b',
+    league: 'Landesliga B-Jugend',
+    description: 'Unsere männliche B-Jugend.',
+    handballNetId: 'nuliga.hvn.1672055',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Di. 17:00–19:00 Uhr', 'Do. 17:00–19:00 Uhr'],
+    halle: 'Sporthalle Am Sportpark, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  {
+    name: 'Männliche Jugend B II',
+    slug: 'maennliche-jugend-b-2',
+    league: 'Regionsoberliga B-Jugend',
+    description: 'Unsere zweite männliche B-Jugend.',
+    handballNetId: 'nuliga.hvn.1672058',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Di. 17:00–19:00 Uhr'],
+    halle: 'Sporthalle Kreideberg, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  {
+    name: 'Männliche Jugend C',
+    slug: 'maennliche-jugend-c',
+    league: 'Landesliga C-Jugend',
+    description: 'Unsere männliche C-Jugend.',
+    handballNetId: 'nuliga.hvn.1672056',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Mi. 16:00–18:00 Uhr', 'Sa. 10:00–12:00 Uhr'],
+    halle: 'Sporthalle Am Sportpark, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  {
+    name: 'Männliche Jugend C II',
+    slug: 'maennliche-jugend-c-2',
+    league: 'Regionsoberliga C-Jugend',
+    description: 'Unsere zweite männliche C-Jugend.',
+    handballNetId: 'nuliga.hvn.1687228',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Do. 16:00–18:00 Uhr'],
+    halle: 'Sporthalle Kreideberg, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  {
+    name: 'Männliche Jugend D',
+    slug: 'maennliche-jugend-d',
+    league: 'Regionsoberliga D-Jugend',
+    description: 'Unsere männliche D-Jugend.',
+    handballNetId: 'nuliga.hvn.1666959',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Mi. 15:30–17:30 Uhr', 'Sa. 09:00–11:00 Uhr'],
+    halle: 'Sporthalle Am Sportpark, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  {
+    name: 'Männliche Jugend D II',
+    slug: 'maennliche-jugend-d-2',
+    league: 'Regionsoberliga D-Jugend',
+    description: 'Unsere zweite männliche D-Jugend.',
+    handballNetId: 'nuliga.hvn.1682408',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Do. 15:30–17:30 Uhr'],
+    halle: 'Sporthalle Kreideberg, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  {
+    name: 'Männliche Jugend E',
+    slug: 'maennliche-jugend-e',
+    league: 'Regionsoberliga E-Jugend',
+    description: 'Unsere männliche E-Jugend.',
+    handballNetId: 'nuliga.hvn.1672060',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Mi. 15:00–17:00 Uhr'],
+    halle: 'Sporthalle Am Sportpark, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  {
+    name: 'Männliche Jugend E II',
+    slug: 'maennliche-jugend-e-2',
+    league: 'Regionsoberliga E-Jugend',
+    description: 'Unsere zweite männliche E-Jugend.',
+    handballNetId: 'nuliga.hvn.1687227',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Do. 15:00–17:00 Uhr'],
+    halle: 'Sporthalle Kreideberg, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  // Weibliche Jugend
+  {
+    name: 'Weibliche Jugend D',
+    slug: 'weibliche-jugend-d',
+    league: 'Regionsoberliga D-Jugend',
+    description: 'Unsere weibliche D-Jugend.',
+    handballNetId: 'nuliga.hvn.1672057',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Di. 16:00–18:00 Uhr', 'Sa. 10:00–12:00 Uhr'],
+    halle: 'Sporthalle Am Sportpark, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+  {
+    name: 'Weibliche Jugend E',
+    slug: 'weibliche-jugend-e',
+    league: 'Regionsoberliga E-Jugend',
+    description: 'Unsere weibliche E-Jugend.',
+    handballNetId: 'nuliga.hvn.1672059',
+    category: 'jugend',
+    trainer: 'TODO: Trainer eintragen',
+    trainingszeiten: ['Do. 16:00–18:00 Uhr'],
+    halle: 'Sporthalle Kreideberg, Lüneburg',
+    kontakt: 'jugend@hv-lueneburg.de',
+  },
+];
+
+/** handball.net club ID for club-wide widgets */
+export const HANDBALL_NET_CLUB_ID = 'nuliga.hvn.681';

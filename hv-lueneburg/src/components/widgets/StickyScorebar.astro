@@ -1,0 +1,125 @@
+---
+export interface Game {
+  homeTeam: string;
+  awayTeam: string;
+  homeScore: number;
+  awayScore: number;
+  time?: string;
+  isLive?: boolean;
+  league?: string;
+}
+
+export interface Props {
+  games?: Game[];
+}
+
+const { games = [
+  {
+    homeTeam: 'HV Lüneburg',
+    awayTeam: 'VfL Fredenbeck',
+    homeScore: 24,
+    awayScore: 22,
+    time: '58:12',
+    isLive: true,
+    league: 'Herren 1',
+  },
+  {
+    homeTeam: 'HVL Damen',
+    awayTeam: 'TSV Handorf',
+    homeScore: 18,
+    awayScore: 15,
+    time: '45:30',
+    isLive: true,
+    league: 'Damen 1',
+  },
+] } = Astro.props;
+---
+
+<!-- z-index 150: below navbar (300) and mobile menu (295) -->
+<div id="scorebar" class="w-full bg-primary text-white font-heading font-bold uppercase tracking-wide overflow-hidden" style="z-index: 150; position: relative;">
+
+  <!-- ── DESKTOP: all games side by side ──────────────────────────────── -->
+  <div class="hidden md:flex max-w-7xl mx-auto px-4 sm:px-6 divide-x divide-white/20">
+    {games.map((game) => (
+      <div class="flex-1 flex items-center justify-center gap-3 py-2 px-3 min-w-0">
+        {game.isLive ? (
+          <span class="flex h-2 w-2 relative flex-shrink-0">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+          </span>
+        ) : null}
+        {game.league && (
+          <span class="text-white/60 font-mono text-xs flex-shrink-0">{game.league}</span>
+        )}
+        <span class="truncate text-sm">{game.homeTeam}</span>
+        <div class="bg-black/25 px-2.5 py-0.5 rounded font-mono text-base tabular-nums whitespace-nowrap flex-shrink-0">
+          {game.homeScore} : {game.awayScore}
+        </div>
+        <span class="truncate text-sm">{game.awayTeam}</span>
+        {game.time && game.isLive && (
+          <span class="text-white/60 font-mono text-xs flex-shrink-0">{game.time}</span>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- ── MOBILE: one game at a time, auto-rotates every 20 s ─────────── -->
+  <div class="md:hidden px-3 py-2">
+    {games.map((game, i) => (
+      <div
+        class="scorebar-slide flex items-center gap-2 w-full justify-between"
+        data-slide={i}
+        aria-hidden={i !== 0 ? 'true' : 'false'}
+        style={i !== 0 ? 'display:none;' : ''}
+      >
+        <!-- Left: live dot + league -->
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          {game.isLive ? (
+            <span class="flex h-1.5 w-1.5 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+            </span>
+          ) : null}
+          {game.league && (
+            <span class="text-white/70 font-mono text-[10px] hidden xs:inline">{game.league}</span>
+          )}
+        </div>
+        <!-- Center: teams + score -->
+        <div class="flex items-center gap-1.5 text-xs min-w-0 flex-1 justify-center">
+          <span class="truncate max-w-[70px]">{game.homeTeam}</span>
+          <div class="bg-black/25 px-2 py-0.5 rounded font-mono text-sm tabular-nums whitespace-nowrap flex-shrink-0">
+            {game.homeScore} : {game.awayScore}
+          </div>
+          <span class="truncate max-w-[70px]">{game.awayTeam}</span>
+        </div>
+        <!-- Right: time + slide indicator -->
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          {game.time && (
+            <span class="font-mono text-[10px] text-white/70">{game.time}</span>
+          )}
+          {games.length > 1 && (
+            <span class="text-white/50 font-mono text-[10px]">{i + 1}/{games.length}</span>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+</div>
+
+{games.length > 1 && (
+  <script is:inline>
+    (function () {
+      var slides = document.querySelectorAll('.scorebar-slide');
+      if (!slides || slides.length <= 1) return;
+      var current = 0;
+      setInterval(function () {
+        slides[current].style.display = 'none';
+        slides[current].setAttribute('aria-hidden', 'true');
+        current = (current + 1) % slides.length;
+        slides[current].style.display = '';
+        slides[current].setAttribute('aria-hidden', 'false');
+      }, 20000);
+    })();
+  </script>
+)}

@@ -1,0 +1,66 @@
+site:
+  name: HV Lüneburg
+  site: 'https://astrowind.vercel.app'
+  base: '/'
+  trailingSlash: false
+
+# Default SEO metadata
+metadata:
+  title:
+    default: HV Lüneburg
+    template: '%s — HV Lüneburg'
+  description: 'Handballverein Lüneburg — Dein Verein für Handball in Lüneburg und Umgebung.'
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: HV Lüneburg
+    images:
+      - url: '~/assets/images/default.png'
+        width: 1200
+        height: 628
+    type: website
+
+i18n:
+  language: de
+  textDirection: ltr
+
+apps:
+  blog:
+    isEnabled: true
+    postsPerPage: 6
+
+    post:
+      isEnabled: true
+      permalink: 'news/%slug%'
+      robots:
+        index: true
+
+    list:
+      isEnabled: true
+      pathname: 'news'
+      robots:
+        index: true
+
+    category:
+      isEnabled: true
+      pathname: 'category'
+      robots:
+        index: true
+
+    tag:
+      isEnabled: true
+      pathname: 'tag'
+      robots:
+        index: false
+
+    isRelatedPostsEnabled: true
+    relatedPostsCount: 4
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: null
+
+ui:
+  theme: 'system'

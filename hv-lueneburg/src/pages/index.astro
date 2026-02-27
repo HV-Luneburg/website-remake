@@ -1,0 +1,274 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero2 from '~/components/widgets/Hero2.astro';
+import StickyScorebar from '~/components/widgets/StickyScorebar.astro';
+import DynamicContentFeed from '~/components/widgets/DynamicContentFeed.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+
+import { teams } from '~/data/teams';
+import { sponsorStrip, nextMatch, clubStats, heroSlides } from '~/data/site';
+
+// Format match date for display: "Sa., 15.03.2026 · 19:30 Uhr"
+const matchDate = new Date(nextMatch.date);
+const formattedMatchDate = matchDate.toLocaleDateString('de-DE', {
+  weekday: 'short',
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+}) + ' · ' + matchDate.toLocaleTimeString('de-DE', {
+  hour: '2-digit',
+  minute: '2-digit',
+}) + ' Uhr';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import { Icon } from 'astro-icon/components';
+
+const metadata = {
+  title: 'HV Lüneburg — Dein Handballverein in Lüneburg',
+  ignoreTitleTemplate: true,
+};
+
+const bgGray = '<div style="position:absolute;inset:0;background:var(--color-gray-100);"></div>';
+
+const mockPosts = [
+  {
+    id: '1', type: 'spielbericht', title: 'Derbysieg in letzter Sekunde!', date: '12. Nov 2026', author: 'Redaktion',
+    imageUrl: 'https://images.unsplash.com/photo-1548689816-c399f954f3dd?q=80&w=1000&auto=format&fit=crop',
+    excerpt: 'In einem unfassbaren Spiel dreht die 1. Herren einen 4-Tore-Rückstand in den letzten 5 Minuten und sichert sich den Derbysieg.',
+    team: '1. Herren', score: '28 : 27', link: '/blog/derbysieg'
+  },
+  {
+    id: '2', type: 'ankündigung', title: 'Neue Trainingszeiten für die E-Jugend', date: '10. Nov 2026',
+    excerpt: 'Bitte beachtet die Hallenänderung ab kommender Woche Montag.',
+    link: '/blog/trainingszeiten'
+  },
+  {
+    id: '3', type: 'gallery', title: 'Saisonauftakt 2026', date: '01. Sep 2026',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1574629810360-7efbb6b69281?q=80&w=1000&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=1000&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=1000&auto=format&fit=crop'
+    ],
+    link: '/blog/galerie-auftakt'
+  }
+];
+---
+
+<Layout metadata={metadata}>
+
+  <StickyScorebar />
+
+  <!-- 1. Hero -->
+  <Hero2
+    tagline="Seit 1946"
+    actions={[
+      { variant: 'primary', text: 'Mehr erfahren', href: '/about', icon: 'tabler:arrow-right' },
+      { text: 'Probetraining', href: '/contact', icon: 'tabler:ball-tennis' },
+    ]}
+    slides={heroSlides}
+  >
+    <Fragment slot="title">
+      Dein Verein für <br class="hidden sm:block" /><em class="not-italic text-primary">Handball</em> in Lüneburg
+    </Fragment>
+    <Fragment slot="subtitle">
+      Von der Jugend bis zu den Aktiven — Teamgeist, Fairplay und Leidenschaft für den Handballsport.
+    </Fragment>
+    <Fragment slot="fixture">
+      <div class="fixture-card">
+        <div class="fixture-card__eyebrow">
+          <span class="badge badge--primary">Nächstes Spiel</span>
+          <span class="fixture-card__league">{nextMatch.league}</span>
+        </div>
+        <div class="fixture-card__teams">
+          <span class="fixture-card__team">HV Lüneburg</span>
+          <span class="fixture-card__vs">VS</span>
+          <span class="fixture-card__team">{nextMatch.opponent}</span>
+        </div>
+        <div class="fixture-card__meta">
+          <span class="fixture-card__date">{formattedMatchDate}</span>
+          <span class="fixture-card__venue">{nextMatch.venue}</span>
+        </div>
+        <div class="fixture-card__countdown" id="hero-countdown" data-target={nextMatch.date} aria-live="polite"></div>
+        <a href={nextMatch.scheduleUrl} class="fixture-card__link">Spielplan ansehen →</a>
+      </div>
+    </Fragment>
+  </Hero2>
+
+  <!-- 2. Partner-Leiste (scrolling marquee) -->
+  <div class="sponsor-logo-strip" role="region" aria-label="Unsere Partner">
+    <span class="sponsor-logo-strip__label">Partner</span>
+    <div class="sponsor-logo-strip__logos">
+      <!-- Two copies of the track for seamless infinite scroll -->
+      <div class="sponsor-logo-strip__track" aria-hidden="true">
+        {sponsorStrip.map((s) => (
+          <a class="sponsor-logo-strip__item" href={s.href} aria-label={s.name}>
+            {s.src
+              ? <img src={s.src} alt={s.name} class="h-6 w-auto object-contain" />
+              : <>
+                  <span class="sponsor-logo-strip__mark">{s.mark}</span>
+                  <span class="sponsor-logo-strip__name">{s.name}</span>
+                </>
+            }
+          </a>
+        ))}
+      </div>
+      <div class="sponsor-logo-strip__track" aria-hidden="true">
+        {sponsorStrip.map((s) => (
+          <a class="sponsor-logo-strip__item" href={s.href} aria-label={s.name} tabindex="-1">
+            {s.src
+              ? <img src={s.src} alt={s.name} class="h-6 w-auto object-contain" />
+              : <>
+                  <span class="sponsor-logo-strip__mark">{s.mark}</span>
+                  <span class="sponsor-logo-strip__name">{s.name}</span>
+                </>
+            }
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Spielplan -->
+  <WidgetWrapper id="spielplan" containerClass="max-w-6xl mx-auto">
+    <Headline title="Nächste Spiele" tagline="Spielplan" subtitle="Alle Heimspiele und Auswärtstermine des HV Lüneburg." />
+    <div class="handball-wrapper">
+      <div id="hb-vereins-spielplan"></div>
+    </div>
+  </WidgetWrapper>
+
+  <!-- 4. Aktuelles -->
+  <DynamicContentFeed posts={mockPosts} />
+
+  <!-- 5. Stats -->
+  <Stats
+    isDark
+    tagline="In Zahlen"
+    title="HV Lüneburg"
+    subtitle="Seit 1946 fester Bestandteil des Lüneburger Sports."
+    stats={clubStats}
+  />
+
+  <!-- 6. Mannschaften -->
+  <Features2
+    id="teams"
+    tagline="Mannschaften"
+    title="Unsere Teams"
+    subtitle="Von den Aktiven bis zur Jugend — alle Handball-Teams des HV Lüneburg."
+    columns={3}
+    bg={bgGray}
+    items={teams.filter(t => ['herren-1','herren-2','damen-1','damen-2','maennliche-jugend-a','maennliche-jugend-b'].includes(t.slug)).map((team) => ({
+      title: team.name,
+      description: `${team.description} Liga: ${team.league}`,
+      icon: 'tabler:shirt-sport',
+      callToAction: { text: 'Mehr erfahren', href: `/teams/${team.slug}` },
+    }))}
+  />
+
+  <!-- 7. Tabelle Herren 1 -->
+  <WidgetWrapper id="tabelle" containerClass="max-w-6xl mx-auto">
+    <Headline title="Tabelle Herren 1" tagline="Tabelle" subtitle="Aktuelle Tabelle unserer ersten Herrenmannschaft — live von handball.net." />
+    <div class="handball-wrapper">
+      <div id="hb-tabelle-herren1"></div>
+    </div>
+  </WidgetWrapper>
+
+  <!-- 8. Über uns -->
+  <section id="about" class="relative bg-white dark:bg-[#141414] py-20 md:py-28 border-t border-gray-100 dark:border-[#2A2A2A] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <!-- Text Content -->
+        <div class="space-y-8 order-2 lg:order-1">
+          <div>
+            <span class="heading-eyebrow">Seit 1946 in Lüneburg</span>
+            <h2 class="section-title mt-2">
+              Handball, der <span class="text-primary">verbindet.</span>
+            </h2>
+          </div>
+
+          <p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-lg">
+            Seit 1946 steht der HV Lüneburg für attraktiven Handball in Stadt und Landkreis.
+            Ob als aktiver Spieler, Nachwuchstalent oder lautstarker Fan auf der Tribüne —
+            bei uns bist du Teil einer echten Handball-Familie.
+          </p>
+
+          <ul class="space-y-4">
+            {[
+              { icon: 'tabler:heart-handshake', text: 'Starker Teamgeist auf und neben dem Feld' },
+              { icon: 'tabler:shield-check', text: 'Gelebtes Fairplay in allen Ligen' },
+              { icon: 'tabler:star', text: 'Aktive Jugendförderung für die Zukunft' },
+            ].map(({ icon, text }) => (
+              <li class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                  <Icon name={icon} class="w-5 h-5" />
+                </div>
+                <span class="font-heading font-bold uppercase tracking-wide text-sm text-gray-900 dark:text-white">{text}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="pt-4">
+            <a href="/about" class="btn btn--primary btn--lg btn--pill">Mehr über den Verein erfahren</a>
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div class="relative order-1 lg:order-2">
+          <div class="absolute -inset-4 bg-primary/5 rounded-3xl -z-10"></div>
+          <div class="absolute -top-2 -right-2 w-24 h-24 border-4 border-primary/20 rounded-2xl -z-10"></div>
+          <img
+            src="~/assets/images/hero-image.png"
+            alt="HV Lüneburg Training"
+            class="w-full rounded-2xl shadow-xl border border-gray-100 dark:border-[#2A2A2A] object-cover aspect-[4/3]"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Call to Action -->
+  <CallToAction
+    actions={[
+      { variant: 'primary', text: 'Kontakt aufnehmen', href: '/contact', icon: 'tabler:mail' },
+    ]}
+  >
+    <Fragment slot="title">Lust auf Handball?</Fragment>
+    <Fragment slot="subtitle">
+      Schau bei einem Probetraining vorbei und lerne uns kennen. Wir freuen uns auf dich!
+    </Fragment>
+  </CallToAction>
+
+  <!-- handball.net Widget Script -->
+  <script is:inline>
+    (function(e,t,n,r,i,s,o){e[i]=e[i]||function(){(e[i].q=e[i].q||[]).push(arguments)},
+    e[i].l=1*new Date;s=t.createElement(n),o=t.getElementsByTagName(n)[0];s.async=1;
+    s.src=r;o.parentNode.insertBefore(s,o)})(window,document,"script",
+    'https://www.handball.net/widgets/embed/v1.js',"_hb");
+
+    _hb({ widget: 'spielplan', clubId: 'nuliga.hvn.681', container: 'hb-vereins-spielplan' });
+    _hb({ widget: 'tabelle', token: 'nuliga.hvn.1662205', container: 'hb-tabelle-herren1' });
+  </script>
+
+  <!-- Countdown für das Nächste-Spiel-Kärtchen -->
+  <script is:inline>
+    (function () {
+      var el = document.getElementById('hero-countdown');
+      if (!el) return;
+      var target = new Date(el.dataset.target).getTime();
+      if (isNaN(target)) return;
+      function update() {
+        var diff = target - Date.now();
+        if (diff <= 0) { el.textContent = 'Heute!'; return; }
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        el.textContent = 'Noch\u00A0' + d + 'T\u00A0' + h + 'h\u00A0' + m + 'm';
+      }
+      update();
+      setInterval(update, 60000);
+    })();
+  </script>
+
+</Layout>

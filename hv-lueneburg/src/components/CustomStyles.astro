@@ -1,0 +1,58 @@
+---
+// HVL Lüneburg – Brand fonts loaded from Google Fonts
+// Replacing the previous Inter Variable font
+---
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap"
+  rel="stylesheet"
+/>
+
+<style is:inline>
+  /* ---- Bridge: map AstroWind variables → HVL design tokens ------------- */
+  :root {
+    /* Fonts */
+    --aw-font-sans:    'Barlow', 'Helvetica Neue', Arial, sans-serif;
+    --aw-font-serif:   'Barlow', Georgia, serif;
+    --aw-font-heading: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+
+    /* Colours */
+    --aw-color-primary:       rgb(227 6 19);   /* HVL jersey red      */
+    --aw-color-secondary:     rgb(30 30 30);   /* Near-black charcoal */
+    --aw-color-accent:        rgb(201 160 32); /* Lüneburg gold       */
+
+    --aw-color-text-heading:  rgb(12 12 12);
+    --aw-color-text-default:  rgb(42 42 42);
+    --aw-color-text-muted:    rgb(102 102 102);
+    --aw-color-bg-page:       rgb(255 255 255);
+    --aw-color-bg-page-dark:  rgb(20 20 20);
+
+    /* Selection */
+    ::selection {
+      background-color: #E30613;
+      color: #ffffff;
+    }
+  }
+
+  .dark {
+    --aw-font-sans:    'Barlow', 'Helvetica Neue', Arial, sans-serif;
+    --aw-font-serif:   'Barlow', Georgia, serif;
+    --aw-font-heading: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+
+    --aw-color-primary:       rgb(227 6 19);
+    --aw-color-secondary:     rgb(30 30 30);
+    --aw-color-accent:        rgb(228 192 72);
+
+    --aw-color-text-heading:  rgb(240 240 240);
+    --aw-color-text-default:  rgb(210 210 210);
+    --aw-color-text-muted:    rgb(153 153 153);
+    --aw-color-bg-page:       rgb(20 20 20);
+
+    ::selection {
+      background-color: #E30613;
+      color: #ffffff;
+    }
+  }
+</style>

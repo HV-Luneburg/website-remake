@@ -1,0 +1,143 @@
+---
+import Image from '~/components/common/Image.astro';
+import Button from '~/components/ui/Button.astro';
+
+import type { Hero } from '~/types';
+
+interface Props extends Hero {
+  /** Multiple hero images for auto-rotating slideshow. Overrides `image` when provided. */
+  slides?: { src: string; alt: string }[];
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+
+  content = await Astro.slots.render('content'),
+  actions = await Astro.slots.render('actions'),
+  image = await Astro.slots.render('image'),
+  slides,
+
+  id,
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+const hasFixture = Astro.slots.has('fixture');
+const useSlides = slides && slides.length > 0;
+
+// Duplicate text enough times to fill any viewport width seamlessly
+const marqueeText = 'HV\u00A0LÜNEBURG\u00A0·\u00A0SEIT\u00A01946\u00A0·\u00A0HANDBALL\u00A0·\u00A0';
+const marqueeContent = marqueeText.repeat(8);
+---
+
+<section class="hero not-prose" {...id ? { id } : {}}>
+
+  <!-- Background media: slideshow or single image -->
+  {useSlides ? (
+    <div class="hero__slideshow" aria-hidden="true">
+      {slides!.map((slide, i) => (
+        <div class="hero__slide" data-active={i === 0 ? 'true' : 'false'}>
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            class="w-full h-full object-cover object-center"
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))}
+    </div>
+  ) : image ? (
+    <div class="hero__media" aria-hidden="true">
+      {typeof image === 'string' ? (
+        <Fragment set:html={image} />
+      ) : (
+        <Image
+          src={(image as { src: string; alt?: string }).src}
+          alt={(image as { src: string; alt?: string }).alt || ''}
+          widths={[768, 1280, 1920]}
+          sizes="100vw"
+          loading="eager"
+          width={1920}
+          height={1080}
+          class="w-full h-full object-cover object-center"
+        />
+      )}
+    </div>
+  ) : null}
+
+  <!-- Optional custom background slot -->
+  {bg && !image && !useSlides && (
+    <div class="hero__media" aria-hidden="true">
+      <Fragment set:html={bg} />
+    </div>
+  )}
+
+  <!-- Animated marquee background text (Tornados-pattern) -->
+  <div class="hero__marquee" aria-hidden="true">
+    <div class="hero__marquee-track">{marqueeContent}{marqueeContent}</div>
+  </div>
+
+  <!-- Jersey-number decoration with entrance animation -->
+  <span class="hero__number hero__number--reveal" aria-hidden="true">HVL</span>
+
+  <!-- Content -->
+  <div class="hero__content">
+    <div style="max-width: 780px;">
+
+      {tagline && (
+        <span class="heading-eyebrow">{tagline}</span>
+      )}
+
+      {title && (
+        <h1 class="hero__title hero__title--reveal" set:html={title} />
+      )}
+
+      {subtitle && (
+        <p class="hero__subtitle hero__subtitle--reveal" set:html={subtitle} />
+      )}
+
+      {actions && (
+        <div class="hero__actions hero__actions--reveal">
+          {Array.isArray(actions) ? (
+            actions.map((action) => (
+              <Button
+                {...(action || {})}
+                class={action.variant === 'primary'
+                  ? 'btn btn--primary btn--lg btn--pill'
+                  : 'btn btn--outline-white btn--lg btn--pill'}
+              />
+            ))
+          ) : (
+            <Fragment set:html={actions} />
+          )}
+        </div>
+      )}
+
+      {content && <Fragment set:html={content} />}
+    </div>
+  </div>
+
+  <!-- Optional next-match fixture card -->
+  {hasFixture && (
+    <div class="hero__fixture relative z-20 mt-8 lg:mt-0 lg:absolute lg:bottom-12 lg:right-12 w-full lg:w-auto px-4 lg:px-0">
+      <slot name="fixture" />
+    </div>
+  )}
+
+</section>
+
+{useSlides && slides!.length > 1 && (
+  <script is:inline>
+    (function () {
+      var slides = document.querySelectorAll('.hero__slide');
+      if (!slides || slides.length <= 1) return;
+      var current = 0;
+      setInterval(function () {
+        slides[current].dataset.active = 'false';
+        current = (current + 1) % slides.length;
+        slides[current].dataset.active = 'true';
+      }, 10000);
+    })();
+  </script>
+)}

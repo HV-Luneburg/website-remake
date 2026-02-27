@@ -1,0 +1,130 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import PlayerCard from '~/components/widgets/PlayerCard.astro';
+
+export interface Props {
+  team: {
+    slug: string;
+    name: string;
+    category: string;
+    league: string;
+    trainer?: string;
+    trainingszeiten?: string[];
+    halle?: string;
+    handballNetId?: string;
+    description?: string;
+  };
+  isActive?: boolean;
+}
+
+const { team, isActive = false } = Astro.props;
+
+// Demo Squad Data
+const squad = [
+  { name: 'Max Mustermann', number: 12, position: 'Tor' },
+  { name: 'Lukas Schmidt', number: 4, position: 'Linksaußen' },
+  { name: 'Leon Müller', number: 18, position: 'Rückraum Mitte' },
+  { name: 'Jonas Weber', number: 21, position: 'Kreis' },
+];
+
+const tabelleDivId = `hb-tabelle-${team.slug}`;
+const spielplanDivId = `hb-spielplan-${team.slug}`;
+---
+
+<div class={`team-profile-container transition-opacity duration-500 ${isActive ? 'block opacity-100' : 'hidden opacity-0'}`} data-team={team.slug}>
+  
+  <!-- Info Header -->
+  <div class="bg-primary/5 dark:bg-slate-800/50 rounded-2xl p-6 sm:p-10 mb-12 border border-primary/10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      
+      <div>
+        <h4 class="text-xs font-bold uppercase text-gray-500 mb-2">Trainer</h4>
+        <p class="font-semibold text-lg">{team.trainer || 'N/A'}</p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase text-gray-500 mb-2">Liga</h4>
+        <p class="font-semibold text-lg">{team.league}</p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase text-gray-500 mb-3">Wochenplan</h4>
+        {team.trainingszeiten && team.trainingszeiten.length > 0 ? (
+          <div class="space-y-2">
+            {team.trainingszeiten.map((z) => {
+              // Extremely simple regex or split to parse "Mo 18:00" vs "Montag"
+              const parts = z.split(' ');
+              const day = parts[0].substring(0,2);
+              const rest = parts.slice(1).join(' ');
+              return (
+                <div class="flex items-center gap-3 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 rounded-lg p-2 shadow-sm">
+                  <div class="bg-primary/10 text-primary font-bold w-10 h-10 rounded-md flex items-center justify-center uppercase text-sm">
+                    {day}
+                  </div>
+                  <div class="text-sm font-medium">
+                    {rest || z}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : <p class="text-sm">Auf Anfrage</p>}
+      </div>
+
+      <div>
+        <h4 class="text-xs font-bold uppercase text-gray-500 mb-2">Halle</h4>
+        <p class="text-sm">{team.halle || 'Oedemer Sporthalle'}</p>
+      </div>
+
+    </div>
+    {team.description && (
+      <div class="mt-8 pt-8 border-t border-gray-200 dark:border-slate-700">
+        <p class="text-gray-600 dark:text-gray-300 max-w-3xl">{team.description}</p>
+      </div>
+    )}
+  </div>
+
+  <!-- Squad Grid -->
+  <div class="mb-16">
+    <Headline title="Kader" subtitle="Die Spieler der Saison 2026/27" classes={{ container: 'text-left mb-8' }} />
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {squad.map((player) => (
+         <PlayerCard 
+            name={player.name} 
+            number={player.number} 
+            position={player.position} 
+         />
+      ))}
+    </div>
+  </div>
+
+  <!-- handball.net Widgets -->
+  {team.handballNetId && (
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-6">
+        <h3 class="text-2xl font-heading font-bold mb-6">Tabelle</h3>
+        <div class="handball-wrapper max-h-[600px] overflow-y-auto w-full iframe-container">
+          <div id={tabelleDivId} data-widget="tabelle" data-token={team.handballNetId}></div>
+        </div>
+      </div>
+      
+      <div class="bg-gray-50 dark:bg-slate-800/50 rounded-2xl p-6 border border-gray-100 dark:border-slate-800">
+        <h3 class="text-2xl font-heading font-bold mb-6">Spielplan</h3>
+        <div class="handball-wrapper max-h-[600px] overflow-y-auto w-full iframe-container">
+          <div id={spielplanDivId} data-widget="spielplan" data-token={team.handballNetId}></div>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+
+<style>
+  /* Match the iframe styling cleanly to the site */
+  .iframe-container :global(iframe) {
+    width: 100% !important;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+  }
+</style>

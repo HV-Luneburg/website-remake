@@ -1,0 +1,38 @@
+---
+/**
+ * SponsorTicker — thin scrolling partner strip above the main navbar.
+ * Placeholder sponsor names; replace with Sanity data once CMS is wired up.
+ */
+
+const sponsors = [
+  'Sparkasse Lüneburg',
+  'VR Bank Nord',
+  'Stadtwerke Lüneburg',
+  'Autohaus Rosier',
+  'REWE Center',
+  'Hotel Bergström',
+  'Salü Lüneburg',
+  'Lüneburg Sport',
+];
+---
+
+<div class="sponsor-ticker" role="marquee" aria-label="Unsere Partner">
+  <span class="sponsor-ticker__label">PARTNER</span>
+  <div class="sponsor-ticker__wrapper">
+    <div class="sponsor-ticker__track">
+      {sponsors.map((name) => (
+        <>
+          <span class="sponsor-ticker__item">{name}</span>
+          <span class="sponsor-ticker__sep" aria-hidden="true">·</span>
+        </>
+      ))}
+      {/* Duplicate set for seamless loop */}
+      {sponsors.map((name) => (
+        <>
+          <span class="sponsor-ticker__item" aria-hidden="true">{name}</span>
+          <span class="sponsor-ticker__sep" aria-hidden="true">·</span>
+        </>
+      ))}
+    </div>
+  </div>
+</div>

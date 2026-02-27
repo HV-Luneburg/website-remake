@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-page {
+    background-color: var(--aw-color-bg-page);
+  }
+  .bg-dark {
+    background-color: var(--aw-color-bg-page-dark);
+  }
+  .bg-light {
+    background-color: #f5f5f5;
+  }
+  .text-page {
+    color: var(--aw-color-text-default);
+  }
+  .text-muted {
+    color: var(--aw-color-text-muted) !important;
+  }
+}
+
+@layer components {
+  /* HVL button base — condensed, uppercase, athletic */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    font-family: 'Barlow Condensed', 'Arial Narrow', var(--aw-font-heading), sans-serif;
+    font-size: 0.875rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease,
+      transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 150ms ease;
+    white-space: nowrap;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .btn:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  /* Primary: HVL red with red shadow */
+  .btn-primary {
+    @apply btn;
+    background-color: #E30613;
+    border-color: #E30613;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(227, 6, 19, 0.40);
+  }
+
+  .btn-primary:hover {
+    background-color: #B5000F;
+    border-color: #B5000F;
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(227, 6, 19, 0.50);
+    text-decoration: none;
+  }
+
+  /* Secondary: transparent outline, inherits context colour */
+  .btn-secondary {
+    @apply btn;
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.7);
+    color: #ffffff;
+  }
+
+  .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #ffffff;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  /* Tertiary: text link with arrow feel */
+  .btn-tertiary {
+    @apply btn;
+    background-color: transparent;
+    border-color: transparent;
+    color: #E30613;
+    padding-left: 0;
+    padding-right: 0;
+    box-shadow: none;
+  }
+
+  .btn-tertiary:hover {
+    color: #B5000F;
+    background-color: transparent;
+    text-decoration: none;
+    transform: none;
+  }
+}
+
+/* Sticky header scroll state */
+#header.scroll > div:first-child {
+  background-color: rgba(12, 12, 12, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-bottom: 3px solid #E30613;
+}
+
+/* Mobile nav expanded state */
+#header.expanded nav {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  bottom: 70px !important;
+  padding: 0 5px;
+  background-color: #0C0C0C;
+  z-index: 100;
+}
+
+/* Dropdown menu hover trigger */
+.dropdown:focus .dropdown-menu,
+.dropdown:focus-within .dropdown-menu,
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Icon stroke widths */
+[astro-icon].icon-light > * {
+  stroke-width: 1.2;
+}
+
+[astro-icon].icon-bold > * {
+  stroke-width: 2.4;
+}
+
+/* Mobile hamburger animation */
+[data-aw-toggle-menu] path {
+  @apply transition;
+}
+
+[data-aw-toggle-menu].expanded g > path:first-child {
+  @apply -rotate-45 translate-y-[15px] translate-x-[-3px];
+}
+
+[data-aw-toggle-menu].expanded g > path:last-child {
+  @apply rotate-45 translate-y-[-8px] translate-x-[14px];
+}
+
+/* Legacy */
+.dd *:first-child {
+  margin-top: 0;
+}

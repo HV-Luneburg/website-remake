@@ -1,0 +1,98 @@
+---
+import { Icon } from 'astro-icon/components';
+import { SITE } from 'astrowind:config';
+import { getHomePermalink } from '~/utils/permalinks';
+
+interface Link {
+  text?: string;
+  href?: string;
+  ariaLabel?: string;
+  icon?: string;
+}
+
+interface Links {
+  title?: string;
+  links: Array<Link>;
+}
+
+export interface Props {
+  links: Array<Links>;
+  secondaryLinks: Array<Link>;
+  socialLinks: Array<Link>;
+  footNote?: string;
+  theme?: string;
+}
+
+const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme = 'dark' } = Astro.props;
+---
+
+<footer class="footer not-prose">
+
+  <!-- Main footer grid -->
+  <div class="footer__main">
+
+    <!-- Brand column -->
+    <div class="footer__brand">
+      <a class="footer__logo" href={getHomePermalink()} aria-label="HV Lüneburg – Startseite">
+        <span class="footer__brand-name">
+          HV <span style="color: var(--color-primary)">Lüneburg</span>
+        </span>
+      </a>
+      <p class="footer__tagline">
+        Seit 1946 — Handball in Lüneburg und Umgebung.
+        Teamgeist, Fairplay und Leidenschaft.
+      </p>
+      {socialLinks?.length ? (
+        <div class="footer__social">
+          {socialLinks.map(({ ariaLabel, href, icon }) => (
+            <a
+              class="footer__social-link"
+              aria-label={ariaLabel}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {icon && <Icon name={icon} class="w-5 h-5" />}
+            </a>
+          ))}
+        </div>
+      ) : null}
+    </div>
+
+    <!-- Nav columns -->
+    {links.map(({ title, links: colLinks }) => (
+      <div class="footer__col">
+        {title && <span class="footer__col-title">{title}</span>}
+        {colLinks?.length ? (
+          <ul class="footer__nav" role="list">
+            {colLinks.map(({ text, href, ariaLabel }) => (
+              <li>
+                <a href={href} aria-label={ariaLabel}>
+                  <Fragment set:html={text} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+    ))}
+
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer__bottom">
+    <p class="footer__copyright">
+      <Fragment set:html={footNote} />
+    </p>
+    {secondaryLinks?.length ? (
+      <ul class="footer__legal" role="list">
+        {secondaryLinks.map(({ text, href }) => (
+          <li>
+            <a href={href}><Fragment set:html={text} /></a>
+          </li>
+        ))}
+      </ul>
+    ) : null}
+  </div>
+
+</footer>

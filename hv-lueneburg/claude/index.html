@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HV Lüneburg – Handball seit 1946</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; transition: color 0.3s; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+    .container { max-width: 1290px; margin: 0 auto; padding: 0 30px; }
+
+    /* ========== COLORS ========== */
+    :root {
+      --primary: #0161ef;
+      --primary-dark: #0054cf;
+      --accent: #e03821;
+      --dark: #0f1923;
+      --dark-light: #151a19;
+      --light: #f8f8f7;
+      --border: #e4e4e2;
+      --text-muted: #6b7280;
+      --gold: #ffb500;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--dark);
+      transition: background 0.3s, padding 0.3s;
+    }
+    .header.scrolled { background: rgba(15, 25, 35, 0.97); backdrop-filter: blur(10px); }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      transition: padding 0.3s;
+    }
+    .header.scrolled .header-inner { padding: 12px 0; }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #fff;
+      font-weight: 900;
+    }
+    .nav-desktop { display: flex; align-items: center; gap: 32px; }
+    .nav-desktop a {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      padding: 4px 0;
+    }
+    .nav-desktop a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+    .nav-desktop a:hover { color: #fff; }
+    .nav-desktop a:hover::after { width: 100%; }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 300px;
+      height: 100vh;
+      background: var(--dark);
+      padding: 80px 30px 30px;
+      transition: right 0.3s;
+      z-index: 999;
+    }
+    .nav-mobile.open { right: 0; }
+    .nav-mobile a {
+      display: block;
+      color: rgba(255,255,255,0.8);
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-mobile-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 998;
+    }
+    .nav-overlay.open { display: block; }
+
+    /* ========== HERO ========== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--dark);
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0f1923 0%, #1a2a3a 50%, #0f1923 100%);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(15,25,35,0.95) 0%, rgba(15,25,35,0.4) 100%);
+    }
+    .hero-placeholder {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(1,97,239,0.1), rgba(1,97,239,0.05));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-placeholder-text {
+      color: rgba(255,255,255,0.08);
+      font-size: 6rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      writing-mode: vertical-lr;
+      letter-spacing: 20px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      padding-top: 100px;
+    }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+    .hero-label::before {
+      content: '';
+      width: 40px;
+      height: 2px;
+      background: var(--primary);
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 40px;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { background: #c42f1a; border-color: #c42f1a; }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,0.4);
+    }
+    .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+    .btn-dark {
+      background: var(--dark);
+      color: #fff;
+      border-color: var(--dark);
+    }
+    .btn-dark:hover { background: #1a2a3a; border-color: #1a2a3a; }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* ========== SCORES BAR ========== */
+    .scores {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    .scores-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .score-card {
+      padding: 30px 24px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .score-card:last-child { border-right: none; }
+    .score-card:hover { background: var(--light); }
+    .score-teams {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .score-team-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--light);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .score-result {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .score-result .winner { color: var(--primary); }
+    .score-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .score-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    /* ========== SECTION COMMONS ========== */
+    .section { padding: 80px 0; }
+    .section-dark { background: var(--dark); color: #fff; }
+    .section-light { background: var(--light); }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .section-label::before {
+      content: '';
+      width: 30px;
+      height: 2px;
+      background: var(--primary);
+    }
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 550px;
+      line-height: 1.7;
+    }
+    .section-dark .section-subtitle { color: rgba(255,255,255,0.6); }
+    .section-header { margin-bottom: 50px; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-subtitle { margin: 0 auto; }
+    .section-header.center .section-label { justify-content: center; }
+
+    /* ========== ARTICLES ========== */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    .article-featured {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--light);
+    }
+    .article-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #c8d6e5, #a4b0be);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .article-featured .article-img-placeholder { aspect-ratio: 4/3; }
+    .article-body { padding: 24px; }
+    .article-category {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .article-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .article-title a:hover { color: var(--primary); }
+    .article-excerpt {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .article-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .article-list { display: flex; flex-direction: column; gap: 20px; }
+    .article-list-item {
+      display: flex;
+      gap: 20px;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.3s, border-color 0.3s;
+    }
+    .article-list-item:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border-color: transparent;
+    }
+    .article-list-item .article-img-placeholder {
+      width: 120px;
+      min-width: 120px;
+      aspect-ratio: 1;
+      border-radius: 8px;
+    }
+    .article-list-item .article-body { padding: 0; display: flex; flex-direction: column; justify-content: center; }
+    .article-list-item .article-title { font-size: 1rem; margin-bottom: 6px; }
+
+    /* ========== TABLE ========== */
+    .table-wrapper { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    table thead th {
+      padding: 14px 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--border);
+    }
+    table tbody td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    table tbody tr { transition: background 0.2s; }
+    table tbody tr:hover { background: var(--light); }
+    table tbody tr.highlight { background: rgba(1,97,239,0.06); }
+    table tbody tr.highlight td:first-child {
+      border-left: 3px solid var(--primary);
+    }
+    .team-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+    }
+    .team-logo-sm {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--light);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .table-link {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .table-link:hover { text-decoration: underline; }
+
+    /* ========== STATS ========== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+    .stat-item { text-align: center; padding: 20px; }
+    .stat-number {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-number span { color: var(--primary); }
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+    }
+
+    /* ========== VIDEO CTA ========== */
+    .video-cta {
+      position: relative;
+      padding: 120px 0;
+      background: var(--dark);
+      overflow: hidden;
+    }
+    .video-cta-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0f1923, #1a3050);
+      opacity: 0.9;
+    }
+    .video-cta-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(1,97,239,0.15), transparent 70%);
+    }
+    .video-cta-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .play-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 2rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    .play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 60px rgba(224,56,33,0.4);
+    }
+    .play-btn svg { width: 32px; height: 32px; fill: #fff; margin-left: 4px; }
+
+    /* ========== TEAM ROSTER ========== */
+    .team-roster { overflow: hidden; }
+    .players-scroll {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 20px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.3) transparent;
+    }
+    .players-scroll::-webkit-scrollbar { height: 4px; }
+    .players-scroll::-webkit-scrollbar-track { background: transparent; }
+    .players-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 2px; }
+    .player-card {
+      flex: 0 0 230px;
+      scroll-snap-align: start;
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+      transition: transform 0.3s;
+    }
+    .player-card:hover { transform: translateY(-6px); }
+    .player-img-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(180deg, rgba(1,97,239,0.15), rgba(1,97,239,0.05));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .player-number {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 2rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.15);
+    }
+    .player-silhouette {
+      color: rgba(255,255,255,0.1);
+      font-size: 4rem;
+    }
+    .player-info {
+      padding: 16px;
+      text-align: center;
+    }
+    .player-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .player-position {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* ========== NEWS SLIDER ========== */
+    .news-scroll {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 20px;
+      scrollbar-width: thin;
+    }
+    .news-card {
+      flex: 0 0 calc(33.333% - 16px);
+      min-width: 300px;
+      scroll-snap-align: start;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #fff;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .news-card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      transform: translateY(-4px);
+    }
+    .news-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #c8d6e5, #a4b0be);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .news-body { padding: 24px; }
+    .news-category {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .news-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .news-title a:hover { color: var(--primary); }
+    .news-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ========== SPONSORS ========== */
+    .sponsors-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .sponsor-card {
+      aspect-ratio: 5/2;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      transition: box-shadow 0.3s;
+      padding: 20px;
+    }
+    .sponsor-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .sponsor-placeholder {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #c0c0c0;
+    }
+
+    /* ========== WELCOME CTA ========== */
+    .welcome-cta {
+      position: relative;
+      padding: 100px 0;
+      overflow: hidden;
+    }
+    .welcome-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--dark) 0%, #1a3050 100%);
+    }
+    .welcome-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(1,97,239,0.12), transparent 60%);
+    }
+    .welcome-content {
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+    }
+    .welcome-content .section-title { color: #fff; }
+
+    /* ========== NEWSLETTER ========== */
+    .newsletter {
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.03);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .newsletter-content { position: relative; z-index: 2; }
+    .newsletter h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      max-width: 500px;
+      margin: 0 auto 16px;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .newsletter-form input:focus { border-color: var(--primary); }
+    .newsletter-form button {
+      padding: 14px 28px;
+      border-radius: 50px;
+      background: var(--dark);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: background 0.3s;
+    }
+    .newsletter-form button:hover { background: #1a2a3a; }
+    .newsletter-privacy {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ========== INSTAGRAM ========== */
+    .insta-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+    }
+    .insta-item {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #c8d6e5, #a4b0be);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .insta-item:nth-child(2) { background: linear-gradient(135deg, #a4b0be, #8395a7); }
+    .insta-item:nth-child(3) { background: linear-gradient(135deg, #8395a7, #636e72); }
+    .insta-item:nth-child(4) { background: linear-gradient(135deg, #636e72, #a4b0be); }
+    .insta-item:nth-child(5) { background: linear-gradient(135deg, #a4b0be, #c8d6e5); }
+    .insta-item:nth-child(6) { background: linear-gradient(135deg, #c8d6e5, #8395a7); }
+    .insta-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(1,97,239,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .insta-item:hover .insta-overlay { opacity: 1; }
+    .insta-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: var(--light);
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .footer-nav { display: flex; gap: 24px; }
+    .footer-nav a {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .footer-nav a:hover { color: var(--dark); }
+    .footer-social { display: flex; gap: 16px; }
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: background 0.3s;
+    }
+    .footer-social a:hover { background: var(--primary); }
+
+    /* ========== SCROLL TO TOP ========== */
+    .scroll-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--dark);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 900;
+      transition: background 0.3s, transform 0.3s;
+      font-size: 1.2rem;
+    }
+    .scroll-top.visible { display: flex; }
+    .scroll-top:hover { background: var(--primary); transform: translateY(-3px); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 1024px) {
+      .scores-grid { grid-template-columns: repeat(2, 1fr); }
+      .articles-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .sponsors-grid { grid-template-columns: repeat(2, 1fr); }
+      .news-card { flex: 0 0 calc(50% - 12px); }
+    }
+    @media (max-width: 768px) {
+      .nav-desktop { display: none; }
+      .nav-toggle { display: block; }
+      .nav-mobile { display: block; }
+      .hero { min-height: 85vh; }
+      .hero-placeholder { display: none; }
+      .hero h1 { font-size: 2.2rem; }
+      .section { padding: 60px 0; }
+      .scores-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .sponsors-grid { grid-template-columns: 1fr 1fr; }
+      .insta-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-nav { flex-wrap: wrap; justify-content: center; }
+      .footer-social { justify-content: center; }
+      .newsletter-form { flex-direction: column; }
+      .hero-buttons { flex-direction: column; align-items: flex-start; }
+      .player-card { flex: 0 0 180px; }
+      .news-card { flex: 0 0 85%; min-width: unset; }
+    }
+    @media (max-width: 480px) {
+      .scores-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .insta-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo">
+          <div class="logo-icon">HV</div>
+          HV Lüneburg
+        </a>
+        <nav class="nav-desktop">
+          <a href="#news">News</a>
+          <a href="#teams">Mannschaften</a>
+          <a href="#about">Über uns</a>
+          <a href="#sponsors">Sponsoren</a>
+          <a href="#contact">Kontakt</a>
+        </nav>
+        <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Menü öffnen">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="nav-overlay" id="navOverlay" onclick="toggleMobileNav()"></div>
+  <nav class="nav-mobile" id="navMobile">
+    <button class="nav-mobile-close" onclick="toggleMobileNav()" aria-label="Menü schließen">&times;</button>
+    <a href="#news" onclick="toggleMobileNav()">News</a>
+    <a href="#teams" onclick="toggleMobileNav()">Mannschaften</a>
+    <a href="#about" onclick="toggleMobileNav()">Über uns</a>
+    <a href="#sponsors" onclick="toggleMobileNav()">Sponsoren</a>
+    <a href="#contact" onclick="toggleMobileNav()">Kontakt</a>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-placeholder">
+      <span class="hero-placeholder-text">HANDBALL</span>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-label">Seit 1946</div>
+        <h1>Dein Verein für Handball in Lüneburg</h1>
+        <p>Von der Jugend bis zu den Aktiven — Teamgeist, Fairplay und Leidenschaft für den Handballsport.</p>
+        <div class="hero-buttons">
+          <a href="#about" class="btn btn-primary">Mehr erfahren</a>
+          <a href="#contact" class="btn btn-outline">Probetraining</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RECENT SCORES ========== -->
+  <section class="scores">
+    <div class="scores-grid">
+      <div class="score-card">
+        <div class="score-date">15. Feb 2026</div>
+        <div class="score-teams">
+          <div class="score-team-icon">HVL</div>
+          <span>vs</span>
+          <div class="score-team-icon">TSV</div>
+        </div>
+        <div class="score-result"><span class="winner">32</span> - 28</div>
+        <div class="score-meta">Herren 1 &bull; Kreisliga</div>
+      </div>
+      <div class="score-card">
+        <div class="score-date">14. Feb 2026</div>
+        <div class="score-teams">
+          <div class="score-team-icon">MTV</div>
+          <span>vs</span>
+          <div class="score-team-icon">HVL</div>
+        </div>
+        <div class="score-result">24 - <span class="winner">27</span></div>
+        <div class="score-meta">Damen 1 &bull; Kreisliga</div>
+      </div>
+      <div class="score-card">
+        <div class="score-date">08. Feb 2026</div>
+        <div class="score-teams">
+          <div class="score-team-icon">HVL</div>
+          <span>vs</span>
+          <div class="score-team-icon">SG</div>
+        </div>
+        <div class="score-result"><span class="winner">29</span> - 22</div>
+        <div class="score-meta">Herren 2 &bull; Kreisklasse</div>
+      </div>
+      <div class="score-card">
+        <div class="score-date">07. Feb 2026</div>
+        <div class="score-teams">
+          <div class="score-team-icon">VfL</div>
+          <span>vs</span>
+          <div class="score-team-icon">HVL</div>
+        </div>
+        <div class="score-result">19 - <span class="winner">25</span></div>
+        <div class="score-meta">Männl. Jugend A &bull; Kreisliga</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TRENDING ARTICLES ========== -->
+  <section class="section section-light" id="news">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Neuigkeiten</div>
+        <h2 class="section-title">Aktuelles vom HVL</h2>
+      </div>
+      <div class="articles-grid">
+        <article class="article-featured">
+          <div class="article-img-placeholder">Bild-Platzhalter</div>
+          <div class="article-body">
+            <div class="article-category">Verein</div>
+            <h3 class="article-title"><a href="#">Rückblick Winterturnier 2026 — Spannende Spiele und tolle Stimmung</a></h3>
+            <p class="article-excerpt">Vergangenes Wochenende fand unser traditionelles Winterturnier statt. Mannschaften aus der gesamten Region traten gegeneinander an…</p>
+            <div class="article-meta">
+              <span>12. Feb 2026</span>
+              <span>0 Kommentare</span>
+            </div>
+          </div>
+        </article>
+        <div class="article-list">
+          <article class="article-list-item">
+            <div class="article-img-placeholder">Bild</div>
+            <div class="article-body">
+              <div class="article-category">Jugend</div>
+              <h3 class="article-title"><a href="#">Jugendförderung: Neue Trainingszeiten ab März</a></h3>
+              <div class="article-meta"><span>10. Feb 2026</span></div>
+            </div>
+          </article>
+          <article class="article-list-item">
+            <div class="article-img-placeholder">Bild</div>
+            <div class="article-body">
+              <div class="article-category">Herren</div>
+              <h3 class="article-title"><a href="#">Herren 1 sichern sich Tabellenführung nach starkem Auftritt</a></h3>
+              <div class="article-meta"><span>08. Feb 2026</span></div>
+            </div>
+          </article>
+          <article class="article-list-item">
+            <div class="article-img-placeholder">Bild</div>
+            <div class="article-body">
+              <div class="article-category">Damen</div>
+              <h3 class="article-title"><a href="#">Damen 1 starten erfolgreich in die Rückrunde</a></h3>
+              <div class="article-meta"><span>05. Feb 2026</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LEAGUE TABLE ========== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-label">Tabelle</div>
+        <h2 class="section-title">Kreisliga Lüneburg</h2>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Pos</th>
+              <th>Mannschaft</th>
+              <th>Sp</th>
+              <th>S</th>
+              <th>U</th>
+              <th>N</th>
+              <th>Pkt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><div class="team-cell"><div class="team-logo-sm">HVL</div> HV Lüneburg</div></td>
+              <td>14</td>
+              <td>11</td>
+              <td>1</td>
+              <td>2</td>
+              <td><strong>23</strong></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><div class="team-cell"><div class="team-logo-sm">TSV</div> TSV Bardowick</div></td>
+              <td>14</td>
+              <td>10</td>
+              <td>2</td>
+              <td>2</td>
+              <td><strong>22</strong></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><div class="team-cell"><div class="team-logo-sm">MTV</div> MTV Treubund</div></td>
+              <td>14</td>
+              <td>9</td>
+              <td>2</td>
+              <td>3</td>
+              <td><strong>20</strong></td>
+            </tr>
+            <tr class="highlight">
+              <td>4</td>
+              <td><div class="team-cell"><div class="team-logo-sm">SG</div> SG Luhdorf</div></td>
+              <td>14</td>
+              <td>8</td>
+              <td>1</td>
+              <td>5</td>
+              <td><strong>17</strong></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><div class="team-cell"><div class="team-logo-sm">VfL</div> VfL Maschen</div></td>
+              <td>14</td>
+              <td>7</td>
+              <td>2</td>
+              <td>5</td>
+              <td><strong>16</strong></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><div class="team-cell"><div class="team-logo-sm">TuS</div> TuS Harburg</div></td>
+              <td>14</td>
+              <td>5</td>
+              <td>3</td>
+              <td>6</td>
+              <td><strong>13</strong></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><div class="team-cell"><div class="team-logo-sm">HSG</div> HSG Lüneheide</div></td>
+              <td>14</td>
+              <td>3</td>
+              <td>1</td>
+              <td>10</td>
+              <td><strong>7</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="text-align:center;">
+        <a href="#" class="table-link">Vollständige Tabelle ansehen &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STATS ========== -->
+  <section class="section section-light">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">250<span>+</span></div>
+          <div class="stat-label">Mitglieder</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">7</div>
+          <div class="stat-label">Mannschaften</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">79<span>+</span></div>
+          <div class="stat-label">Jahre</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100<span>+</span></div>
+          <div class="stat-label">Spiele / Saison</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VIDEO CTA ========== -->
+  <section class="video-cta">
+    <div class="video-cta-bg"></div>
+    <div class="video-cta-content">
+      <button class="play-btn" aria-label="Video abspielen">
+        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ========== TEAM ROSTER ========== -->
+  <section class="section section-dark team-roster" id="teams">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-label">Spieler</div>
+        <h2 class="section-title">Unsere Mannschaften</h2>
+        <p class="section-subtitle">Von den Aktiven bis zur Jugend — alle Handball-Teams des HV Lüneburg im Überblick.</p>
+      </div>
+      <div class="players-scroll">
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#1</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">Max Müller</div>
+            <div class="player-position">Torwart</div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#3</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">Jonas Weber</div>
+            <div class="player-position">Rückraum Links</div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#5</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">Lukas Schmidt</div>
+            <div class="player-position">Rückraum Mitte</div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#7</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">Tim Fischer</div>
+            <div class="player-position">Rückraum Rechts</div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#9</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">Felix Wagner</div>
+            <div class="player-position">Außen Links</div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#11</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">Leon Becker</div>
+            <div class="player-position">Außen Rechts</div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#13</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">Paul Hoffmann</div>
+            <div class="player-position">Kreisläufer</div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#15</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">Niklas Schulz</div>
+            <div class="player-position">Kreisläufer</div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#17</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">David Koch</div>
+            <div class="player-position">Torwart</div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-img-placeholder">
+            <span class="player-number">#19</span>
+            <span class="player-silhouette">&#9899;</span>
+          </div>
+          <div class="player-info">
+            <div class="player-name">Jan Richter</div>
+            <div class="player-position">Außen Links</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LATEST NEWS ========== -->
+  <section class="section section-light">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-label">Blog</div>
+        <h2 class="section-title">Neueste Beiträge</h2>
+      </div>
+      <div class="news-scroll">
+        <article class="news-card">
+          <div class="news-img-placeholder">Bild-Platzhalter</div>
+          <div class="news-body">
+            <div class="news-category">Verein</div>
+            <h3 class="news-title"><a href="#">Mitgliederversammlung 2026 — Alle Infos auf einen Blick</a></h3>
+            <div class="news-meta">10. Feb 2026 &bull; 0 Kommentare</div>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="news-img-placeholder">Bild-Platzhalter</div>
+          <div class="news-body">
+            <div class="news-category">Jugend</div>
+            <h3 class="news-title"><a href="#">Jugend B gewinnt Bezirkspokal — Ein historischer Erfolg</a></h3>
+            <div class="news-meta">07. Feb 2026 &bull; 0 Kommentare</div>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="news-img-placeholder">Bild-Platzhalter</div>
+          <div class="news-body">
+            <div class="news-category">Training</div>
+            <h3 class="news-title"><a href="#">Neues Athletik-Programm für alle Altersklassen gestartet</a></h3>
+            <div class="news-meta">03. Feb 2026 &bull; 0 Kommentare</div>
+          </div>
+        </article>
+        <article class="news-card">
+          <div class="news-img-placeholder">Bild-Platzhalter</div>
+          <div class="news-body">
+            <div class="news-category">Herren</div>
+            <h3 class="news-title"><a href="#">Saisonvorschau: So stehen die Chancen für die Rückrunde</a></h3>
+            <div class="news-meta">28. Jan 2026 &bull; 0 Kommentare</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SPONSORS ========== -->
+  <section class="section" id="sponsors">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-label">Partner</div>
+        <h2 class="section-title">Unsere Sponsoren</h2>
+      </div>
+      <div class="sponsors-grid">
+        <div class="sponsor-card"><span class="sponsor-placeholder">Sponsor 1</span></div>
+        <div class="sponsor-card"><span class="sponsor-placeholder">Sponsor 2</span></div>
+        <div class="sponsor-card"><span class="sponsor-placeholder">Sponsor 3</span></div>
+        <div class="sponsor-card"><span class="sponsor-placeholder">Sponsor 4</span></div>
+      </div>
+      <div class="sponsors-grid">
+        <div class="sponsor-card"><span class="sponsor-placeholder">Sponsor 5</span></div>
+        <div class="sponsor-card"><span class="sponsor-placeholder">Sponsor 6</span></div>
+        <div class="sponsor-card"><span class="sponsor-placeholder">Sponsor 7</span></div>
+        <div class="sponsor-card"><span class="sponsor-placeholder">Sponsor 8</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WELCOME / ABOUT CTA ========== -->
+  <section class="welcome-cta section-dark" id="about">
+    <div class="welcome-bg"></div>
+    <div class="container">
+      <div class="welcome-content">
+        <div class="section-label">Willkommen</div>
+        <h2 class="section-title">Erlebe die Faszination Handball beim HV Lüneburg!</h2>
+        <p class="section-subtitle" style="color:rgba(255,255,255,0.6); margin-bottom:32px;">Seit 1946 steht unser Verein für Teamgeist, Fairplay und Jugendförderung. Ob als aktiver Spieler, Nachwuchstalent oder Fan — bei uns bist du willkommen.</p>
+        <a href="#" class="btn btn-primary">Über uns</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NEWSLETTER ========== -->
+  <section class="section newsletter" id="contact">
+    <div class="newsletter-watermark">Newsletter</div>
+    <div class="container">
+      <div class="newsletter-content">
+        <h3>Bleib auf dem Laufenden!</h3>
+        <p style="color:var(--text-muted); margin-bottom:28px;">Erhalte die neuesten Nachrichten und Spielberichte direkt in dein Postfach.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="Deine E-Mail-Adresse" required>
+          <button type="submit">Abonnieren</button>
+        </form>
+        <p class="newsletter-privacy">Ich stimme der <a href="#" style="color:var(--primary);">Datenschutzerklärung</a> zu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== INSTAGRAM FEED ========== -->
+  <section class="insta-section">
+    <div class="insta-grid">
+      <div class="insta-item">
+        <div class="insta-placeholder">Foto 1</div>
+        <div class="insta-overlay">&#9829; 93 &nbsp; &#9993; 23</div>
+      </div>
+      <div class="insta-item">
+        <div class="insta-placeholder">Foto 2</div>
+        <div class="insta-overlay">&#9829; 45 &nbsp; &#9993; 12</div>
+      </div>
+      <div class="insta-item">
+        <div class="insta-placeholder">Foto 3</div>
+        <div class="insta-overlay">&#9829; 67 &nbsp; &#9993; 8</div>
+      </div>
+      <div class="insta-item">
+        <div class="insta-placeholder">Foto 4</div>
+        <div class="insta-overlay">&#9829; 34 &nbsp; &#9993; 5</div>
+      </div>
+      <div class="insta-item">
+        <div class="insta-placeholder">Foto 5</div>
+        <div class="insta-overlay">&#9829; 78 &nbsp; &#9993; 19</div>
+      </div>
+      <div class="insta-item">
+        <div class="insta-placeholder">Foto 6</div>
+        <div class="insta-overlay">&#9829; 52 &nbsp; &#9993; 11</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-copy">&copy; 2026 HV Lüneburg e.V.</div>
+        <nav class="footer-nav">
+          <a href="#">Startseite</a>
+          <a href="#about">Über uns</a>
+          <a href="#teams">Mannschaften</a>
+          <a href="#sponsors">Sponsoren</a>
+          <a href="#contact">Kontakt</a>
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+        </nav>
+        <div class="footer-social">
+          <a href="#" title="Instagram">Ig</a>
+          <a href="#" title="Facebook">Fb</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== SCROLL TO TOP ========== -->
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Nach oben scrollen">&uarr;</button>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('header');
+    const scrollTopBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+      scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+
+    // Mobile nav toggle
+    function toggleMobileNav() {
+      document.getElementById('navMobile').classList.toggle('open');
+      document.getElementById('navOverlay').classList.toggle('open');
+    }
+
+    // Animate stats on scroll
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.3 });
+    statNumbers.forEach(el => {
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s, transform 0.6s';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

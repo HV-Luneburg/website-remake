@@ -1,0 +1,66 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Headline from '~/components/ui/Headline.astro';
+
+const metadata = {
+  title: 'Einblicke & Galerien | HV Lüneburg',
+};
+
+// Mock data representing Sanity structure for "Saisonauftakt" and others
+const galleries = [
+  {
+    title: 'Saisonauftakt 2026',
+    date: '01. September 2026',
+    images: [
+      'https://images.unsplash.com/photo-1548689816-c399f954f3dd?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1574629810360-7efbb6b69281?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1593341646782-e0b495cff86d?q=80&w=800&auto=format&fit=crop',
+    ]
+  },
+  {
+    title: 'Derbysieg gegen MTV',
+    date: '12. November 2026',
+    images: [
+      'https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1548689816-c399f954f3dd?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1574629810360-7efbb6b69281?q=80&w=800&auto=format&fit=crop',
+    ]
+  }
+];
+---
+
+<Layout metadata={metadata}>
+  
+  <section class="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 pt-32 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <h1 class="text-4xl md:text-5xl font-heading font-black mb-4 uppercase tracking-tight">Einblicke</h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl">Emotionen, Spieltage und Momente abseits des Feldes. Bildergalerien aus unserem Vereinsleben.</p>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-16 space-y-24">
+    {galleries.map(gallery => (
+      <div class="gallery-section">
+        <div class="mb-8">
+          <h2 class="text-3xl font-heading font-black uppercase text-gray-900 dark:text-white mb-2 tracking-tight">{gallery.title}</h2>
+          <span class="text-sm font-bold text-primary tracking-widest uppercase">{gallery.date}</span>
+        </div>
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {gallery.images.map((src, idx) => (
+            <div class={`relative overflow-hidden rounded-2xl bg-gray-200 dark:bg-slate-800 group hover:shadow-xl transition-all duration-300 ${idx === 0 ? 'col-span-2 row-span-2' : ''}`}>
+              <img 
+                src={src} 
+                alt={`${gallery.title} Foto ${idx + 1}`}
+                class="w-full h-full object-cover aspect-square sm:aspect-auto group-hover:scale-105 transition-transform duration-700 ease-in-out mix-blend-luminosity group-hover:mix-blend-normal"
+                loading={idx < 4 ? "eager" : "lazy"}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </main>
+</Layout>

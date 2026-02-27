@@ -369,10 +369,10 @@ const mockPosts = [
         if (!firstGroup) return false;
 
         // --- 1. Extract Teams (Home & Guest) ---
-        var teamEls = firstGroup.querySelectorAll('.hb-embed__schedule-list-item-team-name, .hb-embed__schedule-team');
+        var teamEls = firstGroup.querySelectorAll('.hb-embed__schedule-list-item-team-name, .hb-embed__schedule-team, .hb-embed__team-name');
         if (teamEls.length >= 2) {
           var homeName = teamEls[0].textContent.trim().replace('Handballverein', 'HV');
-          var guestName = teamEls[teEls => teamEls.length - 1].textContent.trim().replace('Handballverein', 'HV');
+          var guestName = teamEls[teamEls.length - 1].textContent.trim().replace('Handballverein', 'HV');
           
           var uiTeams = document.querySelectorAll('.fixture-card__teams .fixture-card__team');
           if (uiTeams.length >= 2) {
@@ -386,11 +386,21 @@ const mockPosts = [
         }
 
         // --- 2. Extract Date & Time ---
-        var dateEl = firstGroup.querySelector('.hb-embed__schedule-list-item-date, .hb-embed__schedule-date, .date');
-        var timeEl = firstGroup.querySelector('.hb-embed__schedule-list-item-starts-at-time, .hb-embed__schedule-time, time');
+        var dateEl = firstGroup.querySelector('.hb-embed__schedule-list-item-date, .hb-embed__schedule-date, .date, .hb-embed__date');
+        var timeEl = firstGroup.querySelector('.hb-embed__schedule-list-item-starts-at-time, .hb-embed__schedule-time, time, .hb-embed__time');
         
         var dateText = dateEl ? dateEl.textContent.trim() : null;
         var timeText = timeEl ? timeEl.textContent.trim() : null;
+
+        // If we didn't find specific elements, try extracting from the entire block text
+        if (!dateText && firstGroup.textContent) {
+           var fullText = firstGroup.textContent;
+           var dateMatchFallback = fullText.match(/(\d{1,2}\.\d{1,2}\.(\d{2}|\d{4}))/);
+           if (dateMatchFallback) dateText = dateMatchFallback[1];
+           
+           var timeMatchFallback = fullText.match(/(\d{1,2}:\d{2})/);
+           if (timeMatchFallback) timeText = timeMatchFallback[1];
+        }
 
         if (dateText) {
           var dateDisplay = document.querySelector('.fixture-card__date');

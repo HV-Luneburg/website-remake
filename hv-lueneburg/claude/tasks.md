@@ -2,66 +2,64 @@
 
 # general
 
-please make sure, that every title / subtitle has enough contrast: grey title on black contract does not work. 
-Please use more whitespace (white for light version), do not use so much dark colors with fill - clean 70/20/10 rule (hero is good with this color) 
+please make sure, that every title / subtitle has enough contrast: grey title on black contract does not work.
+Please use more whitespace (white for light version), do not use so much dark colors with fill - clean 70/20/10 rule (hero is good with this color)
 -> light mode: 70: white
 -> dark mode: can be black, but not 000000
 
 i dont like the blue so much, remove it from the whole pages
 
-make sure, that there is a toggle for light and dark mode, 
+make sure, that there is a toggle for light and dark mode,
 
 please write a central file, where I can "plug" in all data sources for e.g. live ticker, next event etc,.
 
 make sure everything is mobile first
 
-    # rule to have in mind: 
-    sanity headless cms: 
+    # rule to have in mind:
+    sanity headless cms:
 
-    defining a schema: 
+    defining a schema:
     import {defineField, defineType} from 'sanity'
 
 export const postType = defineType({
-  name: 'post',
-  title: 'Post',
-  type: 'document',
-  fields: [
-    defineField({
-      name: 'title',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'slug',
-      type: 'slug',
-      options: {source: 'title'},
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'publishedAt',
-      type: 'datetime',
-      initialValue: () => new Date().toISOString(),
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'image',
-      type: 'image',
-    }),
-    defineField({
-      name: 'body',
-      type: 'array',
-      of: [{type: 'block'}],
-    }),
-  ],
+name: 'post',
+title: 'Post',
+type: 'document',
+fields: [
+defineField({
+name: 'title',
+type: 'string',
+validation: (rule) => rule.required(),
+}),
+defineField({
+name: 'slug',
+type: 'slug',
+options: {source: 'title'},
+validation: (rule) => rule.required(),
+}),
+defineField({
+name: 'publishedAt',
+type: 'datetime',
+initialValue: () => new Date().toISOString(),
+validation: (rule) => rule.required(),
+}),
+defineField({
+name: 'image',
+type: 'image',
+}),
+defineField({
+name: 'body',
+type: 'array',
+of: [{type: 'block'}],
+}),
+],
 })
 https://www.sanity.io/docs/astro-quickstart/defining-a-schema#k6866e901a6a9
 https://www.sanity.io/docs/astro-quickstart/defining-a-schema#fff121a9f0c9
 
 do the sanity wiring with the HVL/studio-hv-lueneburg in second step but keep in mind, that i want every data to be stored here (im überordner von hv-lueneburg)
 
-
 very important: https://github.com/sanity-io/sanity-astro
-
 
 # spielplan
 
@@ -69,25 +67,20 @@ very important: https://github.com/sanity-io/sanity-astro
 
 card needs to be white
 
+# partners
 
-# partners 
 logos bigger and scrolling automatically
 
+# nav
 
-
-# nav 
 make sure that the burger menu appears on mobile and that its design is sleek
 there is a doubled background of the nav, on the top only one background, but when scrolling down, a second overlays weirdly
-
-
-
 
 # hero
 
 fix the positioning of the "next game" card to be at the rigth lower corner
 the text moves too fast
 Handball in the hero title should be highlighted visually
-
 
 # news section
 
@@ -115,24 +108,25 @@ rethink this whole part. looks terrible, not mobile conform and very bad UX
           border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
         "> <svg width="1em" height="1em" class="w-10 h-10 mb-4 mx-auto" style="color: rgba(255,255,255,0.6);" data-icon="tabler:trophy">   <symbol id="ai:tabler:trophy" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21h8m-4-4v4M7 4h10m0 0v8a5 5 0 0 1-10 0V4M3 9a2 2 0 1 0 4 0a2 2 0 1 0-4 0m14 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"></path></symbol><use href="#ai:tabler:trophy"></use>  </svg> <div class="stat-number">100+</div> <div class="stat-label">Spiele / Saison</div> </div> </div>  </div>
 
-
         find an way of oprimzing this part for mobile with the rounded corners dos not work
 
 # unsere teams
 
-cards minimalistic und white: 
+cards minimalistic und white:
 You are given a task to integrate an existing React component in the codebase
 
 The codebase should support:
-- shadcn project structure  
+
+- shadcn project structure
 - Tailwind CSS
 - Typescript
 
 If it doesn't, provide instructions on how to setup project via shadcn CLI, install Tailwind or Typescript.
 
-Determine the default path for components and styles. 
+Determine the default path for components and styles.
 If default path for components is not /components/ui, provide instructions on why it's important to create this folder
 Copy-paste this component to /components/ui folder:
+
 ```tsx
 card-22.tsx
 import * as React from 'react';
@@ -226,8 +220,8 @@ export const PlaceCard = ({
       transition={{ duration: 0.5 }}
       variants={contentVariants}
       // --- NEW: Added hover animation ---
-      whileHover={{ 
-        scale: 1.03, 
+      whileHover={{
+        scale: 1.03,
         boxShadow: '0px 10px 30px -5px hsl(var(--foreground) / 0.1)',
         transition: { type: 'spring', stiffness: 300, damping: 20 }
       }}
@@ -256,7 +250,7 @@ export const PlaceCard = ({
             className="absolute h-full w-full object-cover"
           />
         </AnimatePresence>
-        
+
         {/* Carousel Navigation */}
         <div className="absolute inset-0 flex items-center justify-between p-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <Button variant="ghost" size="icon" className="rounded-full bg-black/30 hover:bg-black/50 text-white" onClick={() => changeImage(-1)}>
@@ -369,142 +363,134 @@ export default PlaceCardDemo;
 ```
 
 Copy-paste these files for dependencies:
-```tsx
-originui/badge
-import { cva, type VariantProps } from "class-variance-authority";
-import * as React from "react";
 
-import { cn } from "@/lib/utils";
+```tsx
+originui / badge;
+import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from 'react';
+
+import { cn } from '@/lib/utils';
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-full border px-1.5 text-xs font-medium leading-normal transition-colors outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70",
+  'inline-flex items-center justify-center rounded-full border px-1.5 text-xs font-medium leading-normal transition-colors outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70',
   {
     variants: {
       variant: {
-        default: "border-transparent bg-primary text-primary-foreground",
-        secondary: "border-transparent bg-secondary text-secondary-foreground",
-        destructive: "border-transparent bg-destructive text-destructive-foreground",
-        outline: "text-foreground",
+        default: 'border-transparent bg-primary text-primary-foreground',
+        secondary: 'border-transparent bg-secondary text-secondary-foreground',
+        destructive: 'border-transparent bg-destructive text-destructive-foreground',
+        outline: 'text-foreground',
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: 'default',
     },
-  },
+  }
 );
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}
 
 function Badge({ className, variant, ...props }: BadgeProps) {
   return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
 }
 
 export { Badge, badgeVariants };
-
 ```
-```tsx
-shadcn/button
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "@/lib/utils"
+```tsx
+shadcn / button;
+import * as React from 'react';
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+
+import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+        outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+        default: 'h-10 px-4 py-2',
+        sm: 'h-9 rounded-md px-3',
+        lg: 'h-11 rounded-md px-8',
+        icon: 'h-10 w-10',
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: 'default',
+      size: 'default',
     },
-  },
-)
+  }
+);
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    )
-  },
-)
-Button.displayName = "Button"
+    const Comp = asChild ? Slot : 'button';
+    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
+  }
+);
+Button.displayName = 'Button';
 
-export { Button, buttonVariants }
-
+export { Button, buttonVariants };
 ```
 
 Install NPM dependencies:
+
 ```bash
 lucide-react, framer-motion, class-variance-authority, @radix-ui/react-slot
 ```
 
 Implementation Guidelines
- 1. Analyze the component structure and identify all required dependencies
- 2. Review the component's argumens and state
- 3. Identify any required context providers or hooks and install them
- 4. Questions to Ask
- - What data/props will be passed to this component?
- - Are there any specific state management requirements?
- - Are there any required assets (images, icons, etc.)?
- - What is the expected responsive behavior?
- - What is the best place to use this component in the app?
 
-Steps to integrate
- 0. Copy paste all the code above in the correct directories
- 1. Install external dependencies
- 2. Fill image assets with Unsplash stock images you know exist
- 3. Use lucide-react icons for svgs or logos if component requires them
+1.  Analyze the component structure and identify all required dependencies
+2.  Review the component's argumens and state
+3.  Identify any required context providers or hooks and install them
+4.  Questions to Ask
 
+- What data/props will be passed to this component?
+- Are there any specific state management requirements?
+- Are there any required assets (images, icons, etc.)?
+- What is the expected responsive behavior?
+- What is the best place to use this component in the app?
 
+Steps to integrate 0. Copy paste all the code above in the correct directories
 
-# mannschafts page 
+1.  Install external dependencies
+2.  Fill image assets with Unsplash stock images you know exist
+3.  Use lucide-react icons for svgs or logos if component requires them
+
+# mannschafts page
+
 looks terrible
 
 use the card design from above
 
 # sponsoren page
+
 hirachie: change exiting sposnores to be at the top and becoming sponsore below
 
 # contact form
-dont be blue, 
 
-light mode white, 
+dont be blue,
+
+light mode white,
 dark mode, different than how it is done now
 
-
 # footer
+
 fix footer on mobile
 
 # team page
@@ -512,6 +498,5 @@ fix footer on mobile
 remove instagram and move instagram to the team detail page as every team as its own instagram
 
 # team detail page
+
 make it looking less like a "slug"
-
-

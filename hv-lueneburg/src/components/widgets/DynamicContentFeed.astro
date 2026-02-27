@@ -140,56 +140,6 @@ const { posts = [], title = 'Aktuelles', tagline = 'Neuigkeiten' } = Astro.props
             <a href={post.link} class="absolute inset-0 z-10" aria-hidden="true"><span class="sr-only">Ankündigung lesen</span></a>
           </article>
         );
-
-        // ── GALERIE (Gallery) ──
-        if (post.type === 'gallery') {
-          const images = post.galleryImages || [post.imageUrl].filter(Boolean) as string[];
-          return (
-            <article class="group relative flex flex-col bg-white dark:bg-[#1C1C1C] rounded-2xl overflow-hidden border border-gray-100 dark:border-[#2A2A2A] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <!-- Gallery grid preview -->
-              <div class="grid grid-cols-2 gap-0.5 h-48 overflow-hidden">
-                {images.slice(0, 2).map((src, i) => (
-                  <div class={`relative overflow-hidden ${i === 0 && images.length === 1 ? 'col-span-2' : ''}`}>
-                    <img src={src} alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
-                  </div>
-                ))}
-                {images.length === 0 && (
-                  <div class="col-span-2 bg-gray-100 dark:bg-[#2A2A2A] flex items-center justify-center">
-                    <Icon name="tabler:photo" class="w-12 h-12 text-gray-300 dark:text-gray-600" />
-                  </div>
-                )}
-              </div>
-
-              {/* Overlay showing count */}
-              {images.length > 2 && (
-                <div class="absolute top-[7.5rem] right-0 h-24 w-1/2 bg-black/60 flex items-center justify-center">
-                  <span class="text-white font-black text-xl font-heading">+{images.length - 1}</span>
-                </div>
-              )}
-
-              <!-- Content -->
-              <div class="p-6 flex flex-col flex-1">
-                <div class="flex items-center gap-2 mb-3">
-                  <Icon name="tabler:camera" class="w-4 h-4 text-gray-400" />
-                  <span class="text-xs font-black uppercase tracking-widest text-gray-400">Galerie</span>
-                </div>
-                <h3 class="text-xl font-heading font-black uppercase tracking-tight text-gray-900 dark:text-white leading-tight group-hover:text-primary transition-colors">
-                  <a href={post.link} class="hover:underline underline-offset-2">{post.title}</a>
-                </h3>
-                <div class="flex items-center justify-between border-t border-gray-100 dark:border-[#2A2A2A] pt-4 mt-4">
-                  <span class="text-xs text-gray-400 dark:text-gray-500">{post.date}</span>
-                  <a href={post.link} class="text-xs font-black uppercase tracking-wider text-primary flex items-center gap-1 hover:gap-2 transition-all">
-                    Ansehen <Icon name="tabler:arrow-right" class="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </div>
-
-              <a href={post.link} class="absolute inset-0 z-10" aria-hidden="true"><span class="sr-only">Galerie ansehen</span></a>
-            </article>
-          );
-        }
-
-        return null;
       })}
 
     </div>

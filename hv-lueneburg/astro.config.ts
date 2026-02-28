@@ -13,6 +13,7 @@ import type { AstroIntegration } from 'astro';
 import AstroPWA from '@vite-pwa/astro';
 import sanity from '@sanity/astro';
 import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
 import astrowind from './vendor/integration';
 
@@ -25,7 +26,10 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
   hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
-  output: 'static',
+  output: 'server',
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
 
   integrations: [
     tailwind({
@@ -108,6 +112,7 @@ export default defineConfig({
       dataset: 'production',
       useCdn: false,
       apiVersion: '2024-03-01',
+      studioBasePath: '/admin',
     }),
   ],
 

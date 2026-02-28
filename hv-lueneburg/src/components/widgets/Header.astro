@@ -381,6 +381,33 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
       transition: background-color 200ms ease, color 200ms ease;
     }
 
+    /* --- Mobile Menu Cascading Animation --- */
+    @keyframes fadeInUpMobile {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    :global(header#header.expanded .navbar__nav-item) {
+      opacity: 0;
+      animation: fadeInUpMobile 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Staggered animation delays for up to 8 menu items */
+    :global(header#header.expanded .navbar__nav-item:nth-child(1)) { animation-delay: 50ms; }
+    :global(header#header.expanded .navbar__nav-item:nth-child(2)) { animation-delay: 100ms; }
+    :global(header#header.expanded .navbar__nav-item:nth-child(3)) { animation-delay: 150ms; }
+    :global(header#header.expanded .navbar__nav-item:nth-child(4)) { animation-delay: 200ms; }
+    :global(header#header.expanded .navbar__nav-item:nth-child(5)) { animation-delay: 250ms; }
+    :global(header#header.expanded .navbar__nav-item:nth-child(6)) { animation-delay: 300ms; }
+    :global(header#header.expanded .navbar__nav-item:nth-child(7)) { animation-delay: 350ms; }
+    :global(header#header.expanded .navbar__nav-item:nth-child(8)) { animation-delay: 400ms; }
+
     :global(header#header.expanded .navbar__nav-link:hover) {
       background-color: rgba(227, 6, 19, 0.12);
       color: var(--color-primary, #E30613) !important;

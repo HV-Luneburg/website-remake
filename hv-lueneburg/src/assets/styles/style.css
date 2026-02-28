@@ -93,18 +93,18 @@
   /* Monospace: scores, stats, timestamps                                    */
   --font-mono: 'DM Mono', 'Roboto Mono', 'Courier New', monospace;
 
-  /* Font sizes — Responsive Fluid Scale (Base 18px on mobile -> 20px+ desktop) */
-  --text-xs: clamp(0.75rem, 0.70rem + 0.25vw, 0.875rem);
-  --text-sm: clamp(0.95rem, 0.90rem + 0.25vw, 1.05rem);
-  --text-base: clamp(1.125rem, 1.05rem + 0.38vw, 1.25rem);
-  --text-md: clamp(1.25rem, 1.15rem + 0.50vw, 1.50rem);
-  --text-lg: clamp(1.50rem, 1.35rem + 0.75vw, 1.875rem);
-  --text-xl: clamp(1.875rem, 1.60rem + 1.00vw, 2.25rem);
-  --text-2xl: clamp(2.25rem, 1.95rem + 1.50vw, 3.00rem);
-  --text-3xl: clamp(3.00rem, 2.60rem + 2.00vw, 4.00rem);
-  --text-4xl: clamp(4.00rem, 3.40rem + 3.00vw, 5.50rem);
-  --text-5xl: clamp(5.50rem, 4.70rem + 4.00vw, 7.50rem);
-  --text-hero: clamp(4rem, 12vw, 10rem);
+  /* Font sizes — Responsive Fluid Scale (Base ~18.5px mobile -> ~20px desktop) */
+  --text-xs: clamp(0.85rem, 0.82rem + 0.15vw, 0.95rem);
+  --text-sm: clamp(1.00rem, 0.95rem + 0.25vw, 1.10rem);
+  --text-base: clamp(1.15rem, 1.10rem + 0.25vw, 1.25rem);
+  --text-md: clamp(1.25rem, 1.15rem + 0.50vw, 1.40rem);
+  --text-lg: clamp(1.40rem, 1.30rem + 0.50vw, 1.65rem);
+  --text-xl: clamp(1.65rem, 1.50rem + 0.75vw, 2.00rem);
+  --text-2xl: clamp(2.00rem, 1.80rem + 1.00vw, 2.60rem);
+  --text-3xl: clamp(2.60rem, 2.30rem + 1.50vw, 3.40rem);
+  --text-4xl: clamp(3.40rem, 3.00rem + 2.00vw, 4.50rem);
+  --text-5xl: clamp(4.50rem, 4.00rem + 2.50vw, 6.00rem);
+  --text-hero: clamp(3.5rem, 10vw, 8rem);
 
   /* Font weights */
   --fw-regular: 400;

@@ -12,7 +12,7 @@ import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
 export const prerender = true;
 
 export const getStaticPaths = (async ({ paginate }) => {
-  return await getStaticPathsBlogList({ paginate });
+ return await getStaticPathsBlogList({ paginate });
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
@@ -24,14 +24,14 @@ const currentPage = page.currentPage ?? 1;
 // const allTags = await findTags();
 
 const metadata = {
-  title: `News${currentPage > 1 ? ` — Seite ${currentPage}` : ''}`,
-  robots: {
-    index: blogListRobots?.index && currentPage === 1,
-    follow: blogListRobots?.follow,
-  },
-  openGraph: {
-    type: 'blog',
-  },
+ title: `News${currentPage > 1 ? ` — Seite ${currentPage}` : ''}`,
+ robots: {
+ index: blogListRobots?.index && currentPage === 1,
+ follow: blogListRobots?.follow,
+ },
+ openGraph: {
+ type: 'blog',
+ },
 };
 
 // Very rough mock filtering for the magazine lanes until CMS is connected
@@ -40,49 +40,49 @@ const news = page.data.filter((_, i) => i % 2 !== 0);
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Section -->
-  <section class="bg-primary text-white py-12 md:py-20 mb-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="max-w-3xl">
-        <h1 class="text-xs md:text-sm font-bold uppercase tracking-widest text-white/70 mb-2">HV Lüneburg</h1>
-        <h2 class="text-4xl md:text-6xl font-heading font-black mb-4">Aktuelles</h2>
-        <p class="text-xl text-white/90">Wissenswertes rund um den Verein: Spielberichte und Nachrichten.</p>
-      </div>
-    </div>
-  </section>
+ <!-- Hero Section -->
+ <section class="bg-primary text-white py-12 md:py-20 mb-12">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6">
+ <div class="max-w-3xl">
+ <h1 class="text-xs md:text-sm font-bold uppercase tracking-widest text-white/70 mb-2">HV Lüneburg</h1>
+ <h2 class="text-4xl md:text-6xl font-heading font-black mb-4">Aktuelles</h2>
+ <p class="text-xl text-white/90">Wissenswertes rund um den Verein: Spielberichte und Nachrichten.</p>
+ </div>
+ </div>
+ </section>
 
-  <!-- Magazine Layout -->
-  <section class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-16">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+ <!-- Magazine Layout -->
+ <section class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-16">
+ <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
-      <!-- Lane 1: Match Reports -->
-      <div class="lg:col-span-7">
-        <div class="flex items-center gap-3 mb-8 border-b-2 border-primary pb-2">
-          <h3 class="text-2xl font-heading font-black text-gray-900 dark:text-white uppercase tracking-wide">Spielberichte</h3>
-          <span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded">Live & Lokal</span>
-        </div>
-        <div class="space-y-8">
-          <BlogList posts={reports} />
-        </div>
-        {reports.length === 0 && <p class="text-gray-500">Aktuell keine Spielberichte.</p>}
-      </div>
+ <!-- Lane 1: Match Reports -->
+ <div class="lg:col-span-7">
+ <div class="flex items-center gap-3 mb-8 border-b-2 border-primary pb-2">
+ <h3 class="text-2xl font-heading font-black text-gray-900 dark:text-white uppercase tracking-wide">Spielberichte</h3>
+ <span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded">Live & Lokal</span>
+ </div>
+ <div class="space-y-8">
+ <BlogList posts={reports} />
+ </div>
+ {reports.length === 0 && <p class="text-gray-500">Aktuell keine Spielberichte.</p>}
+ </div>
 
-      <!-- Lane 2: Club News -->
-      <div class="lg:col-span-5">
-        <div class="flex items-center gap-3 mb-8 border-b-2 border-gray-800 dark:border-gray-200 pb-2">
-          <h3 class="text-2xl font-heading font-black text-gray-900 dark:text-white uppercase tracking-wide">Verein</h3>
-        </div>
-        <div class="space-y-6">
-          <BlogList posts={news} />
-        </div>
-        {news.length === 0 && <p class="text-gray-500">Aktuell keine Ankündigungen.</p>}
-      </div>
+ <!-- Lane 2: Club News -->
+ <div class="lg:col-span-5">
+ <div class="flex items-center gap-3 mb-8 border-b-2 border-gray-800 dark:border-gray-200 pb-2">
+ <h3 class="text-2xl font-heading font-black text-gray-900 dark:text-white uppercase tracking-wide">Verein</h3>
+ </div>
+ <div class="space-y-6">
+ <BlogList posts={news} />
+ </div>
+ {news.length === 0 && <p class="text-gray-500">Aktuell keine Ankündigungen.</p>}
+ </div>
 
-    </div>
+ </div>
 
-    <!-- Pagination -->
-    <div class="mt-16 pt-8 border-t border-gray-200 dark:border-slate-800">
-      <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
-    </div>
-  </section>
+ <!-- Pagination -->
+ <div class="mt-16 pt-8 border-t border-gray-200 dark:border-slate-800">
+ <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+ </div>
+ </section>
 </Layout>

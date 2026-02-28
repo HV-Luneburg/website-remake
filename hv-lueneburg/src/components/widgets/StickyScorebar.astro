@@ -51,11 +51,11 @@ const { games = [
         {game.league && (
           <span class="text-white/60 font-mono text-xs flex-shrink-0">{game.league}</span>
         )}
-        <span class="truncate text-sm">{game.homeTeam}</span>
+        <span class="truncate">{game.homeTeam}</span>
         <div class="bg-black/25 px-2.5 py-0.5 rounded font-mono text-base tabular-nums whitespace-nowrap flex-shrink-0">
           {game.homeScore} : {game.awayScore}
         </div>
-        <span class="truncate text-sm">{game.awayTeam}</span>
+        <span class="truncate">{game.awayTeam}</span>
         {game.time && game.isLive && (
           <span class="text-white/60 font-mono text-xs flex-shrink-0">{game.time}</span>
         )}
@@ -87,7 +87,7 @@ const { games = [
         <!-- Center: teams + score -->
         <div class="flex items-center gap-1.5 text-xs min-w-0 flex-1 justify-center">
           <span class="truncate max-w-[70px]">{game.homeTeam}</span>
-          <div class="bg-black/25 px-2 py-0.5 rounded font-mono text-sm tabular-nums whitespace-nowrap flex-shrink-0">
+          <div class="bg-black/25 px-2 py-0.5 rounded font-mono tabular-nums whitespace-nowrap flex-shrink-0">
             {game.homeScore} : {game.awayScore}
           </div>
           <span class="truncate max-w-[70px]">{game.awayTeam}</span>

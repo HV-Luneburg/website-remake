@@ -42,7 +42,7 @@ const {
       
       <!-- Hero Text Setup -->
       <div class="z-10 animate-fade">
-        {tagline && <p class="text-accent font-heading tracking-widest uppercase font-semibold text-sm mb-3">{tagline}</p>}
+        {tagline && <p class="text-accent font-heading tracking-widest uppercase font-semibold mb-3">{tagline}</p>}
         {title && <h1 class="text-5xl md:text-6xl lg:text-7xl font-heading font-black text-white leading-tight mb-4" set:html={title} />}
         {subtitle && <p class="text-lg md:text-xl text-gray-300 font-sans max-w-lg mb-8">{subtitle}</p>}
       </div>
@@ -53,7 +53,7 @@ const {
           
           <div class="flex justify-between items-center mb-6">
             <span class="bg-primary text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Nächstes Heimspiel</span>
-            <span class="text-gray-300 text-sm font-medium flex items-center gap-1">
+            <span class="text-gray-300 font-medium flex items-center gap-1">
               <Icon name="tabler:clock" class="w-4 h-4" />
               In 3 Tagen
             </span>
@@ -65,7 +65,7 @@ const {
               <div class="w-16 h-16 sm:w-20 sm:h-20 bg-primary/20 rounded-full flex items-center justify-center p-2 mb-2">
                 <Icon name="tabler:shield-checkered" class="w-10 h-10 text-primary" />
               </div>
-              <span class="font-heading font-bold text-white tracking-wide text-sm">HVL</span>
+              <span class="font-heading font-bold text-white tracking-wide">HVL</span>
             </div>
 
             <div class="text-3xl font-black text-gray-400">VS</div>
@@ -75,7 +75,7 @@ const {
               <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gray-800 rounded-full flex items-center justify-center p-2 mb-2">
                 <Icon name="tabler:shield" class="w-10 h-10 text-gray-400" />
               </div>
-              <span class="font-heading font-bold text-gray-300 tracking-wide text-sm text-center line-clamp-1">Braunschweig</span>
+              <span class="font-heading font-bold text-gray-300 tracking-wide text-center line-clamp-1">Braunschweig</span>
             </div>
           </div>
 
@@ -83,7 +83,7 @@ const {
             <div class="bg-black/30 rounded-lg p-3 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between">
               <div>
                 <p class="text-white font-semibold">Samstag, 19:30 Uhr</p>
-                <p class="text-gray-400 text-sm">Oedemer Sporthalle</p>
+                <p class="text-gray-400">Oedemer Sporthalle</p>
               </div>
               <!-- Timer visual illusion -->
               <div class="text-white font-mono font-bold tracking-widest mt-2 sm:mt-0 bg-primary/20 px-3 py-1 rounded">

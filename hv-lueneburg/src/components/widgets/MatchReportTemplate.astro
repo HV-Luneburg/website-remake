@@ -35,7 +35,7 @@ const isDraw = homeScore === awayScore;
   <div class={`p-8 sm:p-12 pb-16 relative overflow-hidden ${isWin ? 'bg-primary text-white' : isDraw ? 'bg-gray-800 text-white' : 'bg-red-900 text-white'}`}>
     <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\\'60\\' height=\\'60\\' viewBox=\\'0 0 60 60\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'none\\' fill-rule=\\'evenodd\\'%3E%3Cg fill=\\'%23ffffff\\' fill-opacity=\\'1\\'%3E%3Cpath d=\\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
     <div class="relative z-10 flex flex-col items-center">
-      <span class="text-white/80 font-bold tracking-widest uppercase text-xs sm:text-sm mb-6 bg-black/20 px-4 py-1 rounded-full">{league} • {date}</span>
+      <span class="text-white/80 font-bold tracking-widest uppercase text-xs sm:mb-6 bg-black/20 px-4 py-1 rounded-full">{league} • {date}</span>
       <div class="flex items-center justify-center gap-4 sm:gap-12 w-full">
         <div class="flex-1 text-right">
           <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-black leading-tight sm:leading-none">{homeTeam}</h2>
@@ -81,7 +81,7 @@ const isDraw = homeScore === awayScore;
             ))}
           </ul>
         ) : (
-          <p class="text-sm text-gray-500">Keine Daten verfügbar.</p>
+          <p class="text-gray-500">Keine Daten verfügbar.</p>
         )}
       </div>
     </div>

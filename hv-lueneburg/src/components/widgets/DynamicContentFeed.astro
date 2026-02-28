@@ -84,7 +84,7 @@ const { posts = [], title = 'Aktuelles', tagline = 'Neuigkeiten' } = Astro.props
                 <a href={post.link} class="hover:underline underline-offset-2">{post.title}</a>
               </h3>
               {post.excerpt && (
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">{post.excerpt}</p>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2 mb-4 flex-1">{post.excerpt}</p>
               )}
               <div class="flex items-center gap-4 text-xs text-gray-400 dark:text-gray-500 border-t border-gray-100 dark:border-[#2A2A2A] pt-4">
                 <span class="flex items-center gap-1.5">
@@ -126,7 +126,7 @@ const { posts = [], title = 'Aktuelles', tagline = 'Neuigkeiten' } = Astro.props
               </h3>
 
               {post.excerpt && (
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">{post.excerpt}</p>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3 mb-4">{post.excerpt}</p>
               )}
 
               <div class="flex items-center justify-between border-t border-gray-100 dark:border-[#2A2A2A] pt-4 mt-auto">

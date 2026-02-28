@@ -59,22 +59,22 @@ const spielplanDivId = `hb-spielplan-${team.slug}`;
               const rest = parts.slice(1).join(' ');
               return (
                 <div class="flex items-center gap-3 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 rounded-lg p-2 shadow-sm">
-                  <div class="bg-primary/10 text-primary font-bold w-10 h-10 rounded-md flex items-center justify-center uppercase text-sm">
+                  <div class="bg-primary/10 text-primary font-bold w-10 h-10 rounded-md flex items-center justify-center uppercase">
                     {day}
                   </div>
-                  <div class="text-sm font-medium">
+                  <div class="font-medium">
                     {rest || z}
                   </div>
                 </div>
               );
             })}
           </div>
-        ) : <p class="text-sm">Auf Anfrage</p>}
+        ) : <p class="">Auf Anfrage</p>}
       </div>
 
       <div>
         <h4 class="text-xs font-bold uppercase text-gray-500 mb-2">Halle</h4>
-        <p class="text-sm">{team.halle || 'Oedemer Sporthalle'}</p>
+        <p class="">{team.halle || 'Oedemer Sporthalle'}</p>
       </div>
 
     </div>

@@ -143,7 +143,7 @@ export const foerderer = [
 
 export const clubStats = [
   { title: 'Mitglieder',      amount: '250+',  icon: 'tabler:users' },
-  { title: 'Mannschaften',    amount: '17',     icon: 'tabler:ball-tennis' },
+  { title: 'Teams',    amount: '17',     icon: 'tabler:ball-tennis' },
   { title: 'Jahre',           amount: '79+',    icon: 'tabler:calendar' },
   { title: 'Spiele / Saison', amount: '100+',  icon: 'tabler:trophy' },
 ];

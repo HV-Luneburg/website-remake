@@ -3,11 +3,15 @@ import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 export const headerData = {
   links: [
     {
+      text: 'Startseite',
+      href: getPermalink('/'),
+    },
+    {
       text: 'Aktuelles',
       href: getBlogPermalink(),
     },
     {
-      text: 'Mannschaften',
+      text: 'Teams',
       href: getPermalink('/teams'),
     },
     {
@@ -28,7 +32,7 @@ export const footerData = {
       title: 'Verein',
       links: [
         { text: 'Über uns', href: getPermalink('/about') },
-        { text: 'Mannschaften', href: getPermalink('/teams') },
+        { text: 'Teams', href: getPermalink('/teams') },
         { text: 'Engagement', href: getPermalink('/about') },
         { text: 'Vertrauensteam', href: getPermalink('/about') + '#vertrauensteam' },
         { text: 'Kontakt', href: getPermalink('/contact') },

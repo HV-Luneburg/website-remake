@@ -93,7 +93,7 @@ export const homePage = defineType({
 
     defineField({
       name: 'teamsSection',
-      title: 'Sektion: Mannschaften',
+      title: 'Sektion: Teams',
       type: 'object',
       group: 'content',
       fields: [

@@ -4,7 +4,7 @@ import { teams } from '~/data/teams';
 import { Icon } from 'astro-icon/components';
 
 const metadata = {
-  title: 'Mannschaften | HV Lüneburg',
+  title: 'Teams | HV Lüneburg',
 };
 
 const activeTeams = teams.filter(t =>
@@ -33,7 +33,7 @@ const categoryGroups = [
       <span class="heading-eyebrow">HV Lüneburg</span>
       <h1 class="mt-2 font-heading font-black uppercase tracking-tight text-white leading-tight"
           style="font-size: clamp(2.5rem, 7vw, 5rem);">
-        Mannschaften
+        Teams
       </h1>
       <p class="mt-4 text-gray-400 text-lg max-w-2xl leading-relaxed">
         Alle Teams des HV Lüneburg im Überblick. Klicke auf eine Mannschaft, um den Spielplan und alle Infos einzusehen.
@@ -98,7 +98,7 @@ const categoryGroups = [
           <Icon name="tabler:users" class="w-6 h-6 text-primary" />
         </div>
         <div>
-          <h3 class="text-lg font-heading font-black uppercase text-gray-900 dark:text-white mb-1">Alle 17 Mannschaften</h3>
+          <h3 class="text-lg font-heading font-black uppercase text-gray-900 dark:text-white mb-1">Alle 17 Teams</h3>
           <p class="text-gray-500 dark:text-gray-400 text-sm">Weitere Teams werden demnächst hinzugefügt. Schau regelmäßig vorbei!</p>
         </div>
         <a href="/contact" class="btn btn--outline btn--pill ml-auto flex-shrink-0">Kontakt</a>

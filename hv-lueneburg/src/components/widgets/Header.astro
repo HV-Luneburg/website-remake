@@ -189,18 +189,23 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
   }
 
   /* bg-page is toggled by AstroWind's menu script — override it */
-  .navbar.bg-page,
-  .navbar.expanded.bg-page {
-    background-color: var(--color-black, #0C0C0C) !important;
+  .navbar.bg-page {
+    background-color: var(--color-black, #0C0C0C);
   }
 
   .navbar--scrolled {
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+    box-shadow: none;
+  }
+
+  /* Default logo color before mobile menu expansions */
+  .navbar__logo-text {
+    color: var(--color-white, #fff) !important;
   }
 
   /* Desktop nav wrapper — hidden on mobile */
   .navbar__nav-wrapper {
     display: none;
+    width: max-content; 
   }
 
   @media (min-width: 768px) {
@@ -254,69 +259,162 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
     .navbar__cta {
       display: flex;
     }
+    :global(#header.expanded) .navbar__cta {
+      z-index: 300; /* Ensure toggle button is above the mobile menu overlay */
+      position: relative;
+    }
   }
 
   /* Mobile expanded nav */
   @media (max-width: 767px) {
-    :global(#header.expanded) .navbar__nav-wrapper {
-      display: flex !important;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      /* Dark overlay — matches brand aesthetic */
-      background-color: #0C0C0C;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-8, 2rem);
-      padding-top: 80px;
-      overflow-y: auto;
-      z-index: 295;
+    /* 1. Header takes over background but keeps its natural layout rules (max-w, padding) */
+    :global(header#header.expanded),
+    :global(header#header.expanded.scroll),
+    :global(header#header.expanded.navbar--scrolled) {
+      box-shadow: none !important;
+      border: none !important;
+      background-color: var(--color-white, #fff) !important; /* Base Light Mode */
     }
 
-    :global(#header.expanded) .navbar__nav {
+    /* Transparent sub-containers so the main header bg shows through */
+    :global(header#header.expanded .navbar__inner),
+    :global(header#header.expanded .navbar__cta),
+    :global(header#header.expanded .navbar__logo),
+    :global(header#header.expanded .navbar__nav-wrapper),
+    :global(header#header.expanded .navbar__nav) {
+      background-color: transparent !important;
+    }
+
+    /* Light Mode Logo & Cross explicitly black */
+    :global(html:not(.dark) header#header.expanded .navbar__logo-text),
+    :global(html:not(.dark) header#header.expanded a.navbar__logo .navbar__logo-text),
+    :global(html:not(.dark) header#header.expanded .sr-only) {
+      color: var(--color-black, #0C0C0C) !important;
+    }
+    :global(html:not(.dark) header#header.expanded .navbar__logo-text span),
+    :global(html:not(.dark) header#header.expanded a.navbar__logo .navbar__logo-text span) {
+      color: var(--color-primary, #E30613) !important;
+    }
+    :global(html:not(.dark) header#header.expanded [data-aw-toggle-menu] span.toggle-line),
+    :global(html:not(.dark) header#header.expanded button[data-aw-toggle-menu] span.toggle-line) {
+      background-color: var(--color-black, #0C0C0C) !important;
+    }
+    :global(html:not(.dark) header#header.expanded .theme-toggle),
+    :global(html:not(.dark) header#header.expanded button.theme-toggle) {
+      color: var(--color-black, #0C0C0C) !important;
+    }
+
+    /* Light Mode Nav Links explicitly red */
+    :global(html:not(.dark) header#header.expanded .navbar__nav-link),
+    :global(html:not(.dark) header#header.expanded .navbar__dropdown-link) {
+      color: var(--color-primary, #E30613) !important;
+    }
+
+    /* 3. Dark Mode Explicit Colors */
+    :global(html.dark header#header.expanded),
+    :global(html.dark header#header.expanded.scroll),
+    :global(html.dark header#header.expanded.navbar--scrolled) {
+      background-color: var(--color-black, #0C0C0C) !important;
+    }
+    :global(html.dark header#header.expanded .navbar__nav-link),
+    :global(html.dark header#header.expanded .navbar__dropdown-link),
+    :global(html.dark header#header.expanded .navbar__logo-text) {
+      color: var(--color-white, #fff) !important;
+    }
+    :global(html.dark header#header.expanded .navbar__logo-text span) {
+      color: var(--color-primary, #E30613) !important;
+    }
+    :global(html.dark header#header.expanded [data-aw-toggle-menu] span),
+    :global(html.dark header#header.expanded button[data-aw-toggle-menu] span) {
+      background-color: var(--color-white, #fff) !important;
+    }
+    :global(html.dark header#header.expanded .theme-toggle),
+    :global(html.dark header#header.expanded button.theme-toggle) {
+      color: var(--color-white, #fff) !important;
+    }
+
+    /* 4. The Nav Wrapper absolute positions below the 72px navbar inner to perfectly vertically center */
+    :global(header#header.expanded .navbar__nav-wrapper) {
+      display: flex !important;
+      position: absolute;
+      top: 72px; /* Starts exactly below the logo/cross line */
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      bottom: 0; /* Stretches to bottom of screen */
+      height: calc(100vh - 72px); /* Ensures it perfectly fills screen below header line */
+      width: 100vw !important; /* Force full width to center items properly, overriding desktop max-content */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; /* True vertical center! */
+      overflow-y: auto;
+      box-shadow: none !important;
+      border: none !important;
+      border-top: none !important;
+      z-index: 10;
+    }
+
+    :global(header#header.expanded .navbar__nav) {
+      display: flex !important;
       flex-direction: column;
       width: 100%;
       align-items: center;
-      gap: var(--space-2, 0.5rem);
+      justify-content: center; 
+      gap: 0; /* Let padding handle spacing */
+      padding: 0 !important;
+      margin: 0 !important;
+      border-top: none !important;
     }
 
-    :global(#header.expanded) .navbar__nav-link {
-      font-size: clamp(1.75rem, 6vw, 2.5rem);
+    :global(header#header.expanded .navbar__nav-link) {
+      font-size: clamp(2rem, 8vw, 2.5rem);
       font-weight: 900;
-      color: var(--color-white, #fff);
+      line-height: 1.1; 
+      letter-spacing: normal !important; 
+      text-transform: uppercase;
+      white-space: normal; 
       text-align: center;
-      padding: var(--space-4, 1rem) var(--space-6, 1.5rem);
-      border-bottom: none;
+      padding: var(--space-2, 0.5rem) var(--space-4, 1rem); 
+      border-bottom: none !important;
+      border-top: none !important;
       width: 100%;
       border-radius: 12px;
       transition: background-color 200ms ease, color 200ms ease;
     }
 
-    :global(#header.expanded) .navbar__nav-link:hover {
+    :global(header#header.expanded .navbar__nav-link:hover) {
       background-color: rgba(227, 6, 19, 0.12);
-      color: var(--color-primary, #E30613);
+      color: var(--color-primary, #E30613) !important;
     }
 
-    :global(#header.expanded) .navbar__nav-link--active {
-      color: var(--color-primary, #E30613);
+    :global(html.dark header#header.expanded .navbar__nav-link:hover) {
+      background-color: rgba(255, 255, 255, 0.12);
+      color: var(--color-white, #fff) !important;
     }
 
-    :global(#header.expanded) .navbar__nav-link::after {
-      display: none;
+    :global(header#header.expanded .navbar__nav-link--active) {
+      color: var(--color-primary, #E30613) !important;
+    }
+
+    :global(html.dark header#header.expanded .navbar__nav-link--active) {
+      color: var(--color-white, #fff) !important;
+    }
+
+    /* Remove the red active line/border under the links in mobile view */
+    :global(header#header.expanded .navbar__nav-link::after),
+    :global(header#header.expanded .navbar__nav-link--active::after) {
+      display: none !important;
+      content: none !important;
     }
 
     /* Probetraining CTA visible in mobile menu */
-    :global(#header.expanded) .navbar__cta-mobile-extra {
+    :global(#header.expanded .navbar__cta-mobile-extra) {
       display: flex;
       margin-top: var(--space-8, 2rem);
       width: 100%;
       justify-content: center;
     }
 
-    :global(#header.expanded) .navbar__dropdown {
+    :global(#header.expanded .navbar__dropdown) {
       position: static;
       border: none;
       margin-top: var(--space-2, 0.5rem);

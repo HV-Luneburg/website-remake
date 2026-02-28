@@ -56,10 +56,10 @@ export const structure = (S: StructureBuilder) =>
         ),
       S.divider(),
       S.listItem()
-        .title('Mannschaften')
+        .title('Teams')
         .child(
           S.documentTypeList('mannschaft')
-            .title('Mannschaften')
+            .title('Teams')
             .defaultOrdering([{field: 'reihenfolge', direction: 'asc'}]),
         ),
       S.divider(),

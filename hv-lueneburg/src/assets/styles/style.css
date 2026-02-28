@@ -790,7 +790,6 @@ pre code {
   font-weight: var(--fw-black);
   text-transform: uppercase;
   letter-spacing: var(--ls-tight);
-  color: var(--color-white);
   line-height: 1;
 }
 
@@ -803,7 +802,7 @@ pre code {
   display: flex;
   align-items: center;
   list-style: none;
-  padding: 0;
+  padding: 0 !important;
   margin: 0;
   gap: var(--space-1);
 }
@@ -4076,21 +4075,7 @@ hb-embed
   color: var(--color-text-muted);
 }
 
-/* Mobile menu — always dark, always white text */
-@media (max-width: 767px) {
-  #header.expanded .navbar__nav-wrapper {
-    background-color: var(--color-black) !important;
-  }
-
-  #header.expanded .navbar__nav-link,
-  #header.expanded .navbar__nav-link:hover {
-    color: var(--color-white) !important;
-  }
-
-  #header.expanded [data-aw-toggle-menu] span {
-    background-color: var(--color-white) !important;
-  }
-}
+/* Mobile menu color configurations moved to Header.astro entirely */
 
 /* Handball widget: ensure white card background is applied */
 .handball-wrapper .hb-embed {

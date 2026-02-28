@@ -15,15 +15,22 @@ const {
   <slot>
     <span
       aria-hidden="true"
-      class="h-0.5 w-6 my-1 rounded-full bg-white transition ease transform duration-200 opacity-80 group-[.expanded]:rotate-45 group-[.expanded]:translate-y-2.5 .expanded & :global(.expanded) & { rotate: 45deg; transform: translateY(10px); }"
+      class="h-0.5 w-6 my-1 rounded-full toggle-line transition ease transform duration-200 opacity-80 group-[.expanded]:rotate-45 group-[.expanded]:translate-y-2.5 .expanded & :global(.expanded) & { rotate: 45deg; transform: translateY(10px); }"
     ></span>
     <span
       aria-hidden="true"
-      class="h-0.5 w-6 my-1 rounded-full bg-white transition ease transform duration-200 opacity-80 group-[.expanded]:opacity-0 .expanded & :global(.expanded) & { opacity: 0; }"
+      class="h-0.5 w-6 my-1 rounded-full toggle-line transition ease transform duration-200 opacity-80 group-[.expanded]:opacity-0 .expanded & :global(.expanded) & { opacity: 0; }"
     ></span>
     <span
       aria-hidden="true"
-      class="h-0.5 w-6 my-1 rounded-full bg-white transition ease transform duration-200 opacity-80 group-[.expanded]:-rotate-45 group-[.expanded]:-translate-y-2.5 .expanded & :global(.expanded) & { rotate: -45deg; transform: translateY(-10px); }"
+      class="h-0.5 w-6 my-1 rounded-full toggle-line transition ease transform duration-200 opacity-80 group-[.expanded]:-rotate-45 group-[.expanded]:-translate-y-2.5 .expanded & :global(.expanded) & { rotate: -45deg; transform: translateY(-10px); }"
     ></span>
   </slot>
 </button>
+
+<style is:global>
+  /* Define base color so Header.astro can easily override it via standard specificity */
+  .toggle-line {
+    background-color: var(--color-white, #fff);
+  }
+</style>
